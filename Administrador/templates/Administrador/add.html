@@ -18,11 +18,12 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Información general</h5>
+            <div class="card-header pb-0">
+                <h3 class="card-title">Información general</h3>
             </div>
             <div class="card-body">
-                <form>
+                <form action="{% url 'AddAdmin' %}" method="POST">
+                    {% csrf_token %}
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.first_name.label}}</label>
@@ -39,11 +40,51 @@
                             {{form.FC_NACIMIENTO}}
                         </div>
                         <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.email.label}}</label>
+                            {{form.email}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_DUI_USUARIO.label}}</label>
                             {{form.ST_DUI_USUARIO}}
                         </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_NIT_USUARIO.label}}</label>
+                            {{form.ST_NIT_USUARIO}}
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_AFP_USUARIO.label}}</label>
+                            {{form.ST_AFP_USUARIO}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_ISSS_USUARIO.label}}</label>
+                            {{form.ST_ISSS_USUARIO}}
+                        </div>
+                    </div>
+                    <h3 class="card-title">Información de cuenta</h3>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.username.label}}</label>
+                            {{form.username}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.password.label}}</label>
+                            {{form.password}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.password_confirm.label}}</label>
+                            {{form.password_confirm}}
+                            {% if form.password_confirm.errors %}
+                                {% for error in form.password_confirm.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Guardar</button>
                 </form>
             </div>
         </div>
@@ -60,9 +101,9 @@
                 singleDatePicker: true,
                 showDropdowns: true,
                 locale: {
-                    format: 'YYYY-MM-DD',
-                    separator: ' - ',
-                    applyLabel: 'Aplicar',
+                    format: 'DD/MM/YYYY',
+                    separator: ' / ',
+                    applyLabel: 'Seleccionar',
                     cancelLabel: 'Cancelar',
                     fromLabel: 'Desde',
                     toLabel: 'Hasta',

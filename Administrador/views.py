@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.contrib import messages
 from .models import Usuario
 from .forms import *
 
@@ -16,12 +17,21 @@ def add(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
+            admin = form.save()
+            admin.is_staff = 1
+            admin.save()
+            messages.success(request,"Administrador creado exitosamente.")
             return redirect('Administrador')
+        else:
+            for field, errors in form.errors.items():
+                form.fields[field].widget.attrs.update({
+                    'class': "form-control is-invalid"
+                })           
+            messages.error(request,"Por favor, revise los datos.")
     else:
         form = CreateUserForm()
     context = {
-        "form": form
+       "form": form
     }
     return render(request, 'Administrador/add.html',context)
 

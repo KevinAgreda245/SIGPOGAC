@@ -107,3 +107,23 @@
     </div>
 </div>
 {% endblock %}
+
+{% block msg %}
+    {% if messages  %}
+        {% for message in messages  %}
+        <script>
+            var message = "{{message}}";
+            var title = "Notificación";
+            var type = "{{message.tags}}";
+            toastr[type](message, title, {
+                positionClass: "toast-top-right",
+                closeButton: true,
+                progressBar: true,
+                newestOnTop: true,
+                rtl: $("body").attr("dir") === "rtl" || $("html").attr("dir") === "rtl",
+                timeOut: 2500
+            });
+        </script>
+        {% endfor %}
+    {% endif %}
+{% endblock msg %}
