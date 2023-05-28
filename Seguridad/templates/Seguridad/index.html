@@ -23,21 +23,32 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="m-sm-4">
-                                <form>
+                                <form method = "POST">
+                                    {% csrf_token %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+											<div class="alert-icon">
+												<i class="far fa-fw fa-bell"></i>
+											</div>
+											<div class="alert-message">
+												<strong>{{message}}</strong> Intenta nuevamente
+											</div>
+											<button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+										</div>
+                                    {% endfor %}
                                     <div class="mb-3">
                                         <label>Usuario:</label>
-                                        <input class="form-control form-control-lg" type="email" name="email" placeholder="Ingrese su usuario" />
+                                        <input class="form-control form-control-lg" type="text" name="usuario" placeholder="Ingrese su usuario" maxlength="25"/>
                                     </div>
                                     <div class="mb-3">
                                         <label>Contraseña:</label>
-                                        <input class="form-control form-control-lg" type="password" name="password" placeholder="Ingrese su contraseña" />
+                                        <input class="form-control form-control-lg" type="password" name="password" placeholder="Ingrese su contraseña" maxlength="25"/>
                                         <small>
-                                            <a href="pages-reset-password.html">Olvidaste tu contraseña</a>
+                                            <a href="pages-reset-password.html">Olvidé mi contraseña</a>
                                         </small>
                                     </div>
                                     <div class="text-center mt-3">
-                                        <a href="{% url 'Main' %}">Ingresar</a>
-                                        <!--<button type="submit" class="btn btn-lg btn-primary">Ingresar</button>-->
+                                        <button type="submit" class="btn btn-lg btn-primary">Ingresar</button>
                                     </div>
                                 </form>
                             </div>

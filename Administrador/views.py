@@ -2,9 +2,6 @@ from django.shortcuts import redirect, render
 from .models import Usuario
 from .forms import *
 
-def index(request):
-    return render(request, 'Administrador/index.html')    
-
 def main(request):
     return render(request, 'Administrador/main.html')
 
