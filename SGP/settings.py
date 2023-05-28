@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'Equipo',
     'Material',
     'Proyecto',
-    'Reporte'
+    'Reporte',
+    'Seguridad'
 ]
 
 MIDDLEWARE = [
