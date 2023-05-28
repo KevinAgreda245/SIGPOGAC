@@ -84,14 +84,12 @@ WSGI_APPLICATION = 'SGP.wsgi.application'
 
 DATABASES = {
     'default': {
-        'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dbsigpogac',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
-    }
     }
 }
 
@@ -137,3 +135,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#Modelo para extender campos a User
+AUTH_USER_MODEL = 'Administrador.Usuario'
