@@ -1,0 +1,81 @@
+{% extends 'General/dashboard.html' %}
+
+{% block title %} Administrador {% endblock %}
+
+{% block main %}
+<div class="header">
+    <h1 class="header-title">
+        Nuevo Administrador
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Configuraciones</li>
+            <li class="breadcrumb-item"><a href="{% url 'Administrador' %}">Administrador</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Información general</h5>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.first_name.label}}</label>
+                            {{form.first_name}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.last_name.label}}</label>
+                            {{form.last_name}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.FC_NACIMIENTO.label}}</label>
+                            {{form.FC_NACIMIENTO}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_DUI_USUARIO.label}}</label>
+                            {{form.ST_DUI_USUARIO}}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $("input[name=\"FC_NACIMIENTO\"]").daterangepicker({
+                maxDate: moment().subtract(18, 'years').endOf('day'),
+                startDate: moment().subtract(18, 'years').endOf('day'),
+                singleDatePicker: true,
+                showDropdowns: true,
+                locale: {
+                    format: 'YYYY-MM-DD',
+                    separator: ' - ',
+                    applyLabel: 'Aplicar',
+                    cancelLabel: 'Cancelar',
+                    fromLabel: 'Desde',
+                    toLabel: 'Hasta',
+                    customRangeLabel: 'Personalizado',
+                    weekLabel: 'S',
+                    daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                    monthNames: [
+                        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                        'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+                    ],
+                    firstDay: 1
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -18,11 +18,15 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">Lista de Administradores</h5>
-                <h6 class="card-subtitle text-muted">Tabla donde muestra la información de los administradores del sistema.</h6>
+                <div class="card-actions float-end">
+                    <a href="{% url 'AddAdmin' %}" class="me-1">
+                        <i class="align-middle" data-feather="plus"></i>
+                    </a>
+                </div>
+                <h5 class="card-title mb-0">Administradores</h5>
             </div>
             <div class="card-body">
-                <table id="datatables-basic" class="table table-striped" style="width:100%">
+                <table id="tbl-Admin" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -64,4 +68,15 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Datatables basic
+        $('#tbl-Admin').DataTable({
+            responsive: true
+        });
+    });
+</script>
 {% endblock %}
