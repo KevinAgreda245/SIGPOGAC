@@ -41,3 +41,17 @@ def details(request,id):
         "admin": admin
     }
     return render(request, 'Administrador/details.html',context)    
+
+def changeStatus(request,id):
+    if (id == request.user.id):
+        messages.success("No puedes autodesactivarte")
+    else:    
+        admin = Usuario.objects.get(id = id)
+        admin.is_active = not admin.is_active
+        if (admin.is_active):
+            msg = "Usuario activado correctamente."
+        else:
+            msg = "Usuario desactivado correctamente."
+        admin.save()
+        messages.success(request,msg)
+    return redirect('Administrador')

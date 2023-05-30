@@ -20,6 +20,7 @@
             <div class="card-header">
                 <div class="card-actions float-end">
                     <a href="{% url 'AddAdmin' %}" class="me-1">
+                        Nuevo Administrador
                         <i class="align-middle" data-feather="plus"></i>
                     </a>
                 </div>
@@ -55,9 +56,9 @@
                                     <a class="btn btn-primary" href="{% url 'EditAdmin' admin.id %}"><i class="far fa-eye"></i></a>
                                     <a class="btn btn-info"><i class="far fa-edit"></i></a>
                                     {% if admin.is_active %}
-                                        <a class="btn btn-danger"><i class="fas fa-user-slash"></i></a>
+                                        <a class="btn btn-danger" href="{% url 'ChangeStatusAdmin' admin.id %}"><i class="fas fa-user-slash"></i></a>
                                     {% else %}
-                                        <a class="btn btn-success"><i class="fas fa-user"></i></a>
+                                        <a class="btn btn-success" href="{% url 'ChangeStatusAdmin' admin.id %}"><i class="fas fa-user"></i></a>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -73,10 +74,7 @@
 {% block js %}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Datatables basic
-        $('#tbl-Admin').DataTable({
-            responsive: true
-        });
+        initTable("#tbl-Admin","Administradores");
     });
 </script>
 {% endblock %}

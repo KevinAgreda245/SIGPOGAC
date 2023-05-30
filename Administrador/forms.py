@@ -42,9 +42,11 @@ class CreateUserForm(forms.ModelForm):
         self.fields['email'].required = True
         
         self.fields['ST_DUI_USUARIO'].widget.attrs['class'] = 'form-control'
+        self.fields['ST_DUI_USUARIO'].widget.attrs['data-mask'] = '00000000-0'
         self.fields['ST_DUI_USUARIO'].label = "DUI"
 
         self.fields['ST_NIT_USUARIO'].widget.attrs['class'] = 'form-control'
+        self.fields['ST_NIT_USUARIO'].widget.attrs['data-mask'] = '0000-000000-000-0'
         self.fields['ST_NIT_USUARIO'].label = "NIT"
 
         self.fields['ST_AFP_USUARIO'].widget.attrs['class'] = 'form-control'
