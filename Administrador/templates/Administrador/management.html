@@ -55,10 +55,12 @@
                                 <td>
                                     <a class="btn btn-primary" href="{% url 'EditAdmin' admin.id %}"><i class="far fa-eye"></i></a>
                                     <a class="btn btn-info"><i class="far fa-edit"></i></a>
-                                    {% if admin.is_active %}
-                                        <a class="btn btn-danger" href="{% url 'ChangeStatusAdmin' admin.id %}"><i class="fas fa-user-slash"></i></a>
-                                    {% else %}
-                                        <a class="btn btn-success" href="{% url 'ChangeStatusAdmin' admin.id %}"><i class="fas fa-user"></i></a>
+                                    {% if admin.id != request.user.id %}
+                                        {% if admin.is_active %}
+                                            <a class="btn btn-danger" href="{% url 'ChangeStatusAdmin' admin.id %}"><i class="fas fa-user-slash"></i></a>
+                                        {% else %}
+                                            <a class="btn btn-success" href="{% url 'ChangeStatusAdmin' admin.id %}"><i class="fas fa-user"></i></a>
+                                        {% endif %}
                                     {% endif %}
                                 </td>
                             </tr>
