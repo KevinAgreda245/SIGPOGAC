@@ -16,7 +16,14 @@ class Usuario(AbstractUser):
 
 # Modelo de la tabla "usuario_documento"
 class DocumentoUsuario(models.Model):
+    TIPO = [
+        ('DUI','DUI'),
+        ('NIT','NIT'),
+        ('ISSS','ISSS'),
+        ('AFP','AFP'),
+    ]
     SK_DOC_USUARIO = models.AutoField(primary_key=True)
+    ST_TIPO_DOC_USUARIO = models.CharField(max_length=50,choices=TIPO)
     ST_DOC_USUARIO = models.FileField(upload_to='doc_usuario/',null=False,blank=False)
     SK_USUARIO = models.ForeignKey(Usuario,on_delete=models.CASCADE,null=False,blank=False)
 

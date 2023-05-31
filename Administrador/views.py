@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from .models import Usuario
+from .models import Usuario, DocumentoUsuario
 from .forms import *
 
 def main(request):
@@ -15,11 +15,9 @@ def management(request):
 
 def add(request):
     if request.method == 'POST':
-        form = CreateUserForm(request.POST)
+        form = CreateUserForm(request.POST,request.FILES)
         if form.is_valid():
-            admin = form.save()
-            admin.is_staff = 1
-            admin.save()
+            form.save()
             messages.success(request,"Administrador creado exitosamente.")
             return redirect('Administrador')
         else:
@@ -27,7 +25,7 @@ def add(request):
                 form.fields[field].widget.attrs.update({
                     'class': "form-control is-invalid"
                 })           
-            messages.error(request,"Por favor, revise los datos.")
+                messages.error(request,errors)
     else:
         form = CreateUserForm()
     context = {
@@ -37,8 +35,10 @@ def add(request):
 
 def details(request,id):
     admin = Usuario.objects.get(id = id)
+    docs = DocumentoUsuario.objects.filter(SK_USUARIO_id = id)
     context = {
-        "admin": admin
+        "admin": admin,
+        "docs": docs
     }
     return render(request, 'Administrador/details.html',context)    
 

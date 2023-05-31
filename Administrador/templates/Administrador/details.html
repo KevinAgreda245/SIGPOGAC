@@ -1,4 +1,5 @@
 {% extends 'General/dashboard.html' %}
+{% load static %}
 
 {% block title %} Administrador {% endblock %}
 
@@ -32,6 +33,7 @@
                 <h5 class="card-title mb-0">{{admin.first_name}} {{admin.last_name}}</h5>
             </div>
             <div class="card-body">
+                <h6 class="card-title mb-0">Información del Administrador.</h6>
                 <table class="table table-sm my-2">
                     <tbody>
                         <tr>
@@ -100,6 +102,24 @@
                         </tr>
                     </tbody>
                 </table>
+                {% if docs %}
+                    <h6 class="card-title mt-3 mb-0">Documentos relacionados.</h6>
+                    <table class="table table-sm my-2">
+                        <tbody>
+                            {% for doc in docs %}
+                                <tr>
+                                    <th>Archivo de {{doc.ST_TIPO_DOC_USUARIO}}</th>
+                                    <td>
+                                        <img src="{{doc.ST_DOC_USUARIO.url}}" alt="{{doc.ST_TIPO_DOC_USUARIO}}">
+                                        
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h6 class="card-title mt-3 mb-0">No hay documentos relacionados.</h6>
+                {% endif %}
             </div>
         </div>
     </div>

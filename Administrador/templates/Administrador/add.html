@@ -22,7 +22,7 @@
                 <h3 class="card-title">Información general</h3>
             </div>
             <div class="card-body">
-                <form action="{% url 'AddAdmin' %}" method="POST">
+                <form action="{% url 'AddAdmin' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row">
                         <div class="mb-3 col-md-6">
@@ -48,10 +48,12 @@
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_DUI_USUARIO.label}}</label>
                             {{form.ST_DUI_USUARIO}}
+                            <span class="font-13 text-muted">e.j "xxxxxxxx-x"</span>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_NIT_USUARIO.label}}</label>
                             {{form.ST_NIT_USUARIO}}
+                            <span class="font-13 text-muted">e.j "xxxx-xxxxxx-xxx-x"</span>
                         </div>
                     </div>
                     <div class="row">
@@ -82,6 +84,31 @@
                                 <small class="form-text d-block text-danger">{{ error }}</small>
                                 {% endfor %}
                             {% endif %}
+                        </div>
+                    </div>
+                    <h3 class="card-title">Documentos del Administrador</h3>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label w-100">{{form.nit_file.label}}</label>
+                            {{form.nit_file}}    
+                            <small class="form-text d-block text-muted">No es obligatorio.</small>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label w-100">{{form.dui_file.label}}</label>
+                            {{form.dui_file}}    
+                            <small class="form-text d-block text-muted">No es obligatorio.</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label w-100">{{form.afp_file.label}}</label>
+                            {{form.afp_file}}    
+                            <small class="form-text d-block text-muted">No es obligatorio.</small>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label w-100">{{form.isss_file.label}}</label>
+                            {{form.isss_file}}    
+                            <small class="form-text d-block text-muted">No es obligatorio.</small>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success">Guardar</button>
