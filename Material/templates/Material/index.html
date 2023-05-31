@@ -16,13 +16,40 @@
 </div>
 <div class="row">
     <div class="col-12">
-        
+        <div class="card">
+            <div class="card-header">
+                <div class="card-actions float-end">
+                    <a href="#" class="me-1">
+                        Nuevo Material
+                        <i class="align-middle" data-feather="plus"></i>
+                    </a>
+                </div>
+                <h5 class="card-title mb-0">Materiales</h5>
+            </div>
+            <div class="card-body">
+                <table id="tbl-Materiales" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
 
 {% block js %}
 <script>
-    
+    document.addEventListener("DOMContentLoaded", function() {
+        initTable("#tbl-Materiales","materiales");
+    });
 </script>
 {% endblock %}
