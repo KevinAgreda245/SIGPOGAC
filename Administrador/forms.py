@@ -1,6 +1,44 @@
 from django import forms
-from .models import Usuario,DocumentoUsuario
+from django.core.validators import MaxLengthValidator
+from django.db import transaction
+
+from .models import Usuario, DocumentoUsuario
 from django.contrib.auth.hashers import make_password
+
+
+class DocumentUserForm(forms.ModelForm):
+    class Meta:
+        model = DocumentoUsuario
+        fields = ['ST_DOC_USUARIO']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['ST_DOC_USUARIO'].required = False
+
+
+class UpdateUserForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = '__all__'
+        exclude = ['last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'FC_INGRESO_USUARIO','password']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'FC_NACIMIENTO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa'}),
+            'ST_DUI_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'xxxxxxxx-x', 'data-mask': '00000000-0'}),
+            'ST_NIT_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'xxxx-xxxxxx-xxx-x', 'data-mask': '0000-000000-000-0'}),
+            'ST_AFP_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite su NUP'}),
+            'ST_ISSS_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite su N° de Afiliacion'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs['maxlength'] = 60
+        self.fields['last_name'].widget.attrs['maxlength'] = 60
+        self.fields['username'].widget.attrs['maxlength'] = 50
+        self.fields['email'].widget.attrs['maxlength'] = 60
 
 class CreateUserForm(forms.ModelForm):
     password_confirm = forms.CharField(
@@ -27,11 +65,11 @@ class CreateUserForm(forms.ModelForm):
 
     class Meta:
         model = Usuario
-        fields = ['first_name','last_name','username','password','password_confirm','email','ST_DUI_USUARIO','ST_NIT_USUARIO','ST_AFP_USUARIO','ST_ISSS_USUARIO','FC_NACIMIENTO'] 
+        fields = ['first_name', 'last_name', 'username', 'password', 'password_confirm', 'email', 'ST_DUI_USUARIO',
+                  'ST_NIT_USUARIO', 'ST_AFP_USUARIO', 'ST_ISSS_USUARIO', 'FC_NACIMIENTO']
         widgets = {
             'password': forms.PasswordInput()
         }
-
 
     def clean_password_confirm(self):
         pass1 = self.cleaned_data.get('password')
@@ -61,31 +99,27 @@ class CreateUserForm(forms.ModelForm):
             documento.SK_USUARIO = user
             documento.ST_TIPO_DOC_USUARIO = "NIT"
             documento.save()
-        
+
         if (self.cleaned_data['dui_file']):
             documento = DocumentoUsuario()
             documento.ST_DOC_USUARIO = self.cleaned_data['dui_file']
             documento.SK_USUARIO = user
             documento.ST_TIPO_DOC_USUARIO = "DUI"
             documento.save()
-        
+
         if (self.cleaned_data['afp_file']):
             documento = DocumentoUsuario()
             documento.ST_DOC_USUARIO = self.cleaned_data['afp_file']
             documento.SK_USUARIO = user
             documento.ST_TIPO_DOC_USUARIO = "AFP"
             documento.save()
-        
+
         if (self.cleaned_data['isss_file']):
             documento = DocumentoUsuario()
             documento.ST_DOC_USUARIO = self.cleaned_data['isss_file']
             documento.SK_USUARIO = user
             documento.ST_TIPO_DOC_USUARIO = "ISSS"
             documento.save()
-        
-
-
-
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -104,7 +138,7 @@ class CreateUserForm(forms.ModelForm):
 
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['email'].required = True
-        
+
         self.fields['ST_DUI_USUARIO'].widget.attrs['class'] = 'form-control'
         self.fields['ST_DUI_USUARIO'].widget.attrs['data-mask'] = '00000000-0'
         self.fields['ST_DUI_USUARIO'].label = "DUI"
@@ -115,10 +149,9 @@ class CreateUserForm(forms.ModelForm):
 
         self.fields['ST_AFP_USUARIO'].widget.attrs['class'] = 'form-control'
         self.fields['ST_AFP_USUARIO'].label = "AFP"
-        
+
         self.fields['ST_ISSS_USUARIO'].widget.attrs['class'] = 'form-control'
         self.fields['ST_ISSS_USUARIO'].label = "ISSS"
-        
+
         self.fields['FC_NACIMIENTO'].widget.attrs['class'] = 'form-control'
         self.fields['FC_NACIMIENTO'].label = "Fecha de Nacimiento"
-    

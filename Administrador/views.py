@@ -1,3 +1,5 @@
+from tarfile import NUL
+
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from .models import Usuario, DocumentoUsuario
@@ -40,10 +42,37 @@ def add(request):
 def edit(request, id):
     usuario = Usuario.objects.get(pk=id)
 
-    form = CreateUserForm(request.POST or None, request.FILES or None, instance=usuario)
+    form = UpdateUserForm(request.POST or None, instance=usuario)
+
+    form_documents = {
+        "NIT": DocumentUserForm(request.POST or None, request.FILES or None, prefix='NIT'),
+        "DUI": DocumentUserForm(request.POST or None, request.FILES or None, prefix='DUI'),
+        "ISSS": DocumentUserForm(request.POST or None, request.FILES or None, prefix='ISSS'),
+        "AFP": DocumentUserForm(request.POST or None, request.FILES or None, prefix='AFP')
+    }
+
+    if DocumentoUsuario.objects.filter(SK_USUARIO=usuario.pk).exists():
+        documentos = DocumentoUsuario.objects.filter(SK_USUARIO=usuario.pk)
+
+        for documento in documentos:
+            form_documents[documento.ST_TIPO_DOC_USUARIO] = DocumentUserForm(
+                request.POST or None,
+                request.FILES or None,
+                instance=documento,
+                prefix=documento.ST_TIPO_DOC_USUARIO
+            )
 
     if form.is_valid():
-        form.save()
+        with transaction.atomic():
+            usuario = form.save()
+
+            for doc_type, form_doc in form_documents.items():
+                if form_doc.is_valid() and form_doc.cleaned_data.get('ST_DOC_USUARIO'):
+                    archivo_doc = form_doc.save(commit=False)
+                    archivo_doc.ST_TIPO_DOC_USUARIO = doc_type
+                    archivo_doc.SK_USUARIO = usuario
+                    archivo_doc.save()
+
         messages.success(request, "Administrador actualizado exitosamente.")
         return redirect('Administrador')
     else:
@@ -53,8 +82,8 @@ def edit(request, id):
             })
             messages.error(request, errors)
 
-    context = {"form": form}
-    return render(request, 'Administrador/add.html', context)
+    context = {"form": form, "form_documents": form_documents}
+    return render(request, 'Administrador/edit.html', context)
 
 
 def details(request, id):
