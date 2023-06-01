@@ -38,7 +38,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        {% for cliente in clientes %}
+                        <tr>
+                            <td>{{cliente.SK_CLIENTE}}</td>
+                            <td>{{cliente.ST_NOMBRE_CLIENTE}}</td>
+                            <td>
+                                {% if cliente.BN_TIPO_CLIENTE %} Jurídico
+                                {% else %} Natural 
+                                {% endif %}
+                            </td>
+                            <td>{{cliente.ST_DOC_CLIENTE}}</td>
+                            <td>
+                                <a class="btn btn-primary" href="{% url 'detailsCliente' cliente.SK_CLIENTE %}"><i class="far fa-eye"></i></a>
+                                <a class="btn btn-info"><i class="far fa-edit"></i></a>
+                                
+                                    {% if cliente.BN_ESTA_ACTIVO %}
+                                        <a class="btn btn-danger" href=#><i class="fas fa-user-slash"></i></a>
+                                    {% else %}
+                                        <a class="btn btn-success" href=#><i class="fas fa-user"></i></a>
+                                    {% endif %}
+                                
+                            </td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

@@ -11,6 +11,7 @@ class Cliente(models.Model):
     BN_TIPO_CLIENTE = models.BooleanField(null=False,blank=False)
     SK_USUARIO = models.ForeignKey(Usuario,models.CASCADE)
     FC_INGRESO_CLIENTE = models.DateTimeField(default=timezone.now)
+    BN_ESTA_ACTIVO=models.BooleanField(null=False,blank=False,default=True)
 
     class Meta:
         db_table = "cliente"
