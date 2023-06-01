@@ -13,7 +13,12 @@
         <div class="sidebar-content">
             <div class="sidebar-user">
                 <div class="fw-bold">{{request.user.first_name}} {{request.user.last_name}}</div>
-                <small>Administrador</small>
+                {% if request.user.is_staff %}
+                    <small>Administrador</small>
+                {% else %}
+                    <small>Empleado</small>
+                {% endif %}
+                
             </div>
 
             <ul class="sidebar-nav">
@@ -27,9 +32,11 @@
                         <i class="align-middle me-2 fas fa-fw fa-clipboard-list"></i> <span class="align-middle">Configuraciones</span>
                     </a>
                     <ul id="config" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                        {% if request.user.is_staff %}
                         <li class="sidebar-item"><a class="sidebar-link" href="{% url 'Administrador' %}">Administrador</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="{% url 'Cliente' %}">Cliente</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="{% url 'Empleado' %}">Empleado</a></li>
+                        {% endif %}
                         <li class="sidebar-item"><a class="sidebar-link" href="{% url 'Equipo' %}">Equipo</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="{% url 'Material' %}">Material</a></li>
                     </ul>
@@ -37,6 +44,7 @@
                 <li class="sidebar-header">
                     Gestión de proyecto
                 </li>
+                {% if request.user.is_staff %}
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{% url 'Main' %}">
                         <i class="align-middle me-2 fas fa-fw fa-plus-circle"></i> <span class="align-middle">Registro</span>
@@ -47,24 +55,29 @@
                         <i class="align-middle me-2 fas fa-fw fa-th-list"></i> <span class="align-middle">Administración</span>
                     </a>
                 </li>
+                {% else %}
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{% url 'Main' %}">
                         <i class="align-middle me-2 fas fa-fw fa-tasks"></i> <span class="align-middle">Mis Proyectos</span>
                     </a>
                 </li>
+                {% endif %}
                 <li class="sidebar-header">
                     Reporte
                 </li>
+                {% if request.user.is_staff %}
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{% url 'Main' %}">
                         <i class="align-middle me-2 fas fa-fw fa-file-alt"></i> <span class="align-middle">Detalle de Proyectos</span>
                     </a>
                 </li>
+                {% else %}
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{% url 'Main' %}">
                         <i class="align-middle me-2 fas fa-fw fa-file-alt"></i> <span class="align-middle">Historial</span>
                     </a>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
