@@ -53,8 +53,8 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <a class="btn btn-primary" href="{% url 'EditAdmin' admin.id %}"><i class="far fa-eye"></i></a>
-                                    <a class="btn btn-info"><i class="far fa-edit"></i></a>
+                                    <a class="btn btn-primary" href="{% url 'DetailsAdmin' admin.id %}"><i class="far fa-eye"></i></a>
+                                    <a class="btn btn-info" href="{% url 'EditAdmin' admin.id %}"><i class="far fa-edit"></i></a>
                                     {% if admin.id != request.user.id %}
                                         {% if admin.is_active %}
                                             <a class="btn btn-danger" href="{% url 'ChangeStatusAdmin' admin.id %}"><i class="fas fa-user-slash"></i></a>

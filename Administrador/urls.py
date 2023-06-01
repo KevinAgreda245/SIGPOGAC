@@ -5,6 +5,7 @@ urlpatterns = [
     path('main/', views.main, name = "Main"),
     path('administrador/', views.management, name = "Administrador"),
     path('administrador/add', views.add, name = "AddAdmin"),
-    path('administrador/edit/<id>', views.details, name = "EditAdmin"),
+    path('administrador/edit/<id>', views.edit, name = "EditAdmin"),
+    path('administrador/details/<id>', views.details, name = "DetailsAdmin"),
     path('administrador/status/<id>', views.changeStatus, name="ChangeStatusAdmin")
 ]

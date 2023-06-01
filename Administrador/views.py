@@ -3,52 +3,77 @@ from django.contrib import messages
 from .models import Usuario, DocumentoUsuario
 from .forms import *
 
+
 def main(request):
     return render(request, 'Administrador/main.html')
 
+
 def management(request):
-    admins = Usuario.objects.filter(is_staff = 1)
+    admins = Usuario.objects.filter(is_staff=1)
     context = {
         "admins": admins
     }
-    return render(request, 'Administrador/management.html',context)    
+    return render(request, 'Administrador/management.html', context)
+
 
 def add(request):
     if request.method == 'POST':
-        form = CreateUserForm(request.POST,request.FILES)
+        form = CreateUserForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request,"Administrador creado exitosamente.")
+            messages.success(request, "Administrador creado exitosamente.")
             return redirect('Administrador')
         else:
             for field, errors in form.errors.items():
                 form.fields[field].widget.attrs.update({
                     'class': "form-control is-invalid"
-                })           
-                messages.error(request,errors)
+                })
+                messages.error(request, errors)
     else:
         form = CreateUserForm()
     context = {
-       "form": form
+        "form": form
     }
-    return render(request, 'Administrador/add.html',context)
+    return render(request, 'Administrador/add.html', context)
 
-def details(request,id):
-    admin = Usuario.objects.get(id = id)
-    docs = DocumentoUsuario.objects.filter(SK_USUARIO_id = id)
+
+def edit(request, id):
+    usuario = Usuario.objects.get(pk=id)
+
+    form = CreateUserForm(request.POST or None, request.FILES or None, instance=usuario)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Administrador actualizado exitosamente.")
+        return redirect('Administrador')
+    else:
+        for field, errors in form.errors.items():
+            form.fields[field].widget.attrs.update({
+                'class': "form-control is-invalid"
+            })
+            messages.error(request, errors)
+
+    context = {"form": form}
+    return render(request, 'Administrador/add.html', context)
+
+
+def details(request, id):
+    admin = Usuario.objects.get(id=id)
+    docs = DocumentoUsuario.objects.filter(SK_USUARIO_id=id)
     context = {
         "admin": admin,
         "docs": docs
     }
-    return render(request, 'Administrador/details.html',context)    
+    return render(request, 'Administrador/details.html', context)
 
-def changeStatus(request,id):
-    admin = Usuario.objects.get(id = id)
+
+def changeStatus(request, id):
+    admin = Usuario.objects.get(id=id)
     admin.is_active = not admin.is_active
     if (admin.is_active):
         msg = "Usuario activado correctamente."
     else:
         msg = "Usuario desactivado correctamente."
     admin.save()
-    messages.success(request,msg)
+    messages.success(request, msg)
     return redirect('Administrador')
