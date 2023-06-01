@@ -1,0 +1,140 @@
+{% extends 'General/dashboard.html' %}
+
+{% block title %} Perfil {% endblock %}
+
+{% block main %}
+<div class="header">
+    <h1 class="header-title">
+        Actualizar Perfil
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Perfil</li>
+            <li class="breadcrumb-item"><a href="{% url 'DetailsProfile' request.user.pk %}">Detalle Perfil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Actualizar Perfil</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header pb-0">
+                <h3 class="card-title">Información general</h3>
+            </div>
+
+
+
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.first_name.label}}</label>
+                            {{form.first_name}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.last_name.label}}</label>
+                            {{form.last_name}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.FC_NACIMIENTO.label}}</label>
+                            {{form.FC_NACIMIENTO}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.email.label}}</label>
+                            {{form.email}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_DUI_USUARIO.label}}</label>
+                            {{form.ST_DUI_USUARIO}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_NIT_USUARIO.label}}</label>
+                            {{form.ST_NIT_USUARIO}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_AFP_USUARIO.label}}</label>
+                            {{form.ST_AFP_USUARIO}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_ISSS_USUARIO.label}}</label>
+                            {{form.ST_ISSS_USUARIO}}
+                        </div>
+                    </div>
+                    <h3 class="card-title">Información de cuenta</h3>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.username.label}}</label>
+                            {{form.username}}
+                        </div>
+                    </div>
+                    <h3 class="card-title">Documentos del Administrador</h3>
+
+                    <h2>Documentos</h2>
+
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label w-100">Archivo NIT</label>
+                            {{form_documents.NIT.ST_DOC_USUARIO}}
+                            <small class="form-text d-block text-muted">No es obligatorio.</small>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label w-100">Archivo DUI</label>
+                            {{form_documents.DUI.ST_DOC_USUARIO}}
+                            <small class="form-text d-block text-muted">No es obligatorio.</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label w-100">Archivo AFP</label>
+                            {{form_documents.AFP.ST_DOC_USUARIO}}
+                            <small class="form-text d-block text-muted">No es obligatorio.</small>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label w-100">Archivo ISSS</label>
+                            {{form_documents.ISSS.ST_DOC_USUARIO}}
+                            <small class="form-text d-block text-muted">No es obligatorio.</small>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $("input[name=\"FC_NACIMIENTO\"]").daterangepicker({
+                maxDate: moment().subtract(18, 'years').endOf('day'),
+                startDate: moment().subtract(18, 'years').endOf('day'),
+                singleDatePicker: true,
+                showDropdowns: true,
+                locale: {
+                    format: 'DD/MM/YYYY',
+                    separator: ' / ',
+                    applyLabel: 'Seleccionar',
+                    cancelLabel: 'Cancelar',
+                    fromLabel: 'Desde',
+                    toLabel: 'Hasta',
+                    customRangeLabel: 'Personalizado',
+                    weekLabel: 'S',
+                    daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                    monthNames: [
+                        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                        'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+                    ],
+                    firstDay: 1
+                }
+            });
+        });
+    </script>
+{% endblock %}

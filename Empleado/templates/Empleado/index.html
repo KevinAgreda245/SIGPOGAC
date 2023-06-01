@@ -53,8 +53,8 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a class="btn btn-primary" href="{% url 'EditEmpleado' empleado.id %}"><i class="far fa-eye"></i></a>
-                                <a class="btn btn-info"><i class="far fa-edit"></i></a>
+                                <a class="btn btn-primary" href="{% url 'DetailsEmpleado' empleado.id %}"><i class="far fa-eye"></i></a>
+                                <a class="btn btn-info" href="{% url 'EditEmpleado' empleado.id %}"><i class="far fa-edit"></i></a>
                                 {% if empleado.id != request.user.id %}
                                     {% if empleado.is_active %}
                                         <a class="btn btn-danger" href="{% url 'ChangeStatusEmpleado' empleado.id %}"><i class="fas fa-user-slash"></i></a>
