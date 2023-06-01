@@ -19,7 +19,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-actions float-end">
-                    <a href="#" class="me-1">
+                    <a href="{% url 'AddEmpleado' %}" class="me-1">
                         Nuevo Empleado
                         <i class="align-middle" data-feather="plus"></i>
                     </a>
@@ -39,7 +39,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        {% for empleado in empleados %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{empleado.first_name}}</td>
+                            <td>{{empleado.last_name}}</td>
+                            <td>{{empleado.username}}</td>
+                            <td>
+                                {% if empleado.is_active %}
+                                    <span class="badge rounded-pill bg-success py-2 px-3">Activo</span>
+                                {% else %}
+                                    <span class="badge rounded-pill bg-danger py-2 px-3">Inactivo</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" href="{% url 'EditEmpleado' empleado.id %}"><i class="far fa-eye"></i></a>
+                                <a class="btn btn-info"><i class="far fa-edit"></i></a>
+                                {% if empleado.id != request.user.id %}
+                                    {% if empleado.is_active %}
+                                        <a class="btn btn-danger" href="{% url 'ChangeStatusEmpleado' empleado.id %}"><i class="fas fa-user-slash"></i></a>
+                                    {% else %}
+                                        <a class="btn btn-success" href="{% url 'ChangeStatusEmpleado' empleado.id %}"><i class="fas fa-user"></i></a>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}                
                     </tbody>
                 </table>
             </div>
