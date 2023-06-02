@@ -1,6 +1,8 @@
 from django import forms
 from Administrador.models import Usuario,DocumentoUsuario
 from django.contrib.auth.hashers import make_password
+from django.core.validators import MaxLengthValidator
+from django.db import transaction
 
 class CreateUserForm(forms.ModelForm):
     password_confirm = forms.CharField(
