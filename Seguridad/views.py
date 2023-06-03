@@ -44,34 +44,9 @@ def edit(request, id):
 
     form = UpdateUserForm(request.POST or None, instance=usuario)
 
-    form_documents = {
-        "NIT": DocumentUserForm(request.POST or None, request.FILES or None, prefix='NIT'),
-        "DUI": DocumentUserForm(request.POST or None, request.FILES or None, prefix='DUI'),
-        "ISSS": DocumentUserForm(request.POST or None, request.FILES or None, prefix='ISSS'),
-        "AFP": DocumentUserForm(request.POST or None, request.FILES or None, prefix='AFP')
-    }
-
-    if DocumentoUsuario.objects.filter(SK_USUARIO=usuario.pk).exists():
-        documentos = DocumentoUsuario.objects.filter(SK_USUARIO=usuario.pk)
-
-        for documento in documentos:
-            form_documents[documento.ST_TIPO_DOC_USUARIO] = DocumentUserForm(
-                request.POST or None,
-                request.FILES or None,
-                instance=documento,
-                prefix=documento.ST_TIPO_DOC_USUARIO
-            )
-
     if form.is_valid():
         with transaction.atomic():
             usuario = form.save()
-
-            for doc_type, form_doc in form_documents.items():
-                if form_doc.is_valid() and form_doc.cleaned_data.get('ST_DOC_USUARIO'):
-                    archivo_doc = form_doc.save(commit=False)
-                    archivo_doc.ST_TIPO_DOC_USUARIO = doc_type
-                    archivo_doc.SK_USUARIO = usuario
-                    archivo_doc.save()
 
         messages.success(request, "Perfil actualizado exitosamente.")
         return redirect('DetailsProfile', id)
@@ -82,6 +57,6 @@ def edit(request, id):
             })
             messages.error(request, errors)
 
-    context = {"form": form, "form_documents": form_documents}
+    context = {"form": form}
     return render(request, 'Seguridad/edit.html', context)
 
