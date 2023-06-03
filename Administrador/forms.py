@@ -10,6 +10,9 @@ class DocumentUserForm(forms.ModelForm):
     class Meta:
         model = DocumentoUsuario
         fields = ['ST_DOC_USUARIO']
+        widgets = {
+            'ST_DOC_USUARIO': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
