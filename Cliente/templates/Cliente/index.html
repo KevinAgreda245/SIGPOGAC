@@ -19,7 +19,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-actions float-end">
-                    <a href="#" class="me-1">
+                    <a href="{% url 'addCliente' %}" class="me-1">
                         Nuevo cliente
                         <i class="align-middle" data-feather="plus"></i>
                     </a>
@@ -50,12 +50,12 @@
                             <td>{{cliente.ST_DOC_CLIENTE}}</td>
                             <td>
                                 <a class="btn btn-primary" href="{% url 'detailsCliente' cliente.SK_CLIENTE %}"><i class="far fa-eye"></i></a>
-                                <a class="btn btn-info"><i class="far fa-edit"></i></a>
+                                <a class="btn btn-info" href="{% url 'editCliente' cliente.SK_CLIENTE %}"><i class="far fa-edit"></i></a>
                                 
                                     {% if cliente.BN_ESTA_ACTIVO %}
-                                        <a class="btn btn-danger" href=#><i class="fas fa-user-slash"></i></a>
+                                        <a class="btn btn-danger" href="{% url 'changeStatusCliente' cliente.SK_CLIENTE %}"><i class="fas fa-user-slash"></i></a>
                                     {% else %}
-                                        <a class="btn btn-success" href=#><i class="fas fa-user"></i></a>
+                                        <a class="btn btn-success" href="{% url 'changeStatusCliente' cliente.SK_CLIENTE %}"><i class="fas fa-user"></i></a>
                                     {% endif %}
                                 
                             </td>

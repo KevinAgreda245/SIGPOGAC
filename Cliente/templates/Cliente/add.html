@@ -1,0 +1,82 @@
+{% extends 'General/dashboard.html' %}
+
+{% block title %} Cliente {% endblock %}
+
+{% block main %}
+<div class="header">
+    <h1 class="header-title">
+        Nuevo Cliente
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Configuraciones</li>
+            <li class="breadcrumb-item"><a href="{% url 'Administrador' %}">Cliente</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header pb-0">
+                <h3 class="card-title">Información general</h3>
+            </div>
+            <div class="card-body">
+                <form action="{% url 'addCliente' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_NOMBRE_CLIENTE.label}}</label>
+                            {{form.ST_NOMBRE_CLIENTE}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_DOC_CLIENTE.label}}</label>
+                            {{form.ST_DOC_CLIENTE}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_NIT_CLIENTE.label}}</label>
+                            {{form.ST_NIT_CLIENTE}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">{{form.BN_TIPO_CLIENTE.label}}</label>
+                            {{form.BN_TIPO_CLIENTE}}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $("input[name=\"FC_NACIMIENTO\"]").daterangepicker({
+                maxDate: moment().subtract(18, 'years').endOf('day'),
+                startDate: moment().subtract(18, 'years').endOf('day'),
+                singleDatePicker: true,
+                showDropdowns: true,
+                locale: {
+                    format: 'DD/MM/YYYY',
+                    separator: ' / ',
+                    applyLabel: 'Seleccionar',
+                    cancelLabel: 'Cancelar',
+                    fromLabel: 'Desde',
+                    toLabel: 'Hasta',
+                    customRangeLabel: 'Personalizado',
+                    weekLabel: 'S',
+                    daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                    monthNames: [
+                        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                        'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+                    ],
+                    firstDay: 1
+                }
+            });
+        });
+    </script>
+{% endblock %}
