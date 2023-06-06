@@ -58,3 +58,5 @@ def changeStatus(request, id):
     messages.success(request, msg)
     return redirect('Cliente')
 
+def portal(request):
+    return render(request, 'Cliente/portal.html')

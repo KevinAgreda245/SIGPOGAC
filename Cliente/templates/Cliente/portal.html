@@ -1,0 +1,417 @@
+{% extends 'General/base.html' %}
+
+{% block title %} Conagrise S.A. de C.V.{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-dark navbar-expand-md w-100 py-2" style="background-color: #ed8a28">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href=""> CONAGRISE S.A. DE C.V. </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo0" aria-controls="navbarTogglerDemo0" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo0">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#Mision">Misión</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#Vision">Visión</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#Politica">Política</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#Servicios">Servicios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#Contacto">Contacto</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <section class="bg-white hero-section">
+      <div class="container">
+        <div class="row pt-5 text-center">
+          <!--<h1>CONAGRISE S.A. DE C.V.</h1>-->
+          <img src="/static/images/conagrise.png">
+          <h2>Tus expertos en servicios de construcción</h2>
+          <p class="blockquote">
+            Empresa salvadoreña dedicada a la
+            construcción de obras de ingeniería civil, obra gris, servicios de
+            topografía, instalación de señalización, estructuras metálicas y más.
+          </p>
+    
+          <!--<img src = "/static/images/logo.png" height = "340px" width = "600px"/>-->
+        </div>
+      </div>
+    </section>
+    
+    <section class="bg-white">
+      <div class="row p-5 mx-5">
+        <div class="col-md-6 d-flex align-items-center" id="Mision">
+        <div>
+          <h2>Misión</h2>
+          <p class="blockquote text-muted">
+            Somos una empresa nacional, dedicada al desarrollo de proyectos de obra
+            gris en el área de construcción, cuyo propósito es el compromiso con
+            nuestros clientes en la calidad de nuestras obras, buscando relaciones a
+            largo plazo con nuestros aliados, y manteniendo la confianza de nuestros
+            clientes, trabajando con principios morales, éticos, responsabilidad y
+            eficacia.
+          </p>
+        </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center">
+            <img src="/static/images/mision.jpg" style="max-width: 30rem">
+        </div>
+      </div>
+      <div class="row p-5 mx-5">
+        <div class="col-md-6 d-flex justify-content-center">
+            <img src="/static/images/vision.jpg" style="max-width: 30rem">
+        </div>
+        <div class="col-md-6 d-flex align-items-center" id="Vision">
+        <div>
+          <h2 id="Vision">Visión</h2>
+          <p class="blockquote text-muted">
+            Permanecer en niveles favorables de venta y utilidad operacional que
+            garanticen el desarrollo de nuevos proyectos de construcción de obra
+            gris en El Salvador, con un equipo de trabajo de campo y administrativo
+            comprometido, que satisfagan las necesidades de los clientes, con altos
+            niveles de calidad, cumplimiento, diseño y servicio al cliente que
+            garanticen el sólido reconocimiento de la empresa, contribuyendo al
+            desarrollo del país.
+          </p>
+        </div>
+    </div>
+      </div>
+      <div class="row p-5 mx-5">
+        <div class="col-md-6 d-flex align-items-center">
+        <div>
+          <h2 id="Politica">Política de calidad</h2>
+          <p class="blockquote text-muted">
+            Nos comprometemos a planificar, controlar y mejorar continuamente todos
+            los procesos de calidad de la empresa, con el fin de garantizar el
+            cumplimiento de los compromisos pactados con clientes y proveedores,
+            especialmente en calidad, ética y tiempo de entrega, logrando un alto
+            grado de satisfacción y así mantener la confianza de nuestros clientes e
+            ir adquiriendo nuevos proyectos paulatinamente.
+          </p>
+        </div>
+    </div>
+    <div class="col-md-6 d-flex justify-content-center">
+        <img src="/static/images/politica.jpg" style="max-height: 23rem">
+    </div>
+      </div>
+    </section>
+    
+    <!--Seccion Servicios-->
+    <section class="">
+        <div class="row text-center">
+            <h2 class="pt-5" id="Servicios">Nuestros servicios</h2>
+        </div>
+        <div class="row mx-5 text-center">
+        <!--Tarjeta servicio concreto y asfalto-->
+        <section class="mx-auto my-3" style="max-width: 23rem">
+          <div class="card">
+            <div class="card-body d-flex flex-row justify-content-center">
+              <div class="">
+                <h3 class="font-weight-bold pt-2">
+                  Concreto y asfalto
+                </h3>
+              </div>
+            </div>
+            <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+              <img class="img-fluid" src="/static/images/concreto.jpg" alt="Concreto y asfalto">
+              <a href="#!">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+              </a>
+            </div>
+            <div class="card-body">
+              <p class="card-text collapse" id="collapseContent">
+                </p><div class="collapse multi-collapse" id="multiCollapseExample1">
+                    <div class="card card-body">
+                        <p>Consiste en la colocación de carpetas de concreto hidráulico y concreto asfáltico de
+                        diferentes espesores, en el proceso de colocación de concreto hidráulico se deben realizar
+                        juntas de dilatación que eviten que el concreto se fracture; en el proceso de colocación de
+                        mezcla asfáltica, se deben respetar temperaturas del asfalto, la limpieza de las cajas, realizar
+                        el riego de emulsión asfáltica, etc.</p>
+                    </div>
+                  </div>
+              <p></p>
+              <div class="d-flex justify-content-center">
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1" style="background-color: #ed8a28; border-style: none;">Leer más</a>
+              </div>
+            </div>
+          </div>
+        </section>
+    
+        <!--Tarjeta renta de equipo para terraceria-->
+        <section class="mx-auto my-3" style="max-width: 23rem">
+            <div class="card">
+              <div class="card-body d-flex flex-row justify-content-center">
+                <div class="">
+                  <h3 class="font-weight-bold pt-2">
+                    Equipo para terracería
+                  </h3>
+                </div>
+              </div>
+              <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                <img class="img-fluid" src="/static/images/terraceria.jpg" alt="Concreto y asfalto">
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <p class="card-text collapse" id="collapseContent">
+                  </p><div class="collapse multi-collapse" id="multiCollapseExample2">
+                      <div class="card card-body">
+                          <p>Alquiler de equipo y maquinaria para realizar trabajo de terracería. Entre el equipo
+                            disponible se encuentran retroexcavadoras, camiones cisterna, rodo vibratorios, camiones
+                            de volteo, entre otros.
+                          </p>
+                      </div>
+                    </div>
+                <p></p>
+                <div class="d-flex justify-content-center">
+                  <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample2" style="background-color: #ed8a28; border-style: none;">Leer más</a>
+                </div>
+              </div>
+            </div>
+          </section>
+    
+          <!--Tarjeta renta de densimetro-->
+        <section class="mx-auto my-3" style="max-width: 23rem">
+            <div class="card">
+              <div class="card-body d-flex flex-row justify-content-center">
+                <div class="">
+                  <h3 class="font-weight-bold pt-2">
+                    Renta de densímetro nuclear
+                  </h3>
+                </div>
+              </div>
+              <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                <img class="img-fluid" src="/static/images/densimetro.jpeg" alt="Concreto y asfalto">
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <p class="card-text collapse" id="collapseContent">
+                  </p><div class="collapse multi-collapse" id="multiCollapseExample3">
+                      <div class="card card-body">
+                          <p>Se alquila el densímetro nuclear para realizar ensayos y determinar la
+                            humedad y la densidad seca de los suelos en el campo mediante métodos nucleares, sin tener
+                            que recurrir a métodos de intervención física. Se cuenta con un permiso de acreditación, 
+                            sabiendo que el equipo debe estar correctamente calibrado, cumpliendo con todos los requisitos 
+                            del ministerio de salud.
+                          </p>
+                      </div>
+                    </div>
+                <p></p>
+                <div class="d-flex justify-content-center">
+                  <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample3" role="button" aria-expanded="false" aria-controls="multiCollapseExample3" style="background-color: #ed8a28; border-style: none;">Leer más</a>
+                </div>
+            </div>
+            </div>
+        </section>
+        </div>
+        <div class="row mx-5 text-center d-flex ">
+             <!--Tarjeta servicio de transporte-->
+        <section class="mx-auto" style="max-width: 23rem">
+            <div class="card">
+              <div class="card-body d-flex flex-row justify-content-center">
+                <div class="">
+                  <h3 class="font-weight-bold pt-2">
+                    Transporte
+                  </h3>
+                </div>
+              </div>
+              <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                <img class="img-fluid" src="/static/images/transporte.jpeg" alt="Concreto y asfalto">
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <p class="card-text collapse" id="collapseContent">
+                  </p><div class="collapse multi-collapse" id="multiCollapseExample4">
+                      <div class="card card-body">
+                          <p>Se realizan el movimiento y traslado de materiales, equipos, entre otros
+                            de acuerdo con los requerimientos del cliente.
+                          </p>
+                      </div>
+                    </div>
+                <p></p>
+                <div class="d-flex justify-content-center">
+                  <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample4" role="button" aria-expanded="false" aria-controls="multiCollapseExample4" style="background-color: #ed8a28; border-style: none;">Leer más</a>
+                </div>
+            </div>
+            </div>
+        </section>
+          <!--Tarjeta servicio de levantamiento topografico-->
+          <section class="mx-auto" style="max-width: 23rem">
+            <div class="card">
+              <div class="card-body d-flex flex-row justify-content-center">
+                <div class="">
+                  <h3 class="font-weight-bold pt-2">
+                    Levantamiento topográfico
+                  </h3>
+                </div>
+              </div>
+              <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                <img class="img-fluid" src="/static/images/levantamiento.jpeg" alt="levantamiento topografico">
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <p class="card-text collapse" id="collapseContent">
+                  </p><div class="collapse multi-collapse" id="multiCollapseExample5">
+                      <div class="card card-body">
+                          <p>En esta actividad se hace un levantamiento de un terreno, se sacan las curvas de nivel
+                            y se ve lo plano o lo quebrado de un terreno, y determinar al pasar ese levantamiento por
+                            medio de estación total a la computadora y pasarlo al levantamiento planimétrico, se
+                            determinará el corte o el relleno que el terreno necesite.
+                          </p>
+                      </div>
+                    </div>
+                <p></p>
+                <div class="d-flex justify-content-center">
+                  <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample5" role="button" aria-expanded="false" aria-controls="multiCollapseExample5" style="background-color: #ed8a28; border-style: none;">Leer más</a>
+                </div>
+            </div>
+            </div>
+        </section>
+        </div>
+    
+        <div class="row mx-5 text-center my-3">
+            <!--Tarjeta servicio de estructuras metálicas-->
+          <section class="mx-auto" style="max-width: 23rem">
+            <div class="card">
+              <div class="card-body d-flex flex-row justify-content-center">
+                <div class="">
+                  <h3 class="font-weight-bold pt-2">
+                    Estructuras metálicas
+                  </h3>
+                </div>
+              </div>
+              <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                <img class="img-fluid" src="/static/images/estructurasmetalicas.jpeg" alt="Estructuras metálicas">
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <p class="card-text collapse" id="collapseContent">
+                  </p><div class="collapse multi-collapse" id="multiCollapseExample6">
+                      <div class="card card-body">
+                          <p>Servicio dedicada a la construcción y soldadura de estructuras 
+                            metálicas de acuerdo a las necesidades y requerimientos establecidos 
+                            por el cliente.
+                          </p>
+                      </div>
+                    </div>
+                <p></p>
+                <div class="d-flex justify-content-center">
+                  <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample6" role="button" aria-expanded="false" aria-controls="multiCollapseExample6" style="background-color: #ed8a28; border-style: none;">Leer más</a>
+                </div>
+            </div>
+            </div>
+        </section>
+    
+        <!--Tarjeta servicio de señalización vial-->
+        <section class="mx-auto" style="max-width: 23rem">
+            <div class="card">
+              <div class="card-body d-flex flex-row justify-content-center">
+                <div class="">
+                  <h3 class="font-weight-bold pt-2">
+                    Señalización vial
+                  </h3>
+                </div>
+              </div>
+              <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                <img class="img-fluid" src="/static/images/senales.jpeg" alt="Señalización vial">
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <p class="card-text collapse" id="collapseContent">
+                  </p><div class="collapse multi-collapse" id="multiCollapseExample7">
+                      <div class="card card-body">
+                          <p>Se brindan servicio de señalización vial, pero es FOVIAL quien proporciona
+                            todas las especificaciones de la obra a realizar y de esa forma como empresa no apegamos a
+                            ellas. Para ejecutrar este servicio es necesario que se especifiquen los metros, tipo de señalización, 
+                            ubicación y todo lo que se debe realizar.
+                          </p>
+                      </div>
+                    </div>
+                <p></p>
+                <div class="d-flex justify-content-center">
+                  <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample7" role="button" aria-expanded="false" aria-controls="multiCollapseExample7" style="background-color: #ed8a28; border-style: none;">Leer más</a>
+                </div>
+            </div>
+            </div>
+        </section>
+    
+      <!--Tarjeta servicio de asesorias constructiva-->
+        <section class="mx-auto" style="max-width: 23rem">
+            <div class="card">
+              <div class="card-body d-flex flex-row justify-content-center">
+                <div class="">
+                  <h3 class="font-weight-bold pt-2">
+                    Asesorias constructivas
+                  </h3>
+                </div>
+              </div>
+              <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                <img class="img-fluid" src="/static/images/asesoria.jpeg" alt="Asesoria constructiva">
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <p class="card-text collapse" id="collapseContent">
+                  </p><div class="collapse multi-collapse" id="multiCollapseExample8">
+                      <div class="card card-body">
+                          <p>En las asesorías constructivas se dan lineamientos para proyectos que se solicitan
+                            como, por ejemplo: que se hagan unas losas de concreto y la empresa se encargar de decirle
+                            que le resiste más ya sea porque el material es mejor o más duradero.
+                          </p>
+                      </div>
+                    </div>
+                <p></p>
+                <div class="d-flex justify-content-center">
+                  <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample8" role="button" aria-expanded="false" aria-controls="multiCollapseExample8" style="background-color: #ed8a28; border-style: none;">Leer más</a>
+                </div>
+            </div>
+            </div>
+        </section>
+    
+    
+        </div>
+    </section>
+    
+    
+    <section class="bg-white">
+        <div class="row text-center py-3">
+            <h2 id="Contacto">Contáctanos</h2>
+        </div>
+        <div class="row text-center d-flex justify-content-around">
+            <div class="col-md-6 px-5">
+                <a href="mailto:CORREO?subject = Solicitud de servicios&amp;body = Message" class="align-middle btn-contacto" target="_blank"><i class="align-middle fas fa-fw fa-envelope fa-8x"></i></a>
+                <h3 class="pt-3 pb-5 text-muted">Escribenos un correo electrónico con tu solicitud de servicio y te enviaremos toda la información necesaria.</h3>
+            </div>
+            <div class="col-md-6 px-5">
+                <a href="https://wa.me/" class="align-middle icono" target="_blank"><i class="align-middle fab fa-fw fa-whatsapp-square fa-8x" style = "color:#25D366"></i></a>
+                    <h3 class="pt-3 pb-5 text-muted">Escribenos a nuestro WhatsApp empresarial, resolveremos todas tus dudas.</h3>
+            </div>
+        </div>
+    </section>
+    
+    <button class="text-center" onclick="topFunction()" id="btnSubir" style="display: block;">
+        <i class="fas fa-fw fa-arrow-alt-circle-up fa-lg"></i>
+    </button>
+ {% endblock %}
