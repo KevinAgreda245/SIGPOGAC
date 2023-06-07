@@ -19,7 +19,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-actions float-end">
-                    <a href="#" class="me-1">
+                    <a href="{% url 'MaterialAdd' %}" class="me-1">
                         Nuevo Material
                         <i class="align-middle" data-feather="plus"></i>
                     </a>
@@ -37,7 +37,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+                    {% for material in materiales %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{material.ST_NOMBRE_MATERIAL}}</td>
+                        <td>{{material.ST_DESCRIPCION_MATERIAL}}</td>
+                        <td>
+                            <a class="btn btn-info" href="{% url 'EditMaterial' material.pk %}"><i class="far fa-edit"></i></a>
+                            <a class="btn btn-danger" href="{% url 'DeleteMaterial' material.pk %}"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

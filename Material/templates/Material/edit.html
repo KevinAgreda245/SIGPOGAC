@@ -1,0 +1,48 @@
+{% extends 'General/dashboard.html' %}
+
+{% block title %} Material {% endblock %}
+
+{% block main %}
+<div class="header">
+    <h1 class="header-title">
+        Editar Material
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Configuraciones</li>
+            <li class="breadcrumb-item"><a href="{% url 'Material' %}">Material</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header pb-0">
+                <h3 class="card-title">Información general</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="pb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_NOMBRE_MATERIAL.label}}</label>
+                            {{form.ST_NOMBRE_MATERIAL}}
+                            {% if form.ST_NOMBRE_MATERIAL.errors %}
+                                {% for error in form.ST_NOMBRE_MATERIAL.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="pb-3 col-md-6">
+                            <label for="inputEmail4">{{form.ST_DESCRIPCION_MATERIAL.label}}</label>
+                            {{form.ST_DESCRIPCION_MATERIAL}}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
