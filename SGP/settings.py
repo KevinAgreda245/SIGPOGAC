@@ -142,3 +142,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Modelo para extender campos a User
 AUTH_USER_MODEL = 'Administrador.Usuario'
+
+
+#Configuración de SMTP (Simple Mail Transfer Protocol)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'conagrise.sv@gmail.com'
+EMAIL_HOST_PASSWORD = 'fawmxwaolulxtgkb'
