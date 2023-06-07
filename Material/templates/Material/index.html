@@ -43,8 +43,8 @@
                         <td>{{material.ST_NOMBRE_MATERIAL}}</td>
                         <td>{{material.ST_DESCRIPCION_MATERIAL}}</td>
                         <td>
-                            <a class="btn btn-info" href="{% url 'EditMaterial' material.pk %}"><i class="far fa-edit"></i></a>
-                            <a class="btn btn-danger" href="{% url 'DeleteMaterial' material.pk %}"><i class="fas fa-trash"></i></a>
+                            <a class="btn btn-info m-2" href="{% url 'EditMaterial' material.pk %}"><i class="far fa-edit"></i></a>
+                            <a class="btn btn-danger m-2" href="{% url 'DeleteMaterial' material.pk %}"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                     {% endfor %}

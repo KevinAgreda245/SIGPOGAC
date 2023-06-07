@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Modelo de la tabla "usuario"
 class Usuario(AbstractUser):
-    ST_DUI_USUARIO = models.CharField(max_length=10,null=False,blank=False,unique=True, verbose_name="DUI")
+    ST_DUI_USUARIO = models.CharField(max_length=10,null=False,blank=False,unique=True, verbose_name="DUI",error_messages={'unique': "Ya existe este DUI en el sistema."})
     ST_NIT_USUARIO = models.CharField(max_length=17,null=True,blank=True,unique=True, verbose_name="NIT")
     ST_AFP_USUARIO = models.CharField(max_length=12,null=True,blank=True,unique=True, verbose_name="AFP")
     ST_ISSS_USUARIO = models.CharField(max_length=9,null=True,blank=True, verbose_name="ISSS")

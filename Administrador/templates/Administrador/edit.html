@@ -51,6 +51,11 @@
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_DUI_USUARIO.label}}</label>
                             {{form.ST_DUI_USUARIO}}
+                            {% if form.ST_DUI_USUARIO.errors %}
+                                {% for error in form.ST_DUI_USUARIO.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_NIT_USUARIO.label}}</label>

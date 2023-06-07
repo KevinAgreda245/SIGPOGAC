@@ -4,7 +4,6 @@
 *.pyc
 __pycache__
 media
-doc_usuario
 
 # Visual Studio Code # 
 .vscode/* 
