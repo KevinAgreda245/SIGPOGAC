@@ -2,15 +2,22 @@ from django.shortcuts import render,redirect
 from Cliente.models import Cliente
 from .forms import ClienteForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
+
+@login_required(login_url='login')
 def index(request):
     clientes=Cliente.objects.all()
     return render(request, 'Cliente/index.html',{'clientes':clientes})
 
+
+@login_required(login_url='login')
 def detailsCliente(request,id):
     cliente=Cliente.objects.get(SK_CLIENTE=id)
     return render(request,'Cliente/details.html',{"cliente":cliente})
 
+
+@login_required(login_url='login')
 def createCliente(request):
     if request.method == 'POST':
         cliente=Cliente()
@@ -31,6 +38,8 @@ def createCliente(request):
         form = ClienteForm()
     return render(request,'Cliente/add.html',{"form":form})
 
+
+@login_required(login_url='login')
 def editCliente(request,id):
     cliente=Cliente.objects.get(SK_CLIENTE=id)
     form = ClienteForm(request.POST or None,instance=cliente)
@@ -47,6 +56,8 @@ def editCliente(request,id):
                 messages.error(request, errors)
     return render(request,'Cliente/edit.html',{"form":form})
 
+
+@login_required(login_url='login')
 def changeStatus(request, id):
     cliente = Cliente.objects.get(SK_CLIENTE=id)
     cliente.BN_ESTA_ACTIVO = not cliente.BN_ESTA_ACTIVO

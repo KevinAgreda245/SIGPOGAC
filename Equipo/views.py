@@ -1,16 +1,18 @@
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 from Equipo.forms import EquipoForm
 from Equipo.models import Equipo
 from django.shortcuts import redirect, render
 
 
+@login_required(login_url='login')
 def index(request):
     equipos = Equipo.objects.filter(BN_ESTADO_EQUIPO=True)
     context = {"equipos": equipos}
     return render(request, 'Equipo/index.html', context)
 
 
+@login_required(login_url='login')
 def add(request):
     form = EquipoForm(request.POST or None, request.FILES or None)
     if form.is_valid():
@@ -28,6 +30,7 @@ def add(request):
     return render(request, 'Equipo/add.html', context)
 
 
+@login_required(login_url='login')
 def edit(request, id):
     equipo = Equipo.objects.get(pk=id)
 
@@ -47,6 +50,7 @@ def edit(request, id):
     return render(request, 'Equipo/add.html', context)
 
 
+@login_required(login_url='login')
 def details(request, id):
     equipo = Equipo.objects.get(pk=id)
     context = {
@@ -55,6 +59,7 @@ def details(request, id):
     return render(request, 'Equipo/details.html', context)
 
 
+@login_required(login_url='login')
 def Delete(request, id):
     equipo = Equipo.objects.get(pk=id)
     equipo.BN_ESTADO_EQUIPO = not equipo.BN_ESTADO_EQUIPO

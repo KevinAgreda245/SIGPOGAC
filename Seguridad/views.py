@@ -29,6 +29,7 @@ def cerrarSesion(request):
     return redirect('login')
 
 
+@login_required(login_url='login')
 def details(request, id):
     admin = Usuario.objects.get(id=id)
     docs = DocumentoUsuario.objects.filter(SK_USUARIO_id=id)
@@ -39,6 +40,7 @@ def details(request, id):
     return render(request, 'Seguridad/details.html', context)
 
 
+@login_required(login_url='login')
 def edit(request, id):
     usuario = Usuario.objects.get(pk=id)
 

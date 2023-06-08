@@ -1,49 +1,16 @@
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from Administrador.models import Usuario, DocumentoUsuario
 from .forms import *
 from tarfile import NUL
 
-
-class DocumentUserForm(forms.ModelForm):
-    class Meta:
-        model = DocumentoUsuario
-        fields = ['ST_DOC_USUARIO']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['ST_DOC_USUARIO'].required = False
-
-
-class UpdateUserForm(forms.ModelForm):
-    class Meta:
-        model = Usuario
-        fields = '__all__'
-        exclude = ['last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'FC_INGRESO_USUARIO','password']
-        widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'FC_NACIMIENTO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa'}),
-            'ST_DUI_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'xxxxxxxx-x', 'data-mask': '00000000-0'}),
-            'ST_NIT_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'xxxx-xxxxxx-xxx-x', 'data-mask': '0000-000000-000-0'}),
-            'ST_AFP_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite su NUP'}),
-            'ST_ISSS_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite su N° de Afiliacion'}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['first_name'].widget.attrs['maxlength'] = 60
-        self.fields['last_name'].widget.attrs['maxlength'] = 60
-        self.fields['username'].widget.attrs['maxlength'] = 50
-        self.fields['email'].widget.attrs['maxlength'] = 60
-
-
+@login_required(login_url='login')
 def main(request):
     return render(request, 'Empleado/main.html')
 
 
+@login_required(login_url='login')
 def index(request):
     empleados = Usuario.objects.filter(is_staff=0)
     context = {
@@ -52,6 +19,7 @@ def index(request):
     return render(request, 'Empleado/index.html', context)
 
 
+@login_required(login_url='login')
 def add(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST, request.FILES)
@@ -73,6 +41,7 @@ def add(request):
     return render(request, 'Empleado/add.html', context)
 
 
+@login_required(login_url='login')
 def details(request, id):
     empleado = Usuario.objects.get(id=id)
     docs = DocumentoUsuario.objects.filter(SK_USUARIO_id=id)
@@ -83,6 +52,7 @@ def details(request, id):
     return render(request, 'Empleado/details.html', context)
 
 
+@login_required(login_url='login')
 def changeStatus(request, id):
     empleado = Usuario.objects.get(id=id)
     empleado.is_active = not empleado.is_active
@@ -95,6 +65,7 @@ def changeStatus(request, id):
     return redirect('Empleado')
 
 
+@login_required(login_url='login')
 def edit(request, id):
     usuario = Usuario.objects.get(pk=id)
 
