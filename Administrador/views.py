@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from .models import Usuario, DocumentoUsuario
 from .forms import *
-
+from Seguridad.decorators import *
 
 @login_required(login_url='login')
 def main(request):
@@ -12,6 +12,7 @@ def main(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def management(request):
     admins = Usuario.objects.filter(is_staff=1)
     context = {
@@ -21,6 +22,7 @@ def management(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def add(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST, request.FILES)
@@ -43,6 +45,7 @@ def add(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def edit(request, id):
     usuario = Usuario.objects.get(pk=id)
 
@@ -91,6 +94,7 @@ def edit(request, id):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def details(request, id):
     admin = Usuario.objects.get(id=id)
     docs = DocumentoUsuario.objects.filter(SK_USUARIO_id=id)
@@ -102,6 +106,7 @@ def details(request, id):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def changeStatus(request, id):
     admin = Usuario.objects.get(id=id)
     admin.is_active = not admin.is_active

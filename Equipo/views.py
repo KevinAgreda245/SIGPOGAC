@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from Equipo.forms import EquipoForm
 from Equipo.models import Equipo
 from django.shortcuts import redirect, render
+from Seguridad.decorators import *
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def index(request):
     equipos = Equipo.objects.filter(BN_ESTADO_EQUIPO=True)
     context = {"equipos": equipos}
@@ -13,6 +15,7 @@ def index(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def add(request):
     form = EquipoForm(request.POST or None, request.FILES or None)
     if form.is_valid():
@@ -31,6 +34,7 @@ def add(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def edit(request, id):
     equipo = Equipo.objects.get(pk=id)
 
@@ -51,6 +55,7 @@ def edit(request, id):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def details(request, id):
     equipo = Equipo.objects.get(pk=id)
     context = {
@@ -60,6 +65,7 @@ def details(request, id):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def Delete(request, id):
     equipo = Equipo.objects.get(pk=id)
     equipo.BN_ESTADO_EQUIPO = not equipo.BN_ESTADO_EQUIPO

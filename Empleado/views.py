@@ -4,6 +4,7 @@ from django.contrib import messages
 from Administrador.models import Usuario, DocumentoUsuario
 from .forms import *
 from tarfile import NUL
+from Seguridad.decorators import *
 
 @login_required(login_url='login')
 def main(request):
@@ -11,6 +12,7 @@ def main(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def index(request):
     empleados = Usuario.objects.filter(is_staff=0)
     context = {
@@ -20,6 +22,7 @@ def index(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def add(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST, request.FILES)
@@ -42,6 +45,7 @@ def add(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def details(request, id):
     empleado = Usuario.objects.get(id=id)
     docs = DocumentoUsuario.objects.filter(SK_USUARIO_id=id)
@@ -53,6 +57,7 @@ def details(request, id):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def changeStatus(request, id):
     empleado = Usuario.objects.get(id=id)
     empleado.is_active = not empleado.is_active
@@ -66,6 +71,7 @@ def changeStatus(request, id):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def edit(request, id):
     usuario = Usuario.objects.get(pk=id)
 

@@ -6,8 +6,10 @@ from django.contrib import messages
 
 from Administrador.forms import DocumentUserForm, UpdateUserForm
 from Administrador.models import Usuario, DocumentoUsuario
+from .decorators import *
 
 
+@authenticated_user
 def index(request):
     if request.method == 'POST':
         usuario = request.POST['usuario']

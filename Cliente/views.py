@@ -3,21 +3,25 @@ from Cliente.models import Cliente
 from .forms import ClienteForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from Seguridad.decorators import *
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def index(request):
     clientes=Cliente.objects.all()
     return render(request, 'Cliente/index.html',{'clientes':clientes})
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def detailsCliente(request,id):
     cliente=Cliente.objects.get(SK_CLIENTE=id)
     return render(request,'Cliente/details.html',{"cliente":cliente})
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def createCliente(request):
     if request.method == 'POST':
         cliente=Cliente()
@@ -40,6 +44,7 @@ def createCliente(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def editCliente(request,id):
     cliente=Cliente.objects.get(SK_CLIENTE=id)
     form = ClienteForm(request.POST or None,instance=cliente)
@@ -58,6 +63,7 @@ def editCliente(request,id):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador'])
 def changeStatus(request, id):
     cliente = Cliente.objects.get(SK_CLIENTE=id)
     cliente.BN_ESTA_ACTIVO = not cliente.BN_ESTA_ACTIVO

@@ -3,8 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Material
 from .forms import MaterialForm
+from Seguridad.decorators import *
 
 @login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def index(request):
     materiales = Material.objects.filter(BN_ESTADO_MATERIAL = 1)
     return render(request, 'Material/index.html',{
@@ -13,6 +15,7 @@ def index(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def add(request):
     if request.method == 'POST':
         form = MaterialForm(request.POST)
@@ -35,6 +38,7 @@ def add(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def edit(request,id):
     material = Material.objects.get(pk=id)
     form = MaterialForm(request.POST or None, request.FILES or None, instance=material)
@@ -55,6 +59,7 @@ def edit(request,id):
 
 
 @login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def delete(request,id):
     material = Material.objects.get(pk=id)
     material.BN_ESTADO_MATERIAL = False
