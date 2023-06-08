@@ -3,6 +3,7 @@ from Administrador.models import Usuario,DocumentoUsuario
 from django.contrib.auth.hashers import make_password
 from django.core.validators import MaxLengthValidator
 from django.db import transaction
+from django.contrib.auth.models import Group
 
 class CreateUserForm(forms.ModelForm):
     password_confirm = forms.CharField(
@@ -56,6 +57,9 @@ class CreateUserForm(forms.ModelForm):
         user.FC_NACIMIENTO = self.cleaned_data['FC_NACIMIENTO']
         user.is_staff = 0
         user.save()
+        #Asignación de rol (grupo)
+        group = Group.objects.get(name='Empleado')
+        user.groups.add(group)
 
         if (self.cleaned_data['nit_file']):
             documento = DocumentoUsuario()
