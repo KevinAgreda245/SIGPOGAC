@@ -69,12 +69,8 @@
                             {% endif %}
                         </tr>                                      
                         <tr>
-                            <th>Último acceso:</th>
-                            {% if cliente.FC_INGRESO_CLIENTE %}
-                                <td>{{cliente.FC_INGRESO_CLIENTE}}</td>
-                            {% else %}
-                                <td>Nunca ha ingresado</td>
-                            {% endif %}
+                            <th>Fecha de ingreso: </th>
+                            <td>{{cliente.FC_INGRESO_CLIENTE}}</td>                    
                         </tr>
                         <tr>
                             <th>Ingresado por:</th>

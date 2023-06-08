@@ -78,5 +78,29 @@
                 }
             });
         });
+
+        $(document).ready(function() {
+            var maskOptions = {
+                False: {
+                mask: '00000000-0',
+                placeholder: 'xxxxxxxx-x'
+                },
+                True: {
+                mask: '000000-0',
+                placeholder: 'xxxxxx-x'
+                }
+            };
+            var selectedOption = $('#id_BN_TIPO_CLIENTE').val();
+            $('#id_ST_DOC_CLIENTE').mask(maskOptions[selectedOption].mask);
+            $('#id_ST_DOC_CLIENTE').attr('placeholder', maskOptions[selectedOption].placeholder);
+
+            $('#id_BN_TIPO_CLIENTE').on('change', function() {
+                var newOption = $(this).val();
+                $('#id_ST_DOC_CLIENTE').mask(maskOptions[newOption].mask);
+                $('#id_ST_DOC_CLIENTE').attr('placeholder', maskOptions[newOption].placeholder);
+                //$('#id_ST_DOC_CLIENTE').val(''); // Limpia el texto actual del input
+            });
+        });
+
     </script>
 {% endblock %}
