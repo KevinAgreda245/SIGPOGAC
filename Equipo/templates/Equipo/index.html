@@ -45,9 +45,18 @@
                                 <td>{{equipo.SK_TIPO_EQUIPO.ST_TIPO_EQUIPO}}</td>
                                 <td>{{equipo.FC_INGRESO}}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="{% url 'DetailsEquipo' equipo.pk %}"><i class="far fa-eye"></i></a>
-                                    <a class="btn btn-info" href="{% url 'EditEquipo' equipo.pk %}"><i class="far fa-edit"></i></a>
-                                    <a class="btn btn-danger" href="{% url 'DeleteEquipo' equipo.pk %}"><i class="fas fa-trash"></i></a>
+                                    <!--Privilegio para ver equipo-->
+                                    {% if perms.Equipo.view_equipo %}
+                                        <a class="btn btn-primary" href="{% url 'DetailsEquipo' equipo.pk %}"><i class="far fa-eye"></i></a>
+                                    {% endif %}
+                                    <!--Privilegio para editar equipo-->
+                                    {% if perms.Equipo.change_equipo %}
+                                        <a class="btn btn-info" href="{% url 'EditEquipo' equipo.pk %}"><i class="far fa-edit"></i></a>
+                                    {% endif %}
+                                    <!--Privilegio para eliminar equipo-->
+                                    {% if perms.Equipo.delete_equipo %}
+                                        <a class="btn btn-danger" href="{% url 'DeleteEquipo' equipo.pk %}"><i class="fas fa-trash"></i></a>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}
