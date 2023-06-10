@@ -26,21 +26,33 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.first_name.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.first_name.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.first_name}}
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.last_name.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.last_name.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.last_name}}
                         </div>
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.FC_NACIMIENTO.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.FC_NACIMIENTO.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.FC_NACIMIENTO}}
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.email.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.email.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.email}}
                             {% if form.email.errors %}
                                 {% for error in form.email.errors %}
@@ -51,7 +63,10 @@
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.ST_DUI_USUARIO.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.ST_DUI_USUARIO.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.ST_DUI_USUARIO}}
                             <span class="font-13 text-muted">e.j "xxxxxxxx-x"</span>
                             {% if form.ST_DUI_USUARIO.errors %}
@@ -84,15 +99,29 @@
                     <h3 class="card-title">Información de cuenta</h3>
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.username.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.username.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.username}}
+                            {% if form.username.errors %}
+                                {% for error in form.username.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.password.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.password.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.password}}
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.password_confirm.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.password_confirm.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.password_confirm}}
                             {% if form.password_confirm.errors %}
                                 {% for error in form.password_confirm.errors %}
@@ -104,13 +133,13 @@
                     <h3 class="card-title">Documentos del Administrador</h3>
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label class="form-label w-100">{{form.nit_file.label}}</label>
-                            {{form.nit_file}}    
+                            <label class="form-label w-100">{{form.dui_file.label}}</label>
+                            {{form.dui_file}}    
                             <small class="form-text d-block text-muted">No es obligatorio.</small>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label class="form-label w-100">{{form.dui_file.label}}</label>
-                            {{form.dui_file}}    
+                            <label class="form-label w-100">{{form.nit_file.label}}</label>
+                            {{form.nit_file}}    
                             <small class="form-text d-block text-muted">No es obligatorio.</small>
                         </div>
                     </div>
@@ -127,6 +156,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success">Guardar</button>
+                    <a href="{% url 'Administrador' %}" class="btn btn-danger ms-2">Cancelar</a>
                 </form>
             </div>
         </div>

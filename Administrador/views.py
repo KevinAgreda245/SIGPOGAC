@@ -1,10 +1,11 @@
-from tarfile import NUL
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from .models import Usuario, DocumentoUsuario
 from .forms import *
+from tarfile import NUL
 from Seguridad.decorators import *
+from django.db import transaction
 
 @login_required(login_url='login')
 def main(request):
@@ -14,7 +15,7 @@ def main(request):
 @login_required(login_url='login')
 @allowed_users(['Administrador'])
 def management(request):
-    admins = Usuario.objects.filter(is_staff=1)
+    admins = Usuario.objects.filter(is_staff=1,BN_ESTADO_USUARIO = 1)
     context = {
         "admins": admins
     }
@@ -28,7 +29,7 @@ def add(request):
         form = CreateUserForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, "Administrador creado exitosamente.")
+            messages.success(request, "Administrador ha sido creado exitosamente.")
             return redirect('Administrador')
         else:
             for field, errors in form.errors.items():
@@ -72,6 +73,8 @@ def edit(request, id):
     if form.is_valid():
         with transaction.atomic():
             usuario = form.save()
+            #group = Group.objects.get(name='Administrador')
+            #usuario.groups.add(group)
 
             for doc_type, form_doc in form_documents.items():
                 if form_doc.is_valid() and form_doc.cleaned_data.get('ST_DOC_USUARIO'):
@@ -80,7 +83,7 @@ def edit(request, id):
                     archivo_doc.SK_USUARIO = usuario
                     archivo_doc.save()
 
-        messages.success(request, "Administrador actualizado exitosamente.")
+        messages.success(request, "Administrador ha sido actualizado exitosamente.")
         return redirect('Administrador')
     else:
         for field, errors in form.errors.items():
@@ -111,9 +114,19 @@ def changeStatus(request, id):
     admin = Usuario.objects.get(id=id)
     admin.is_active = not admin.is_active
     if (admin.is_active):
-        msg = "Usuario activado correctamente."
+        msg = "Usuario ha sido activado correctamente."
     else:
-        msg = "Usuario desactivado correctamente."
+        msg = "Usuario ha sido desactivado correctamente."
+    admin.save()
+    messages.success(request, msg)
+    return redirect('Administrador')
+
+@login_required(login_url='login')
+@allowed_users(['Administrador'])
+def delete(request, id):
+    admin = Usuario.objects.get(id=id)
+    admin.BN_ESTADO_USUARIO = 0
+    msg = "Usuario ha sido eliminado correctamente."
     admin.save()
     messages.success(request, msg)
     return redirect('Administrador')

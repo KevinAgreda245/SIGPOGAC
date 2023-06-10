@@ -45,12 +45,18 @@
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.email.label}}</label>
                             {{form.email}}
+                            {% if form.email.errors %}
+                                {% for error in form.email.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_DUI_USUARIO.label}}</label>
                             {{form.ST_DUI_USUARIO}}
+                            <span class="font-13 text-muted">e.j "xxxxxxxx-x"</span>
                             {% if form.ST_DUI_USUARIO.errors %}
                                 {% for error in form.ST_DUI_USUARIO.errors %}
                                 <small class="form-text d-block text-danger">{{ error }}</small>
@@ -60,6 +66,12 @@
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_NIT_USUARIO.label}}</label>
                             {{form.ST_NIT_USUARIO}}
+                            <span class="font-13 text-muted">e.j "xxxx-xxxxxx-xxx-x"</span>
+                            {% if form.ST_NIT_USUARIO.errors %}
+                                {% for error in form.ST_NIT_USUARIO.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
@@ -77,12 +89,14 @@
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.username.label}}</label>
                             {{form.username}}
+                            {% if form.username.errors %}
+                                {% for error in form.username.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <h3 class="card-title">Documentos del Administrador</h3>
-
-                    <h2>Documentos</h2>
-
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label class="form-label w-100">Archivo NIT</label>
@@ -108,6 +122,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success">Guardar</button>
+                    <a href="{% url 'Administrador' %}" class="btn btn-danger ms-2">Cancelar</a>
                 </form>
             </div>
         </div>

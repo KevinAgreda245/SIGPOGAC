@@ -57,10 +57,11 @@
                                     <a class="btn btn-info" href="{% url 'EditAdmin' admin.id %}"><i class="far fa-edit"></i></a>
                                     {% if admin.id != request.user.id %}
                                         {% if admin.is_active %}
-                                            <a class="btn btn-danger" href="{% url 'ChangeStatusAdmin' admin.id %}"><i class="fas fa-user-slash"></i></a>
+                                            <a class="btn btn-warning" data-url="{% url 'ChangeStatusAdmin' admin.id %}" data-action="desactivar" onclick="confirmStatus(this)"><i class="fas fa-user-slash"></i></a>
                                         {% else %}
-                                            <a class="btn btn-success" href="{% url 'ChangeStatusAdmin' admin.id %}"><i class="fas fa-user"></i></a>
+                                            <a class="btn btn-success" data-url="{% url 'ChangeStatusAdmin' admin.id %}" data-action="activar" onclick="confirmStatus(this)"><i class="fas fa-user"></i></a>
                                         {% endif %}
+                                        <a class="btn btn-danger" data-url="{% url 'deleteAdmin' admin.id %}" data-action="eliminar" onclick="confirmStatus(this)"><i class="fas fa-trash"></i></a>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -78,5 +79,11 @@
     document.addEventListener("DOMContentLoaded", function() {
         initTable("#tbl-Admin","administradores");
     });
+    
+    function confirmStatus(link) {
+        var url = link.getAttribute('data-url');
+        var action = link.getAttribute('data-action');
+        showConfirm(url,action,"administrador");
+    }
 </script>
 {% endblock %}
