@@ -17,7 +17,6 @@ def index(request):
         usuarioAutenticado = authenticate(request, username=usuario, password=contraseña)
         if usuarioAutenticado is not None:
             login(request, usuarioAutenticado)
-            # Pendiente validación para redigirir de acuerdo al rol del usuario
             return redirect('Main')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
