@@ -14,7 +14,7 @@ def main(request):
 @login_required(login_url='login')
 @allowed_users(['Administrador'])
 def index(request):
-    empleados = Usuario.objects.filter(is_staff=0)
+    empleados = Usuario.objects.filter(is_staff=0,BN_ESTADO_USUARIO=1)
     context = {
         "empleados": empleados
     }
@@ -28,7 +28,7 @@ def add(request):
         form = CreateUserForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, "Empleado creado exitosamente.")
+            messages.success(request, "Empleado ha sido creado exitosamente.")
             return redirect('Empleado')
         else:
             for field, errors in form.errors.items():
@@ -62,13 +62,22 @@ def changeStatus(request, id):
     empleado = Usuario.objects.get(id=id)
     empleado.is_active = not empleado.is_active
     if (empleado.is_active):
-        msg = "Usuario activado correctamente."
+        msg = "Usuario ha sido activado correctamente."
     else:
-        msg = "Usuario desactivado correctamente."
+        msg = "Usuario ha sido desactivado correctamente."
     empleado.save()
     messages.success(request, msg)
     return redirect('Empleado')
 
+@login_required(login_url='login')
+@allowed_users(['Administrador'])
+def delete(request, id):
+    empleado = Usuario.objects.get(id=id)
+    empleado.BN_ESTADO_USUARIO = 0
+    msg = "Usuario ha sido eliminado correctamente."
+    empleado.save()
+    messages.success(request, msg)
+    return redirect('Empleado')
 
 @login_required(login_url='login')
 @allowed_users(['Administrador'])
@@ -106,7 +115,7 @@ def edit(request, id):
                     archivo_doc.SK_USUARIO = usuario
                     archivo_doc.save()
 
-        messages.success(request, "Empleado actualizado exitosamente.")
+        messages.success(request, "Empleado ha sido actualizado exitosamente.")
         return redirect('Empleado')
     else:
         for field, errors in form.errors.items():

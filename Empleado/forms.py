@@ -7,8 +7,11 @@ from django.contrib.auth.models import Group
 
 class CreateUserForm(forms.ModelForm):
     password_confirm = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-        label='Confirmar contraseña',
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control',
+                'placeholder': "Ingrese de nuevo la contraseña",
+        }),
+        label='Confirmación contraseña',
         required=True
     )
     nit_file = forms.FileField(
@@ -32,7 +35,78 @@ class CreateUserForm(forms.ModelForm):
         model = Usuario
         fields = ['first_name','last_name','username','password','password_confirm','email','ST_DUI_USUARIO','ST_NIT_USUARIO','ST_AFP_USUARIO','ST_ISSS_USUARIO','FC_NACIMIENTO'] 
         widgets = {
-            'password': forms.PasswordInput()
+            'first_name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': "Ingrese el nombre",
+                    'required': 'required'
+                },
+            ),
+            'last_name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': "Ingrese el apellido",
+                    'required': 'required'
+                }
+            ),
+            'username': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': "Ingrese el nombre de usuario",
+                    'required': 'required'
+                }
+            ),
+            'password': forms.PasswordInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': "Ingrese la contraseña",
+                    'required': 'required'
+                }
+            ),
+            'email': forms.EmailInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': "Ingrese la dirección de correo electrónico",
+                    'required': 'required'
+                }
+            ),
+            'ST_DUI_USUARIO': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': "Ingrese el DUI",
+                    'data-mask': "00000000-0",
+                    'maxlength': "10",
+                    'minlength': "10",
+                    'required': 'required'
+                },
+            ),
+            'ST_NIT_USUARIO': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': "Ingrese el NIT",
+                    'data-mask': "0000-000000-000-0",
+                    'maxlength': "17",
+                    'minlength': "17"
+                },
+            ), 
+            'ST_AFP_USUARIO': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': "Ingrese el NUP",
+                    'data-mask': "000000000000",
+                    'maxlength': "12",
+                    'minlength': "12",
+                },
+            ),
+            'ST_ISSS_USUARIO': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': "Ingrese el N° de Afiliación",
+                    'data-mask': "000000000",
+                    'maxlength': "9",
+                    'minlength': "9"
+                },
+            ),
         }
 
 
@@ -95,38 +169,8 @@ class CreateUserForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        self.fields['first_name'].widget.attrs['class'] = 'form-control'
-        self.fields['first_name'].required = True
-
-        self.fields['last_name'].widget.attrs['class'] = 'form-control'
-        self.fields['last_name'].required = True
-
-        self.fields['username'].widget.attrs['class'] = 'form-control'
-        self.fields['username'].required = True
-
-        self.fields['password'].widget.attrs['class'] = 'form-control'
-        self.fields['password'].required = True
-
-        self.fields['email'].widget.attrs['class'] = 'form-control'
-        self.fields['email'].required = True
-        
-        self.fields['ST_DUI_USUARIO'].widget.attrs['class'] = 'form-control'
-        self.fields['ST_DUI_USUARIO'].widget.attrs['data-mask'] = '00000000-0'
-        self.fields['ST_DUI_USUARIO'].label = "DUI"
-
-        self.fields['ST_NIT_USUARIO'].widget.attrs['class'] = 'form-control'
-        self.fields['ST_NIT_USUARIO'].widget.attrs['data-mask'] = '0000-000000-000-0'
-        self.fields['ST_NIT_USUARIO'].label = "NIT"
-
-        self.fields['ST_AFP_USUARIO'].widget.attrs['class'] = 'form-control'
-        self.fields['ST_AFP_USUARIO'].label = "AFP"
-        
-        self.fields['ST_ISSS_USUARIO'].widget.attrs['class'] = 'form-control'
-        self.fields['ST_ISSS_USUARIO'].label = "ISSS"
-        
+        self.fields['FC_NACIMIENTO'].widget.attrs['placeholder'] = 'dd/mm/aaaa'
         self.fields['FC_NACIMIENTO'].widget.attrs['class'] = 'form-control'
-        self.fields['FC_NACIMIENTO'].label = "Fecha de Nacimiento"
     
 class DocumentUserForm(forms.ModelForm):
     class Meta:

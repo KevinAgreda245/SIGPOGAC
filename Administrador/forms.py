@@ -112,6 +112,8 @@ class CreateUserForm(forms.ModelForm):
                     'class': 'form-control',
                     'placeholder': "Ingrese el DUI",
                     'data-mask': "00000000-0",
+                    'maxlength': "10",
+                    'minlength': "10",
                     'required': 'required'
                 },
             ),
@@ -119,21 +121,27 @@ class CreateUserForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                     'placeholder': "Ingrese el NIT",
-                    'data-mask': "0000-000000-000-0"
+                    'data-mask': "0000-000000-000-0",
+                    'maxlength': "17",
+                    'minlength': "17"
                 },
             ), 
             'ST_AFP_USUARIO': forms.TextInput(
                 attrs={
                     'class': 'form-control',
                     'placeholder': "Ingrese el NUP",
-                    'data-mask': "000000000000"
+                    'data-mask': "000000000000",
+                    'maxlength': "12",
+                    'minlength': "12"
                 },
             ),
             'ST_ISSS_USUARIO': forms.TextInput(
                 attrs={
                     'class': 'form-control',
                     'placeholder': "Ingrese el N° de Afiliación",
-                    'data-mask': "000000000"
+                    'data-mask': "000000000",
+                    'maxlength': "9",
+                    'minlength': "9"
                 },
             ),  
         }

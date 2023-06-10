@@ -49,21 +49,41 @@
                             <label for="inputEmail4">{{form.ST_DUI_USUARIO.label}}</label>
                             {{form.ST_DUI_USUARIO}}
                             <span class="font-13 text-muted">e.j "xxxxxxxx-x"</span>
+                            {% if form.ST_DUI_USUARIO.errors %}
+                                {% for error in form.ST_DUI_USUARIO.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_NIT_USUARIO.label}}</label>
                             {{form.ST_NIT_USUARIO}}
                             <span class="font-13 text-muted">e.j "xxxx-xxxxxx-xxx-x"</span>
+                            {% if form.ST_NIT_USUARIO.errors %}
+                                {% for error in form.ST_NIT_USUARIO.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_AFP_USUARIO.label}}</label>
                             {{form.ST_AFP_USUARIO}}
+                            {% if form.ST_AFP_USUARIO.errors %}
+                                {% for error in form.ST_AFP_USUARIO.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_ISSS_USUARIO.label}}</label>
                             {{form.ST_ISSS_USUARIO}}
+                            {% if form.ST_ISSS_USUARIO.errors %}
+                                {% for error in form.ST_ISSS_USUARIO.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <h3 class="card-title">Información de cuenta</h3>
@@ -71,6 +91,11 @@
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.username.label}}</label>
                             {{form.username}}
+                            {% if form.username.errors %}
+                                {% for error in form.username.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.password.label}}</label>
@@ -112,6 +137,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success">Guardar</button>
+                    <a href="{% url 'Empleado' %}" class="btn btn-danger ms-2">Cancelar</a>
                 </form>
             </div>
         </div>
