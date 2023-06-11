@@ -52,7 +52,7 @@ def edit(request):
             usuario = form.save()
 
         messages.success(request, "Perfil actualizado exitosamente.")
-        return redirect('DetailsProfile', id)
+        return redirect('DetailsProfile')
     else:
         for field, errors in form.errors.items():
             form.fields[field].widget.attrs.update({
