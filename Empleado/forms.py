@@ -138,35 +138,31 @@ class CreateUserForm(forms.ModelForm):
         if (self.cleaned_data['nit_file']):
             documento = DocumentoUsuario()
             documento.ST_DOC_USUARIO = self.cleaned_data['nit_file']
-            documento.SK_USUARIO = user
+            documento.FK_USUARIO = user
             documento.ST_TIPO_DOC_USUARIO = "NIT"
             documento.save()
         
         if (self.cleaned_data['dui_file']):
             documento = DocumentoUsuario()
             documento.ST_DOC_USUARIO = self.cleaned_data['dui_file']
-            documento.SK_USUARIO = user
+            documento.FK_USUARIO = user
             documento.ST_TIPO_DOC_USUARIO = "DUI"
             documento.save()
         
         if (self.cleaned_data['afp_file']):
             documento = DocumentoUsuario()
             documento.ST_DOC_USUARIO = self.cleaned_data['afp_file']
-            documento.SK_USUARIO = user
+            documento.FK_USUARIO = user
             documento.ST_TIPO_DOC_USUARIO = "AFP"
             documento.save()
         
         if (self.cleaned_data['isss_file']):
             documento = DocumentoUsuario()
             documento.ST_DOC_USUARIO = self.cleaned_data['isss_file']
-            documento.SK_USUARIO = user
+            documento.FK_USUARIO = user
             documento.ST_TIPO_DOC_USUARIO = "ISSS"
             documento.save()
         
-
-
-
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['FC_NACIMIENTO'].widget.attrs['placeholder'] = 'dd/mm/aaaa'
@@ -186,7 +182,7 @@ class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = '__all__'
-        exclude = ['last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'FC_INGRESO_USUARIO','password']
+        exclude = ['last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'FC_INGRESO_USUARIO','password',"BN_ESTADO_USUARIO"]
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),

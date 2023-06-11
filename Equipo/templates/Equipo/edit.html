@@ -30,8 +30,13 @@
                             {{form.ST_NOMBRE_EQUIPO}}
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.SK_TIPO_EQUIPO.label}}</label>
-                            {{form.SK_TIPO_EQUIPO}}
+                            <label for="inputEmail4">{{form.FK_TIPO_EQUIPO.label}}</label>
+                            {{form.FK_TIPO_EQUIPO}}
+                            {% if form.FK_TIPO_EQUIPO.errors %}
+                                {% for error in form.FK_TIPO_EQUIPO.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
@@ -39,8 +44,6 @@
                             <label for="inputEmail4">{{form.ST_DESCRIPCION_EQUIPO.label}}</label>
                             {{form.ST_DESCRIPCION_EQUIPO}}
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="mb-3 col-md-6">
                             <label class="form-label w-100">{{form.ST_IMG_EQUIPO.label}}</label>
                             {{form.ST_IMG_EQUIPO}}
@@ -48,6 +51,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success">Guardar</button>
+                    <a href="{% url 'Equipo' %}" class="btn btn-danger ms-2">Cancelar</a>
                 </form>
             </div>
         </div>

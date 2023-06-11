@@ -20,7 +20,7 @@ def add(request):
     form = EquipoForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
-        messages.success(request, "Equipo ingresado exitosamente.")
+        messages.success(request, "Equipo ha sido ingresado exitosamente.")
         return redirect('Equipo')
     else:
         for field, errors in form.errors.items():
@@ -41,7 +41,7 @@ def edit(request, id):
     form = EquipoForm(request.POST or None, request.FILES or None, instance=equipo)
     if form.is_valid():
         form.save()
-        messages.success(request, "Equipo ingresado exitosamente.")
+        messages.success(request, "Equipo ha sido actualizado exitosamente.")
         return redirect('Equipo')
     else:
         for field, errors in form.errors.items():
@@ -51,7 +51,7 @@ def edit(request, id):
             messages.error(request, errors)
 
     context = {"form": form}
-    return render(request, 'Equipo/add.html', context)
+    return render(request, 'Equipo/edit.html', context)
 
 
 @login_required(login_url='login')
@@ -69,7 +69,7 @@ def details(request, id):
 def Delete(request, id):
     equipo = Equipo.objects.get(pk=id)
     equipo.BN_ESTADO_EQUIPO = not equipo.BN_ESTADO_EQUIPO
-    msg = "Equipo eliminado correctamente."
+    msg = "Equipo ha sido eliminado correctamente."
     equipo.save()
     messages.success(request, msg)
     return redirect('Equipo')

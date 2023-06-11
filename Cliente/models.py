@@ -9,7 +9,7 @@ class Cliente(models.Model):
     ST_DOC_CLIENTE = models.CharField(max_length=75,null=False,blank=False,unique=True)
     ST_NIT_CLIENTE = models.CharField(max_length=17,null=False,blank=False,unique=True)
     BN_TIPO_CLIENTE = models.BooleanField(null=False,blank=False)
-    SK_USUARIO = models.ForeignKey(Usuario,models.CASCADE)
+    FK_USUARIO = models.ForeignKey(Usuario,models.CASCADE)
     FC_INGRESO_CLIENTE = models.DateTimeField(default=timezone.now)
     BN_ESTA_ACTIVO=models.BooleanField(null=False,blank=False,default=True)
 

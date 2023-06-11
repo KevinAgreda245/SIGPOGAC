@@ -59,8 +59,8 @@ def edit(request, id):
         "AFP": DocumentUserForm(request.POST or None, request.FILES or None, prefix='AFP')
     }
 
-    if DocumentoUsuario.objects.filter(SK_USUARIO=usuario.pk).exists():
-        documentos = DocumentoUsuario.objects.filter(SK_USUARIO=usuario.pk)
+    if DocumentoUsuario.objects.filter(FK_USUARIO=usuario.pk).exists():
+        documentos = DocumentoUsuario.objects.filter(FK_USUARIO=usuario.pk)
 
         for documento in documentos:
             form_documents[documento.ST_TIPO_DOC_USUARIO] = DocumentUserForm(
@@ -80,7 +80,7 @@ def edit(request, id):
                 if form_doc.is_valid() and form_doc.cleaned_data.get('ST_DOC_USUARIO'):
                     archivo_doc = form_doc.save(commit=False)
                     archivo_doc.ST_TIPO_DOC_USUARIO = doc_type
-                    archivo_doc.SK_USUARIO = usuario
+                    archivo_doc.FK_USUARIO = usuario
                     archivo_doc.save()
 
         messages.success(request, "Administrador ha sido actualizado exitosamente.")
@@ -100,7 +100,7 @@ def edit(request, id):
 @allowed_users(['Administrador'])
 def details(request, id):
     admin = Usuario.objects.get(id=id)
-    docs = DocumentoUsuario.objects.filter(SK_USUARIO_id=id)
+    docs = DocumentoUsuario.objects.filter(FK_USUARIO_id=id)
     context = {
         "admin": admin,
         "docs": docs

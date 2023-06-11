@@ -175,28 +175,28 @@ class CreateUserForm(forms.ModelForm):
         if (self.cleaned_data['nit_file']):
             documento = DocumentoUsuario()
             documento.ST_DOC_USUARIO = self.cleaned_data['nit_file']
-            documento.SK_USUARIO = user
+            documento.FK_USUARIO = user
             documento.ST_TIPO_DOC_USUARIO = "NIT"
             documento.save()
 
         if (self.cleaned_data['dui_file']):
             documento = DocumentoUsuario()
             documento.ST_DOC_USUARIO = self.cleaned_data['dui_file']
-            documento.SK_USUARIO = user
+            documento.FK_USUARIO = user
             documento.ST_TIPO_DOC_USUARIO = "DUI"
             documento.save()
 
         if (self.cleaned_data['afp_file']):
             documento = DocumentoUsuario()
             documento.ST_DOC_USUARIO = self.cleaned_data['afp_file']
-            documento.SK_USUARIO = user
+            documento.FK_USUARIO = user
             documento.ST_TIPO_DOC_USUARIO = "AFP"
             documento.save()
 
         if (self.cleaned_data['isss_file']):
             documento = DocumentoUsuario()
             documento.ST_DOC_USUARIO = self.cleaned_data['isss_file']
-            documento.SK_USUARIO = user
+            documento.FK_USUARIO = user
             documento.ST_TIPO_DOC_USUARIO = "ISSS"
             documento.save()
 

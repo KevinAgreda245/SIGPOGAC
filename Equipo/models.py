@@ -19,12 +19,12 @@ class TipoEquipo(models.Model):
 # Modelo de la tabla "equipo"
 class Equipo(models.Model):
     SK_EQUIPO = models.AutoField(primary_key=True)
-    ST_NOMBRE_EQUIPO = models.CharField(max_length=50, null=False, unique=True, verbose_name="Nombre")
+    ST_NOMBRE_EQUIPO = models.CharField(max_length=50, null=False, unique=True, verbose_name="Nombre",error_messages={'unique': "El nombre de equipo ingresado ya existe en el sistema. Por favor, ingrese otro nombre."})
     ST_DESCRIPCION_EQUIPO = models.CharField(max_length=120, null=False, verbose_name="Descripcion")
     BN_ESTADO_EQUIPO = models.BooleanField(null=False, default=1)
     FC_INGRESO = models.DateField(null=False, blank=True, verbose_name="Fecha de ingreso", default=datetime.now)
     ST_IMG_EQUIPO = models.FileField(upload_to='img_equipo/', null=False, blank=False, default='img_equipo/default.jpg', validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])], verbose_name="Imagen del equipo")
-    SK_TIPO_EQUIPO = models.ForeignKey(TipoEquipo, models.CASCADE, verbose_name="Tipo de Equipo")
+    FK_TIPO_EQUIPO = models.ForeignKey(TipoEquipo, models.CASCADE, verbose_name="Tipo de Equipo")
 
     class Meta:
         db_table = "equipo"
