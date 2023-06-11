@@ -51,18 +51,34 @@ class CreateUserForm(forms.ModelForm):
         required=True
     )
     nit_file = forms.FileField(
+        widget=forms.ClearableFileInput(
+            attrs={
+                'class': 'form-control',
+            }),
         label='Archivo de NIT',
         required=False
     )
     dui_file = forms.FileField(
+        widget=forms.ClearableFileInput(
+            attrs={
+                'class': 'form-control',
+            }),
         label='Archivo de DUI',
         required=False
     )
     isss_file = forms.FileField(
+        widget=forms.ClearableFileInput(
+            attrs={
+                'class': 'form-control',
+            }),
         label='Archivo de ISSS',
         required=False
     )
     afp_file = forms.FileField(
+        widget=forms.ClearableFileInput(
+            attrs={
+                'class': 'form-control',
+            }),
         label='Archivo de AFP',
         required=False
     )

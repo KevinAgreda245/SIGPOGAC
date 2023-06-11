@@ -15,18 +15,34 @@ class CreateUserForm(forms.ModelForm):
         required=True
     )
     nit_file = forms.FileField(
+        widget=forms.ClearableFileInput(
+            attrs={
+                'class': 'form-control',
+            }),
         label='Archivo de NIT',
         required=False
     )
     dui_file = forms.FileField(
+        widget=forms.ClearableFileInput(
+            attrs={
+                'class': 'form-control',
+            }),
         label='Archivo de DUI',
         required=False
     )
     isss_file = forms.FileField(
+        widget=forms.ClearableFileInput(
+            attrs={
+                'class': 'form-control',
+            }),
         label='Archivo de ISSS',
         required=False
     )
     afp_file = forms.FileField(
+        widget=forms.ClearableFileInput(
+            attrs={
+                'class': 'form-control',
+            }),
         label='Archivo de AFP',
         required=False
     )
@@ -182,7 +198,7 @@ class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = '__all__'
-        exclude = ['last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'FC_INGRESO_USUARIO','password',"BN_ESTADO_USUARIO"]
+        exclude = ['last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'FC_INGRESO_USUARIO','password',"B"]
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),

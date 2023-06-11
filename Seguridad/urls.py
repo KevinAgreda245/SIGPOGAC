@@ -7,8 +7,8 @@ from . import decorators
 urlpatterns = [
     path('login/', views.index, name = "login"),
     path('logout/', views.cerrarSesion, name = "logout"),
-    path('profile/details/<id>', views.details, name="DetailsProfile"),
-    path('profile/edit/<id>', views.edit, name="EditProfile"),
+    path('profile/details/', views.details, name="DetailsProfile"),
+    path('profile/edit/', views.edit, name="EditProfile"),
 
     #Rutas para restaurar contraseña
     #Se utilizan las rutas de django por defecto y se ha agregado un decorator

@@ -67,28 +67,6 @@
 {% block js %}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            $("input[name=\"FC_INGRESO\"]").daterangepicker({
-                maxDate: moment().subtract(0, 'years').endOf('day'),
-                startDate: moment().subtract(0, 'years').endOf('day'),
-                singleDatePicker: true,
-                showDropdowns: true,
-                locale: {
-                    format: 'DD/MM/YYYY',
-                    separator: ' / ',
-                    applyLabel: 'Seleccionar',
-                    cancelLabel: 'Cancelar',
-                    fromLabel: 'Desde',
-                    toLabel: 'Hasta',
-                    customRangeLabel: 'Personalizado',
-                    weekLabel: 'S',
-                    daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                    monthNames: [
-                        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
-                        'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-                    ],
-                    firstDay: 1
-                }
-            });
             $(".select2").each(function() {
 				$(this)
 					.wrap("<div class=\"position-relative\"></div>")

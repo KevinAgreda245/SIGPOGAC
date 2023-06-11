@@ -56,7 +56,7 @@
                                 {% endif %}
                                 <!--Privilegio para eliminar material-->
                                 {% if perms.Material.delete_material %}
-                                    <a class="btn btn-danger" href="{% url 'DeleteMaterial' material.pk %}"><i class="fas fa-trash"></i></a>
+                                    <a class="btn btn-danger" data-url="{% url 'DeleteMaterial' material.pk %}" data-action="eliminar" onclick="confirmStatus(this)"><i class="fas fa-trash"></i></a>
                                 {% endif %}
                             </td>
                         {% endif %}
@@ -75,5 +75,11 @@
     document.addEventListener("DOMContentLoaded", function() {
         initTable("#tbl-Materiales","materiales");
     });
+
+    function confirmStatus(link) {
+        var url = link.getAttribute('data-url');
+        var action = link.getAttribute('data-action');
+        showConfirm(url,action,"equipo");
+    }
 </script>
 {% endblock %}

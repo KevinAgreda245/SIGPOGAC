@@ -58,3 +58,17 @@
     </div>
 </div>
 {% endblock %}
+{% block js %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $(".select2").each(function() {
+				$(this)
+					.wrap("<div class=\"position-relative\"></div>")
+					.select2({
+						placeholder: "Seleccione una opción",
+						dropdownParent: $(this).parent()
+					});
+			})
+        });
+    </script>
+{% endblock %}

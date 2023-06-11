@@ -31,9 +31,9 @@ def cerrarSesion(request):
 
 
 @login_required(login_url='login')
-def details(request, id):
-    admin = Usuario.objects.get(id=id)
-    docs = DocumentoUsuario.objects.filter(SK_USUARIO_id=id)
+def details(request):
+    admin = Usuario.objects.get(id=request.user.pk)
+    docs = DocumentoUsuario.objects.filter(FK_USUARIO_id=request.user.pk)
     context = {
         "admin": admin,
         "docs": docs
@@ -42,8 +42,8 @@ def details(request, id):
 
 
 @login_required(login_url='login')
-def edit(request, id):
-    usuario = Usuario.objects.get(pk=id)
+def edit(request):
+    usuario = Usuario.objects.get(pk=request.user.pk)
 
     form = UpdateUserForm(request.POST or None, instance=usuario)
 

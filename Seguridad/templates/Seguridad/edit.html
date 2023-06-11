@@ -9,8 +9,7 @@
     </h1>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">Perfil</li>
-            <li class="breadcrumb-item"><a href="{% url 'DetailsProfile' request.user.pk %}">Detalle Perfil</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'DetailsProfile' %}">Mi perfil</a></li>
             <li class="breadcrumb-item active" aria-current="page">Actualizar Perfil</li>
         </ol>
     </nav>
@@ -21,9 +20,6 @@
             <div class="card-header pb-0">
                 <h3 class="card-title">Información general</h3>
             </div>
-
-
-
             <div class="card-body">
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
@@ -45,12 +41,22 @@
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.email.label}}</label>
                             {{form.email}}
+                            {% if form.email.errors %}
+                                {% for error in form.email.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_DUI_USUARIO.label}}</label>
                             {{form.ST_DUI_USUARIO}}
+                            {% if form.ST_DUI_USUARIO.errors %}
+                                {% for error in form.ST_DUI_USUARIO.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_NIT_USUARIO.label}}</label>
@@ -72,6 +78,11 @@
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.username.label}}</label>
                             {{form.username}}
+                            {% if form.username.errors %}
+                                {% for error in form.username.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success">Guardar</button>
