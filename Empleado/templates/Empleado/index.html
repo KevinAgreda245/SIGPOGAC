@@ -52,7 +52,7 @@
                                     <span class="badge rounded-pill bg-danger py-2 px-3">Inactivo</span>
                                 {% endif %}
                             </td>
-                            <td>
+                            <td class="text-nowrap">
                                 <a class="btn btn-primary" href="{% url 'DetailsEmpleado' empleado.id %}"><i class="far fa-eye"></i></a>
                                 <a class="btn btn-info" href="{% url 'EditEmpleado' empleado.id %}"><i class="far fa-edit"></i></a>
                                 {% if empleado.id != request.user.id %}

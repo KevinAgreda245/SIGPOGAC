@@ -32,8 +32,8 @@
                         <tr>
                             <th>#</th>
                             <th>Nombre</th>
+                            <th>Descripción</th>
                             <th>Tipo</th>
-                            <th>Fecha de ingreso</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -42,9 +42,9 @@
                             <tr>
                                 <td>{{forloop.counter}}</td>
                                 <td>{{equipo.ST_NOMBRE_EQUIPO}}</td>
-                                <td>{{equipo.SK_TIPO_EQUIPO.ST_TIPO_EQUIPO}}</td>
-                                <td>{{equipo.FC_INGRESO}}</td>
-                                <td>
+                                <td>{{equipo.ST_DESCRIPCION_EQUIPO}}</td>
+                                <td>{{equipo.FK_TIPO_EQUIPO.ST_TIPO_EQUIPO}}</td>
+                                <td class="text-nowrap">
                                     <!--Privilegio para ver equipo-->
                                     {% if perms.Equipo.view_equipo %}
                                         <a class="btn btn-primary" href="{% url 'DetailsEquipo' equipo.pk %}"><i class="far fa-eye"></i></a>
@@ -55,7 +55,7 @@
                                     {% endif %}
                                     <!--Privilegio para eliminar equipo-->
                                     {% if perms.Equipo.delete_equipo %}
-                                        <a class="btn btn-danger" href="{% url 'DeleteEquipo' equipo.pk %}"><i class="fas fa-trash"></i></a>
+                                        <a class="btn btn-danger" data-url="{% url 'DeleteEquipo' equipo.pk %}" data-action="eliminar" onclick="confirmStatus(this)"><i class="fas fa-trash"></i></a>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -73,5 +73,11 @@
     document.addEventListener("DOMContentLoaded", function() {
         initTable("#tbl-Equipos","equipos");
     });
+
+    function confirmStatus(link) {
+        var url = link.getAttribute('data-url');
+        var action = link.getAttribute('data-action');
+        showConfirm(url,action,"equipo");
+    }
 </script>
 {% endblock %}

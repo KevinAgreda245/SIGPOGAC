@@ -49,14 +49,14 @@
                         <td>{{material.ST_DESCRIPCION_MATERIAL}}</td>
                         <!--Celda aparece si se tiene 1/2 privilegios-->
                         {% if perms.Material.change_material or perms.Material.delete_material%}
-                            <td>
+                            <td class="text-nowrap">
                                 <!--Privilegio para editar material-->
                                 {% if perms.Material.change_material %}
-                                    <a class="btn btn-info m-2" href="{% url 'EditMaterial' material.pk %}"><i class="far fa-edit"></i></a>
+                                    <a class="btn btn-info" href="{% url 'EditMaterial' material.pk %}"><i class="far fa-edit"></i></a>
                                 {% endif %}
                                 <!--Privilegio para eliminar material-->
                                 {% if perms.Material.delete_material %}
-                                    <a class="btn btn-danger m-2" href="{% url 'DeleteMaterial' material.pk %}"><i class="fas fa-trash"></i></a>
+                                    <a class="btn btn-danger" href="{% url 'DeleteMaterial' material.pk %}"><i class="fas fa-trash"></i></a>
                                 {% endif %}
                             </td>
                         {% endif %}
