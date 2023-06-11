@@ -26,7 +26,10 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="pb-3 col-md-6">
-                            <label for="inputEmail4">{{form.ST_NOMBRE_MATERIAL.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.ST_NOMBRE_MATERIAL.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.ST_NOMBRE_MATERIAL}}
                             {% if form.ST_NOMBRE_MATERIAL.errors %}
                                 {% for error in form.ST_NOMBRE_MATERIAL.errors %}
@@ -35,7 +38,10 @@
                             {% endif %}
                         </div>
                         <div class="pb-3 col-md-6">
-                            <label for="inputEmail4">{{form.ST_DESCRIPCION_MATERIAL.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.ST_DESCRIPCION_MATERIAL.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.ST_DESCRIPCION_MATERIAL}}
                         </div>
                     </div>
