@@ -62,6 +62,12 @@
                             <label class="form-label w-100">{{form.ST_IMG_EQUIPO.label}}</label>
                             {{form.ST_IMG_EQUIPO}}
                             <small class="form-text d-block text-muted">No es obligatorio.</small>
+
+                            {% if form.ST_IMG_EQUIPO.errors %}
+                                {% for error in form.ST_IMG_EQUIPO.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success">Guardar</button>

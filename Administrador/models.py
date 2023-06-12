@@ -1,3 +1,5 @@
+import os
+
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
@@ -26,8 +28,17 @@ class DocumentoUsuario(models.Model):
     ]
     SK_DOC_USUARIO = models.AutoField(primary_key=True)
     ST_TIPO_DOC_USUARIO = models.CharField(max_length=50,choices=TIPO)
-    ST_DOC_USUARIO = models.FileField(upload_to='doc_usuario/',null=False,blank=False)
+    ST_DOC_USUARIO = models.FileField(upload_to='doc_usuario/',null=False,blank=True)
     FK_USUARIO = models.ForeignKey(Usuario,on_delete=models.CASCADE,null=False,blank=False)
+
+    def delete(self, *args, **kwargs):
+        # Eliminar el archivo asociado antes de eliminar el objeto
+        if self.ST_DOC_USUARIO:
+            ruta_archivo = self.ST_DOC_USUARIO.path
+            if os.path.exists(ruta_archivo):
+                os.remove(ruta_archivo)
+
+        super().delete(*args, **kwargs)
 
     class Meta:
         db_table = "usuario_documento"
