@@ -30,30 +30,30 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{equipo.ST_IMG_EQUIPO.url}}" target="_blank">
-                    <img src="{{ equipo.ST_IMG_EQUIPO.url }}" alt="Imagen" class="img-fluid" style="max-width: 25%;">
+                <a href="{{equipo.ST_IMG_EQUIPO.url}}" title="{{ equipo.ST_IMG_EQUIPO.name }}" target="_blank">
+                    <img src="{{ equipo.ST_IMG_EQUIPO.url }}" alt="image" class="img-fluid" style="max-width: 25%;">
                 </a>
             </div>
             <div class="card-body">
                 <h6 class="card-title mb-0">Información del Equipo.</h6>
                 <table class="table table-sm my-2">
                     <tbody>
-                        <tr>
-                            <th>Nombre</th>
-                            <td>{{equipo.ST_NOMBRE_EQUIPO}}</td>
-                        </tr>
-                        <tr>
-                            <th>Tipo</th>
-                            <td>{{equipo.FK_TIPO_EQUIPO.ST_TIPO_EQUIPO}}</td>
-                        </tr>
-                        <tr>
-                            <th>Descripción</th>
-                            <td>{{equipo.ST_DESCRIPCION_EQUIPO}}</td>
-                        </tr>
-                        <tr>
-                            <th>Fecha de ingreso</th>
-                            <td>{{ equipo.FC_INGRESO }}</td>
-                        </tr>
+                    <tr>
+                        <th>Nombre</th>
+                        <td>{{equipo.ST_NOMBRE_EQUIPO}}</td>
+                    </tr>
+                    <tr>
+                        <th>Tipo</th>
+                        <td>{{equipo.FK_TIPO_EQUIPO.ST_TIPO_EQUIPO}}</td>
+                    </tr>
+                    <tr>
+                        <th>Descripción</th>
+                        <td>{{equipo.ST_DESCRIPCION_EQUIPO}}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de ingreso</th>
+                        <td>{{ equipo.FC_INGRESO }}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

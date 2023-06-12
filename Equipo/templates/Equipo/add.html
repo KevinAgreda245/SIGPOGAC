@@ -26,7 +26,10 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.ST_NOMBRE_EQUIPO.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.ST_NOMBRE_EQUIPO.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.ST_NOMBRE_EQUIPO}}
                             {% if form.ST_NOMBRE_EQUIPO.errors %}
                                 {% for error in form.ST_NOMBRE_EQUIPO.errors %}
@@ -35,7 +38,10 @@
                             {% endif %}
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.FK_TIPO_EQUIPO.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.FK_TIPO_EQUIPO.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.FK_TIPO_EQUIPO}}
                             {% if form.FK_TIPO_EQUIPO.errors %}
                                 {% for error in form.FK_TIPO_EQUIPO.errors %}
@@ -46,13 +52,22 @@
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.ST_DESCRIPCION_EQUIPO.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.ST_DESCRIPCION_EQUIPO.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.ST_DESCRIPCION_EQUIPO}}
                         </div>
                         <div class="mb-3 col-md-6">
                             <label class="form-label w-100">{{form.ST_IMG_EQUIPO.label}}</label>
                             {{form.ST_IMG_EQUIPO}}
                             <small class="form-text d-block text-muted">No es obligatorio.</small>
+
+                            {% if form.ST_IMG_EQUIPO.errors %}
+                                {% for error in form.ST_IMG_EQUIPO.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success">Guardar</button>
