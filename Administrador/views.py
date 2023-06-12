@@ -77,11 +77,17 @@ def edit(request, id):
             #usuario.groups.add(group)
 
             for doc_type, form_doc in form_documents.items():
-                if form_doc.is_valid() and form_doc.cleaned_data.get('ST_DOC_USUARIO'):
-                    archivo_doc = form_doc.save(commit=False)
-                    archivo_doc.ST_TIPO_DOC_USUARIO = doc_type
-                    archivo_doc.FK_USUARIO = usuario
-                    archivo_doc.save()
+                if form_doc.is_valid():
+                    if form_doc.cleaned_data.get('ST_DOC_USUARIO'):
+                        archivo_doc = form_doc.save(commit=False)
+                        archivo_doc.ST_TIPO_DOC_USUARIO = doc_type
+                        archivo_doc.FK_USUARIO = usuario
+                        archivo_doc.save()
+                    else:
+                        archivo_doc = form_doc.save(commit=False)
+
+                        if archivo_doc.ST_TIPO_DOC_USUARIO:
+                            archivo_doc.delete()
 
         messages.success(request, "Administrador ha sido actualizado exitosamente.")
         return redirect('Administrador')
