@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.contrib import messages
+from django.db.models import Count
 from .models import Usuario, DocumentoUsuario
+from Proyecto.models import Proyecto
 from .forms import *
 from tarfile import NUL
 from Seguridad.decorators import *
@@ -9,7 +11,14 @@ from django.db import transaction
 
 @login_required(login_url='login')
 def main(request):
-    return render(request, 'Administrador/main.html')
+    context = {
+        "registrados": Proyecto.objects.filter(FK_ESTADO_PROYECTO_id=1).count(),
+        "ejecución": Proyecto.objects.filter(FK_ESTADO_PROYECTO_id=2).count(),
+        "finalizados": Proyecto.objects.filter(FK_ESTADO_PROYECTO_id=3).count(),
+        "completados": Proyecto.objects.filter(FK_ESTADO_PROYECTO_id=4).count(),
+        "data": Proyecto.objects.values('FK_TIPO_SERVICIO__ST_TIPO_SERVICIO').annotate(cant=Count('FK_TIPO_SERVICIO__ST_TIPO_SERVICIO'))
+    }
+    return render(request, 'Administrador/main.html',context)
 
 
 @login_required(login_url='login')
