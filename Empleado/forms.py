@@ -198,17 +198,17 @@ class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = '__all__'
-        exclude = ['last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'FC_INGRESO_USUARIO','password',"B"]
+        exclude = ['last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'FC_INGRESO_USUARIO','password',"BN_ESTADO_USUARIO"]
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ingrese el nombre','required': 'required'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ingrese el apellido','required': 'required'}),
+            'username': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ingrese el nombre de usuario'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control','placeholder': 'Ingrese la dirección de correo electrónico'}),
             'FC_NACIMIENTO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa'}),
-            'ST_DUI_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'xxxxxxxx-x', 'data-mask': '00000000-0'}),
-            'ST_NIT_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'xxxx-xxxxxx-xxx-x', 'data-mask': '0000-000000-000-0'}),
-            'ST_AFP_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite su NUP'}),
-            'ST_ISSS_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite su N° de Afiliacion'}),
+            'ST_DUI_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el DUI', 'data-mask': '00000000-0', 'minlength': "10"}),
+            'ST_NIT_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el NIT', 'data-mask': '0000-000000-000-0', 'minlength': '17'}),
+            'ST_AFP_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el NUP', 'minlength': "12"}),
+            'ST_ISSS_USUARIO': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el N° de Afiliación', 'minlength': "9"}),
         }
 
     def __init__(self, *args, **kwargs):
