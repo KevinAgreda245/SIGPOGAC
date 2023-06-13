@@ -107,6 +107,9 @@ def edit(request, id):
     if form.is_valid():
         with transaction.atomic():
             usuario = form.save()
+            
+            #group = Group.objects.get(name='Empleado')
+            #usuario.groups.add(group)
 
             for doc_type, form_doc in form_documents.items():
                 if form_doc.is_valid() and form_doc.cleaned_data.get('ST_DOC_USUARIO'):
