@@ -45,7 +45,7 @@
                     {% for material in materiales %}
                     <tr>
                         <td>{{forloop.counter}}</td>
-                        <td>{{material.ST_NOMBRE_MATERIAL}}</td>
+                        <td class="text-nowrap">{{material.ST_NOMBRE_MATERIAL}}</td>
                         <td>{{material.ST_DESCRIPCION_MATERIAL}}</td>
                         <!--Celda aparece si se tiene 1/2 privilegios-->
                         {% if perms.Material.change_material or perms.Material.delete_material%}

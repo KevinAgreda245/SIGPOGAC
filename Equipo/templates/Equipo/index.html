@@ -41,7 +41,7 @@
                     {% for equipo in equipos %}
                             <tr>
                                 <td>{{forloop.counter}}</td>
-                                <td>{{equipo.ST_NOMBRE_EQUIPO}}</td>
+                                <td class="text-nowrap">{{equipo.ST_NOMBRE_EQUIPO}}</td>
                                 <td>{{equipo.ST_DESCRIPCION_EQUIPO}}</td>
                                 <td>{{equipo.FK_TIPO_EQUIPO.ST_TIPO_EQUIPO}}</td>
                                 <td class="text-nowrap">
