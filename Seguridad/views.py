@@ -16,10 +16,21 @@ def index(request):
         contraseña = request.POST['password']
         usuarioAutenticado = authenticate(request, username=usuario, password=contraseña)
         if usuarioAutenticado is not None:
-            login(request, usuarioAutenticado)
-            return redirect('Main')
+            if usuarioAutenticado.BN_ESTADO_USUARIO:
+                login(request, usuarioAutenticado)
+                return redirect('Main')
+            else:
+                messages.error(request, 'Lamentablemente, tu cuenta ya no tiene acceso al sistema.')
         else:
-            messages.error(request, 'Usuario o contraseña incorrectos.')
+            try:
+                user = Usuario.objects.get(username=usuario)
+                if not user.is_active:
+                    # Usuario inactivo, mostrar mensaje de error
+                    messages.error(request, 'Tu cuenta está bloqueada. Contacta al administrador.')
+                else: 
+                    messages.error(request, 'El usuario o la contraseña incorrectos. Intenta nuevamente')
+            except:
+                messages.error(request, 'El usuario o la contraseña incorrectos. Intenta nuevamente')
             return render(request, 'Seguridad/index.html')
     return render(request, 'Seguridad/index.html')
 
