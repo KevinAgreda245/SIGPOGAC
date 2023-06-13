@@ -12,14 +12,15 @@ class ClienteForm(forms.ModelForm):
     )
     BN_TIPO_CLIENTE=forms.ChoiceField(
         label="Tipo de cliente",
-        widget=forms.Select(attrs={'class': 'form-control'}),
+        widget=forms.Select(attrs={'class': 'form-control select2', 'data-bs-toggle':'select2'}),
         choices = [
-       ('False', 'Natural'),
-       ('True', 'Jurídico'),
+        ('', 'Seleccione una opción'),
+        ('False', 'Natural'),
+        ('True', 'Jurídico'),
         ]
     )
     ST_DOC_CLIENTE=forms.CharField(
-        label="Documento",
+        label="DUI/NRC",
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
     ST_NIT_CLIENTE=forms.CharField(

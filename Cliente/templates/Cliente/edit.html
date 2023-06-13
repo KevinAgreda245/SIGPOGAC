@@ -26,22 +26,33 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.ST_NOMBRE_CLIENTE.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.ST_NOMBRE_CLIENTE.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.ST_NOMBRE_CLIENTE}}
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.ST_DOC_CLIENTE.label}}</label>
-                            {{form.ST_DOC_CLIENTE}}
+                            <label for="inputEmail4">
+                                {{form.BN_TIPO_CLIENTE.label}}
+                                <span class="text-danger">*</span>
+                            </label>
+                            {{form.BN_TIPO_CLIENTE}}
                         </div>
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.ST_NIT_CLIENTE.label}}</label>
-                            {{form.ST_NIT_CLIENTE}}
+                            <label for="inputEmail4">
+                                <span id="labelDocument">{{form.ST_DOC_CLIENTE.label}}</span>
+                                <span class="text-danger">*</span>
+                            </label>
+                            {{form.ST_DOC_CLIENTE}}
+                            <span class="font-13 text-muted" id="exampleDocument"></span>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.BN_TIPO_CLIENTE.label}}</label>
-                            {{form.BN_TIPO_CLIENTE}}
+                            <label for="inputEmail4">{{form.ST_NIT_CLIENTE.label}}</label>
+                            {{form.ST_NIT_CLIENTE}}
+                            <span class="font-13 text-muted">e.j "xxxx-xxxxxx-xxx-x"</span>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success">Guardar</button>
@@ -77,28 +88,45 @@
                     firstDay: 1
                 }
             });
+            $(".select2").each(function() {
+				$(this)
+					.wrap("<div class=\"position-relative\"></div>")
+					.select2({
+						placeholder: "Seleccione una opción",
+						dropdownParent: $(this).parent()
+					});
+			})
         });
         $(document).ready(function() {
             var maskOptions = {
                 False: {
-                mask: '00000000-0',
-                placeholder: 'xxxxxxxx-x'
+                    mask: '00000000-0',
+                    placeholder: 'Ingrese el DUI',
+                    label: 'DUI',
+                    example: 'e.j "xxxxxxxx-x"'
                 },
                 True: {
-                mask: '000000-0',
-                placeholder: 'xxxxxx-x'
+                    mask: '000000-0',
+                    placeholder: 'Ingrese el NRC',
+                    label: 'NRC',
+                    example: 'e.j "xxxxxx-x"'
                 }
             };
-            var selectedOption = $('#id_BN_TIPO_CLIENTE').val();
-            $('#id_ST_DOC_CLIENTE').mask(maskOptions[selectedOption].mask);
-            $('#id_ST_DOC_CLIENTE').attr('placeholder', maskOptions[selectedOption].placeholder);
+            
+            var newOption = $('#id_BN_TIPO_CLIENTE').val();
+            $('#labelDocument').text(maskOptions[newOption].label);
+            $('#exampleDocument').text(maskOptions[newOption].example);
+            $('#id_ST_DOC_CLIENTE').mask(maskOptions[newOption].mask);
+            $('#id_ST_DOC_CLIENTE').attr('placeholder', maskOptions[newOption].placeholder);
 
             $('#id_BN_TIPO_CLIENTE').on('change', function() {
+                $('#id_ST_DOC_CLIENTE').removeAttr('disabled');
                 var newOption = $(this).val();
+                $('#labelDocument').text(maskOptions[newOption].label);
+                $('#exampleDocument').text(maskOptions[newOption].example);
                 $('#id_ST_DOC_CLIENTE').mask(maskOptions[newOption].mask);
                 $('#id_ST_DOC_CLIENTE').attr('placeholder', maskOptions[newOption].placeholder);
-                //$('#id_ST_DOC_CLIENTE').val(''); // Limpia el texto actual del input
             });
-        });
+        })
     </script>
 {% endblock %}
