@@ -41,7 +41,11 @@
                             <td>{{cliente.ST_NOMBRE_CLIENTE}}</td>
                         </tr>                                       
                         <tr>
-                            <th>N° DUI:</th>
+                            {% if cliente.BN_TIPO_CLIENTE %}
+                                <th>N° NRC:</th>    
+                            {% else %}
+                                <th>N° DUI:</th>    
+                            {% endif %}
                             <td>{{cliente.ST_DOC_CLIENTE}}</td>
                         </tr>
                         <tr>

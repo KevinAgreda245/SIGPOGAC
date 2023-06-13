@@ -28,7 +28,7 @@ def createCliente(request):
         form = ClienteForm(request.POST)
         if form.is_valid() and form.cleaned_data:
             cliente=form.save(commit=False)
-            cliente.SK_USUARIO=request.user
+            cliente.FK_USUARIO=request.user
             cliente.save()
             messages.success(request, "Cliente creado exitosamente.")
             return redirect('Cliente')

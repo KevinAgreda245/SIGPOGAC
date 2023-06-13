@@ -25,7 +25,7 @@ class ClienteForm(forms.ModelForm):
     )
     ST_NIT_CLIENTE=forms.CharField(
         label="NIT",
-        widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'xxxx-xxxxxx-xxx-x', 'data-mask': '0000-000000-000-0'})
+        widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ingrese el NIT del cliente', 'data-mask': '0000-000000-000-0','minlength':"17"})
     )
     class Meta:
         model=Cliente

@@ -31,6 +31,11 @@
                                 <span class="text-danger">*</span>
                             </label>
                             {{form.ST_NOMBRE_CLIENTE}}
+                            {% if form.ST_NOMBRE_CLIENTE.errors %}
+                                {% for error in form.ST_NOMBRE_CLIENTE.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">
@@ -48,10 +53,23 @@
                             </label>
                             {{form.ST_DOC_CLIENTE}}
                             <span class="font-13 text-muted" id="exampleDocument"></span>
+                            {% if form.ST_DOC_CLIENTE.errors %}
+                                {% for error in form.ST_DOC_CLIENTE.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">{{form.ST_NIT_CLIENTE.label}}</label>
+                            <label for="inputEmail4">
+                                {{form.ST_NIT_CLIENTE.label}}
+                                <span class="text-danger">*</span>
+                            </label>
                             {{form.ST_NIT_CLIENTE}}
+                            {% if form.ST_NIT_CLIENTE.errors %}
+                                {% for error in form.ST_NIT_CLIENTE.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                             <span class="font-13 text-muted">e.j "xxxx-xxxxxx-xxx-x"</span>
                         </div>
                     </div>
@@ -103,13 +121,15 @@
                     mask: '00000000-0',
                     placeholder: 'Ingrese el DUI',
                     label: 'DUI',
-                    example: 'e.j "xxxxxxxx-x"'
+                    example: 'e.j "xxxxxxxx-x"',
+                    minlength: 10,
                 },
                 True: {
                     mask: '000000-0',
                     placeholder: 'Ingrese el NRC',
                     label: 'NRC',
-                    example: 'e.j "xxxxxx-x"'
+                    example: 'e.j "xxxxxx-x"',
+                    minlength: 8,
                 }
             };
             
@@ -118,6 +138,7 @@
             $('#exampleDocument').text(maskOptions[newOption].example);
             $('#id_ST_DOC_CLIENTE').mask(maskOptions[newOption].mask);
             $('#id_ST_DOC_CLIENTE').attr('placeholder', maskOptions[newOption].placeholder);
+            $('#id_ST_DOC_CLIENTE').attr('minlength', maskOptions[newOption].minlength);
 
             $('#id_BN_TIPO_CLIENTE').on('change', function() {
                 $('#id_ST_DOC_CLIENTE').removeAttr('disabled');
@@ -126,6 +147,7 @@
                 $('#exampleDocument').text(maskOptions[newOption].example);
                 $('#id_ST_DOC_CLIENTE').mask(maskOptions[newOption].mask);
                 $('#id_ST_DOC_CLIENTE').attr('placeholder', maskOptions[newOption].placeholder);
+                $('#id_ST_DOC_CLIENTE').attr('minlength', maskOptions[newOption].minlength);
             });
         })
     </script>
