@@ -15,7 +15,7 @@ def index(request):
 
 
 @login_required(login_url='login')
-@allowed_users(['Administrador', 'Empleado'])
+@allowed_users(['Administrador'])
 def add(request):
     form = EquipoForm(request.POST or None, request.FILES or None)
     if form.is_valid():
@@ -34,7 +34,7 @@ def add(request):
 
 
 @login_required(login_url='login')
-@allowed_users(['Administrador', 'Empleado'])
+@allowed_users(['Administrador'])
 def edit(request, id):
     equipo = Equipo.objects.get(pk=id)
 
@@ -65,7 +65,7 @@ def details(request, id):
 
 
 @login_required(login_url='login')
-@allowed_users(['Administrador', 'Empleado'])
+@allowed_users(['Administrador'])
 def Delete(request, id):
     equipo = Equipo.objects.get(pk=id)
     equipo.BN_ESTADO_EQUIPO = not equipo.BN_ESTADO_EQUIPO

@@ -15,7 +15,7 @@ def index(request):
 
 
 @login_required(login_url='login')
-@allowed_users(['Administrador', 'Empleado'])
+@allowed_users(['Administrador'])
 def add(request):
     if request.method == 'POST':
         form = MaterialForm(request.POST)
@@ -38,7 +38,7 @@ def add(request):
 
 
 @login_required(login_url='login')
-@allowed_users(['Administrador', 'Empleado'])
+@allowed_users(['Administrador'])
 def edit(request,id):
     material = Material.objects.get(pk=id)
     form = MaterialForm(request.POST or None, request.FILES or None, instance=material)
@@ -59,7 +59,7 @@ def edit(request,id):
 
 
 @login_required(login_url='login')
-@allowed_users(['Administrador', 'Empleado'])
+@allowed_users(['Administrador'])
 def delete(request,id):
     material = Material.objects.get(pk=id)
     material.BN_ESTADO_MATERIAL = False

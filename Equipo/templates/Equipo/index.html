@@ -19,10 +19,12 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-actions float-end">
-                    <a href="{% url 'AddEquipo' %}" class="me-1">
-                        Nuevo Equipo
-                        <i class="align-middle" data-feather="plus"></i>
-                    </a>
+                    {% if perms.Equipo.add_equipo %}
+                        <a href="{% url 'AddEquipo' %}" class="me-1">
+                            Nuevo Equipo
+                            <i class="align-middle" data-feather="plus"></i>
+                        </a>
+                    {% endif %}
                 </div>
                 <h5 class="card-title mb-0">Equipos</h5>
             </div>
