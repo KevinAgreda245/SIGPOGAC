@@ -99,18 +99,20 @@
                 <h5 class="card-title mb-0">Clientes</h5>
             </div>
             <div class="card-body">
-                
+                <div class="align-self-center chart chart-lg">
+                    <canvas id="chartjs-clientes"></canvas>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-12 col-md-6 col-xxl-4 d-flex">
-        <div class="card flex-fill w-100">
+        <div class="card flex-fill">
             <div class="card-header">
                 <h5 class="card-title mb-0">Tipos de proyectos</h5>
             </div>
-            <div class="card-body d-flex w-100">
+            <div class="card-body">
                 <div class="align-self-center chart chart-lg">
-                    <canvas id="chartjs-dashboard-bar"></canvas>
+                    <canvas id="chartjs-tipo-proyectos"></canvas>
                 </div>
             </div>
         </div>
@@ -121,22 +123,51 @@
 {% block js %}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var data = JSON.parse("{{ data|safe }}");
-        var labels = data.map(function(item) {
+        var data_bar_1 = JSON.parse("{{ tp|escapejs }}");
+        var labels_bar_1 = data_bar_1.map(function(item) {
             return item.FK_TIPO_SERVICIO__ST_TIPO_SERVICIO;
         });
-        var values = data.map(function(item) {
+        var values_bar_1 = data_bar_1.map(function(item) {
+            return item.cant;
+        });
+        var data_bar_2 = JSON.parse("{{ cliente|escapejs }}");
+        var labels_bar_2 = data_bar_2.map(function(item) {
+            return item.FK_CLIENTE__ST_NOMBRE_CLIENTE;
+        });
+        var values_bar_2 = data_bar_2.map(function(item) {
             return item.cant;
         });
         // Bar chart
-        new Chart(document.getElementById("chartjs-dashboard-bar"), {
+        new Chart(document.getElementById("chartjs-tipo-proyectos"), {
             type: 'bar',
                 data: {
-                    labels: labels,
+                    labels: labels_bar_1,
                     datasets: [{
-                        label: 'Datos',
-                        data: values,
+                        label: 'Proyectos',
+                        data: values_bar_1,
                         backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                        borderColor: 'rgba(0, 123, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+        });
+        // Bar chart
+        new Chart(document.getElementById("chartjs-clientes"), {
+            type: 'bar',
+                data: {
+                    labels: labels_bar_2,
+                    datasets: [{
+                        label: 'Clientes',
+                        data: values_bar_2,
+                        backgroundColor: 'rgba(0, 200, 255, 0.5)',
                         borderColor: 'rgba(0, 123, 255, 1)',
                         borderWidth: 1
                     }]

@@ -3,23 +3,29 @@ import os
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from django.db.models import Count
+from django.db.models import Count, Q
 from .models import Usuario, DocumentoUsuario
 from Proyecto.models import Proyecto
 from .forms import *
 from tarfile import NUL
 from Seguridad.decorators import *
 from django.db import transaction
+import json
+from datetime import datetime
 
 
 @login_required(login_url='login')
 def main(request):
+    anio_actual = datetime.now().year
+    cliente = list(Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual).values('FK_CLIENTE__ST_NOMBRE_CLIENTE').annotate(cant=Count('FK_CLIENTE__ST_NOMBRE_CLIENTE')))
+    tipo_proyectos = list(Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual).values('FK_TIPO_SERVICIO__ST_TIPO_SERVICIO').annotate(cant=Count('FK_TIPO_SERVICIO__ST_TIPO_SERVICIO')))
     context = {
-        "registrados": Proyecto.objects.filter(FK_ESTADO_PROYECTO_id=1).count(),
-        "ejecución": Proyecto.objects.filter(FK_ESTADO_PROYECTO_id=2).count(),
-        "finalizados": Proyecto.objects.filter(FK_ESTADO_PROYECTO_id=3).count(),
-        "completados": Proyecto.objects.filter(FK_ESTADO_PROYECTO_id=4).count(),
-        "data": Proyecto.objects.values('FK_TIPO_SERVICIO__ST_TIPO_SERVICIO').annotate(cant=Count('FK_TIPO_SERVICIO__ST_TIPO_SERVICIO'))
+        "registrados": Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual,FK_ESTADO_PROYECTO_id=1).count(),
+        "ejecución": Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual,FK_ESTADO_PROYECTO_id=2).count(),
+        "finalizados": Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual,FK_ESTADO_PROYECTO_id=3).count(),
+        "completados": Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual,FK_ESTADO_PROYECTO_id=4).count(),
+        "tp": json.dumps(tipo_proyectos),
+        "cliente": json.dumps(cliente),
     }
     return render(request, 'Administrador/main.html',context)
 
