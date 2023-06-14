@@ -148,9 +148,10 @@
 {% block js %}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            var fechaActual = moment('{{ form.FC_NACIMIENTO.value | date:"Y-m-d" }}', 'YYYY-MM-DD');
             $("input[name=\"FC_NACIMIENTO\"]").daterangepicker({
                 maxDate: moment().subtract(18, 'years').endOf('day'),
-                startDate: moment().subtract(18, 'years').endOf('day'),
+                startDate: fechaActual,
                 singleDatePicker: true,
                 showDropdowns: true,
                 locale: {

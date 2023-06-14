@@ -91,7 +91,7 @@
         </div>
     </div>
 </div>
-
+{% if request.user.is_staff %}
 <div class="row">
     <div class="col-12 col-md-6 col-xxl-4 d-flex">
         <div class="card flex-fill">
@@ -118,9 +118,11 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
 
 {% block js %}
+{% if request.user.is_staff %}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var data_bar_1 = JSON.parse("{{ tp|escapejs }}");
@@ -183,4 +185,5 @@
         });
     });
 </script>
+{% endif %}
 {% endblock %}

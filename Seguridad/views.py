@@ -62,7 +62,7 @@ def edit(request):
         with transaction.atomic():
             usuario = form.save()
 
-        messages.success(request, "Perfil actualizado exitosamente.")
+        messages.success(request, "Perfil ha sido actualizado exitosamente.")
         return redirect('DetailsProfile')
     else:
         for field, errors in form.errors.items():

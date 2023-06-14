@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.db.models import Count, Q
 from .models import Usuario, DocumentoUsuario
-from Proyecto.models import Proyecto
+from Proyecto.models import Proyecto, AsignacionEmpleado
 from .forms import *
 from tarfile import NUL
 from Seguridad.decorators import *
@@ -16,17 +16,26 @@ from datetime import datetime
 
 @login_required(login_url='login')
 def main(request):
-    anio_actual = datetime.now().year
-    cliente = list(Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual).values('FK_CLIENTE__ST_NOMBRE_CLIENTE').annotate(cant=Count('FK_CLIENTE__ST_NOMBRE_CLIENTE')))
-    tipo_proyectos = list(Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual).values('FK_TIPO_SERVICIO__ST_TIPO_SERVICIO').annotate(cant=Count('FK_TIPO_SERVICIO__ST_TIPO_SERVICIO')))
-    context = {
-        "registrados": Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual,FK_ESTADO_PROYECTO_id=1).count(),
-        "ejecución": Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual,FK_ESTADO_PROYECTO_id=2).count(),
-        "finalizados": Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual,FK_ESTADO_PROYECTO_id=3).count(),
-        "completados": Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual,FK_ESTADO_PROYECTO_id=4).count(),
-        "tp": json.dumps(tipo_proyectos),
-        "cliente": json.dumps(cliente),
-    }
+    if (request.user.is_staff):
+        anio_actual = datetime.now().year
+        cliente = list(Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual).values('FK_CLIENTE__ST_NOMBRE_CLIENTE').annotate(cant=Count('FK_CLIENTE__ST_NOMBRE_CLIENTE')))
+        tipo_proyectos = list(Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual).values('FK_TIPO_SERVICIO__ST_TIPO_SERVICIO').annotate(cant=Count('FK_TIPO_SERVICIO__ST_TIPO_SERVICIO')))
+        context = {
+            "registrados": Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual,FK_ESTADO_PROYECTO_id=1).count(),
+            "ejecución": Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual,FK_ESTADO_PROYECTO_id=2).count(),
+            "finalizados": Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual,FK_ESTADO_PROYECTO_id=3).count(),
+            "completados": Proyecto.objects.filter(FC_INGRESO_PROYECTO__year=anio_actual,FK_ESTADO_PROYECTO_id=4).count(),
+            "tp": json.dumps(tipo_proyectos),
+            "cliente": json.dumps(cliente),
+        }
+    else: 
+        anio_actual = datetime.now().year
+        context = {
+            "registrados": AsignacionEmpleado.objects.filter(FK_USUARIO = request.user.pk,SK_PROYECTO__FC_INGRESO_PROYECTO__year=anio_actual,SK_PROYECTO__FK_ESTADO_PROYECTO_id=1).count(),
+            "ejecución": AsignacionEmpleado.objects.filter(FK_USUARIO = request.user.pk,SK_PROYECTO__FC_INGRESO_PROYECTO__year=anio_actual,SK_PROYECTO__FK_ESTADO_PROYECTO_id=2).count(),
+            "finalizados": AsignacionEmpleado.objects.filter(FK_USUARIO = request.user.pk,SK_PROYECTO__FC_INGRESO_PROYECTO__year=anio_actual,SK_PROYECTO__FK_ESTADO_PROYECTO_id=3).count(),
+            "completados": AsignacionEmpleado.objects.filter(FK_USUARIO = request.user.pk,SK_PROYECTO__FC_INGRESO_PROYECTO__year=anio_actual,SK_PROYECTO__FK_ESTADO_PROYECTO_id=4).count(),
+        }
     return render(request, 'Administrador/main.html',context)
 
 
