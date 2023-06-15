@@ -46,6 +46,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             {{form.FC_NACIMIENTO}}
+                            {{ form.FC_NACIMIENTO.value }}
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">
@@ -67,6 +68,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             {{form.ST_DUI_USUARIO}}
+                            <span class="font-13 text-muted">e.j "xxxxxxxx-x"</span>
                             {% if form.ST_DUI_USUARIO.errors %}
                                 {% for error in form.ST_DUI_USUARIO.errors %}
                                 <small class="form-text d-block text-danger">{{ error }}</small>
@@ -76,6 +78,12 @@
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">{{form.ST_NIT_USUARIO.label}}</label>
                             {{form.ST_NIT_USUARIO}}
+                            <span class="font-13 text-muted">e.j "xxxx-xxxxxx-xxx-x"</span>
+                            {% if form.ST_NIT_USUARIO.errors %}
+                                {% for error in form.ST_NIT_USUARIO.errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
@@ -114,7 +122,10 @@
 {% block js %}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var fechaActual = moment('{{ form.FC_NACIMIENTO.value | date:"Y-m-d" }}', 'YYYY-MM-DD');
+            var fechaActual = moment.utc('{{ form.FC_NACIMIENTO.value | date:"Y-m-d" }}', 'YYYY-MM-DD');
+            if (!fechaActual.isValid()) {
+                fechaActual = moment.utc('{{ form.FC_NACIMIENTO.value }}', 'DD/MM/YYYY');
+            }
             $("input[name=\"FC_NACIMIENTO\"]").daterangepicker({
                 maxDate: moment().subtract(18, 'years').endOf('day'),
                 startDate: fechaActual,
