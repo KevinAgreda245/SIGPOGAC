@@ -54,6 +54,11 @@
                                 <span class="text-danger">*</span>
                             </label>
                             {{form.email}}
+                            {% if form.email.errors %}
+                                {% for error in form.email.errors %}
+                                    <small class="form-text d-block text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">

@@ -198,7 +198,7 @@ class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = '__all__'
-        exclude = ['last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'FC_INGRESO_USUARIO','password',"BN_ESTADO_USUARIO"]
+        exclude = ['last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'FC_INGRESO_USUARIO','password','groups',"BN_ESTADO_USUARIO"]
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ingrese el nombre','required': 'required'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ingrese el apellido','required': 'required'}),
