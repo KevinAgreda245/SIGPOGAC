@@ -1,3 +1,5 @@
+import os
+
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -93,30 +95,50 @@ def edit(request, id):
         "AFP": DocumentUserForm(request.POST or None, request.FILES or None, prefix='AFP')
     }
 
+    archivos_url = {}
+
     if DocumentoUsuario.objects.filter(FK_USUARIO=usuario.pk).exists():
         documentos = DocumentoUsuario.objects.filter(FK_USUARIO=usuario.pk)
 
         for documento in documentos:
+            prefix = documento.ST_TIPO_DOC_USUARIO
+
             form_documents[documento.ST_TIPO_DOC_USUARIO] = DocumentUserForm(
                 request.POST or None,
                 request.FILES or None,
                 instance=documento,
-                prefix=documento.ST_TIPO_DOC_USUARIO
+                prefix=prefix
             )
+
+            # Obtener la dirección del archivo adjunto
+            archivo_url = documento.ST_DOC_USUARIO if documento.ST_DOC_USUARIO else None
+            archivos_url[prefix] = archivo_url
 
     if form.is_valid():
         with transaction.atomic():
             usuario = form.save()
-            
-            #group = Group.objects.get(name='Empleado')
-            #usuario.groups.add(group)
+            # group = Group.objects.get(name='Administrador')
+            # usuario.groups.add(group)
 
             for doc_type, form_doc in form_documents.items():
-                if form_doc.is_valid() and form_doc.cleaned_data.get('ST_DOC_USUARIO'):
-                    archivo_doc = form_doc.save(commit=False)
-                    archivo_doc.ST_TIPO_DOC_USUARIO = doc_type
-                    archivo_doc.FK_USUARIO = usuario
-                    archivo_doc.save()
+                if form_doc.is_valid():
+                    if form_doc.cleaned_data.get('ST_DOC_USUARIO'):
+                        archivo_doc = form_doc.save(commit=False)
+                        archivo_doc.ST_TIPO_DOC_USUARIO = doc_type
+                        archivo_doc.FK_USUARIO = usuario
+                        archivo_doc.save()
+
+                        if doc_type in archivos_url:
+                            if not archivos_url[doc_type] == archivo_doc.ST_DOC_USUARIO:
+                                ruta_archivo = archivos_url[doc_type].path
+                                if os.path.exists(ruta_archivo):
+                                    os.remove(ruta_archivo)
+                    else:
+                        archivo_doc = form_doc.save(commit=False)
+
+                        if archivo_doc.ST_TIPO_DOC_USUARIO:
+                            archivo_doc.ST_DOC_USUARIO = archivos_url[archivo_doc.ST_TIPO_DOC_USUARIO]
+                            archivo_doc.delete()
 
         messages.success(request, "Empleado ha sido actualizado exitosamente.")
         return redirect('Empleado')
