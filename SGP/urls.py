@@ -26,8 +26,8 @@ urlpatterns = [
     path('empleado/',include('Empleado.urls')),
     path('equipo/',include('Equipo.urls')),
     path('material/',include('Material.urls')),
-    path('proyecto',include('Proyecto.urls')),
-    path('reporte',include('Reporte.urls')),
+    path('proyecto/',include('Proyecto.urls')),
+    path('reporte/',include('Reporte.urls')),
 ]
 
 # Configuración para servir archivos de medios en el entorno de desarrollo
