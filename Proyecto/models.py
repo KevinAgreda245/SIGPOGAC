@@ -13,6 +13,9 @@ class TipoServicio(models.Model):
     class Meta: 
         db_table = "tipo_servicio"
 
+    def __str__(self):
+        return self.ST_TIPO_SERVICIO
+
 # Modelo de la tabla "estado_proyecto"
 class EstadoProyecto(models.Model):
     SK_ESTADO_PROYECTO = models.AutoField(primary_key=True)
@@ -24,13 +27,13 @@ class EstadoProyecto(models.Model):
 # Modelo de la tabla "proyecto"
 class Proyecto(models.Model):
     SK_PROYECTO = models.AutoField(primary_key=True)
-    ST_DIRECCION_PROYECTO = models.CharField(max_length=120,null=False,blank=False)
+    ST_DIRECCION_PROYECTO = models.CharField(max_length=120,null=False,blank=False,verbose_name="Dirección:")
     NM_LATITUD_PROYECTO = models.FloatField(null=False,blank=False)
     NM_LONGITUD_PROYECTO = models.FloatField(null=False,blank=False)
-    ST_DESCRIPCION_PROYECTO = models.CharField(max_length=120,null=False,blank=False)
-    FK_CLIENTE = models.ForeignKey(Cliente,models.CASCADE)
-    FK_ESTADO_PROYECTO = models.ForeignKey(EstadoProyecto,models.CASCADE)
-    FK_TIPO_SERVICIO = models.ForeignKey(TipoServicio,models.CASCADE) 
+    ST_DESCRIPCION_PROYECTO = models.CharField(max_length=120,null=False,blank=False,verbose_name="Descripción:")
+    FK_CLIENTE = models.ForeignKey(Cliente,models.CASCADE,verbose_name="Cliente")
+    FK_ESTADO_PROYECTO = models.ForeignKey(EstadoProyecto,models.CASCADE,verbose_name="Estado:")
+    FK_TIPO_SERVICIO = models.ForeignKey(TipoServicio,models.CASCADE,verbose_name="Tipo de Servicio:") 
     FK_USUARIO = models.ForeignKey(Usuario,models.CASCADE)
     FC_INGRESO_PROYECTO = models.DateTimeField(default=timezone.now)
 
