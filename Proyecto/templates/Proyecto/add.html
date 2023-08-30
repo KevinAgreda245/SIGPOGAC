@@ -26,6 +26,13 @@
                                 <small>Detalles generales del proyecto</small>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#default-primary-step-2">
+                                Detalles del proyecto
+                                <br/>
+                                <small>Detalles del proyecto</small>
+                            </a>
+                        </li>
                     </ul>
 
                     <div class="tab-content">
@@ -83,6 +90,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="default-primary-step-2" class="tab-pane" role="tabpanel">
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,8 +110,23 @@
                 lang: {
                     next: 'Siguiente',
                     previous: 'Anterior'
-                }
+                },
 			});
+           
+            $(".sw-btn-next").css({
+                "background-color": "white",
+                "color": "gray",
+                "border-color": "gray"
+                
+            });
+
+            $(".sw-btn-prev").css({
+                "background-color": "white",
+                "color": "gray" ,
+                "border-color": "gray"
+            });
+
+
             $(".select2").each(function() {
 				$(this)
 					.wrap("<div class=\"position-relative\"></div>")
@@ -111,5 +136,6 @@
 					});
 			})
         });
+
     </script>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import ProyectoForm
+from .forms import ProyectoForm, TransporteForm, ConcretoForm
 
 
 def index(request):
@@ -8,7 +8,7 @@ def index(request):
 
 def add(request):
     if request.method == 'POST':
-        form = ProyectoForm(request.POST)
+        form = ProyectoForm(request.POST)        
         if form.is_valid():
             form.save()
             messages.success(request, "Material creado exitosamente.")
@@ -21,7 +21,9 @@ def add(request):
                 messages.error(request, errors)
     else:
         form = ProyectoForm()
+        
     context = {
-        "form": form
+        "form": form,
     }
     return render(request, 'Proyecto/add.html',context)
+

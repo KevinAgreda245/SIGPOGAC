@@ -109,6 +109,7 @@ class RentaDesimetro(models.Model):
     FK_PROYECTO = models.ForeignKey(Proyecto,models.CASCADE)
     class Meta:
         db_table = "renta_desimetro"
+        
 class Transporte(models.Model):
     UNIDADES = [
         ('LITRO','Litro'),
