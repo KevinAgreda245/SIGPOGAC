@@ -35,7 +35,7 @@ class ConcretoForm(forms.ModelForm):
     class Meta:
         model = Concreto
         fields = '__all__'
-        exclude = ['ST_TIPO_DOC_CONCRETO', 'ST_DOC_CONCRETO', 'FK_PROYECTO']
+        exclude = ['ST_DOC_CONCRETO', 'FK_PROYECTO']
         widgets={
           'ST_TIPO_DOC_CONCRETO': forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
           'ST_DOC_CONCRETO': forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),

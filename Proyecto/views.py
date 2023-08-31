@@ -10,9 +10,9 @@ def add(request):
     if request.method == 'POST':
         form = ProyectoForm(request.POST)        
         if form.is_valid():
-            form.save()
-            messages.success(request, "Material creado exitosamente.")
-            return redirect('AddProyecto')
+            messages.success(request, request.POST["FK_TIPO_SERVICIO"])
+            
+            #return render(request, 'Proyecto/add2.html')
         else:
             for field, errors in form.errors.items():
                 form.fields[field].widget.attrs.update({

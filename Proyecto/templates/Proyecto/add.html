@@ -26,72 +26,64 @@
                                 <small>Detalles generales del proyecto</small>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#default-primary-step-2">
-                                Detalles del proyecto
-                                <br/>
-                                <small>Detalles del proyecto</small>
-                            </a>
-                        </li>
                     </ul>
-
                     <div class="tab-content">
                         <div id="default-primary-step-1" class="tab-pane" role="tabpanel">
-                            <div class="row">
-                                <div class="mb-3 col-md-6">
-                                    <label for="inputEmail4">
-                                        {{form.FK_CLIENTE.label}}
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    {{form.FK_CLIENTE}}
-                                    {% if form.FK_CLIENTE.errors %}
-                                        {% for error in form.FK_CLIENTE.errors %}
-                                        <small class="form-text d-block text-danger">{{ error }}</small>
-                                        {% endfor %}
-                                    {% endif %}
+                            <form method="POST" id="frmStep1">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label for="inputEmail4">
+                                            {{form.FK_CLIENTE.label}}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        {{form.FK_CLIENTE}}
+                                        {% if form.FK_CLIENTE.errors %}
+                                            {% for error in form.FK_CLIENTE.errors %}
+                                            <small class="form-text d-block text-danger">{{ error }}</small>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="inputEmail4">
+                                            {{form.FK_TIPO_SERVICIO.label}}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        {{form.FK_TIPO_SERVICIO}}
+                                        {% if form.FK_TIPO_SERVICIO.errors %}
+                                            {% for error in form.FK_TIPO_SERVICIO.errors %}
+                                            <small class="form-text d-block text-danger">{{ error }}</small>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="inputEmail4">
-                                        {{form.FK_TIPO_SERVICIO.label}}
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    {{form.FK_TIPO_SERVICIO}}
-                                    {% if form.FK_TIPO_SERVICIO.errors %}
-                                        {% for error in form.FK_TIPO_SERVICIO.errors %}
-                                        <small class="form-text d-block text-danger">{{ error }}</small>
-                                        {% endfor %}
-                                    {% endif %}
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label for="inputEmail4">
+                                            {{form.ST_DIRECCION_PROYECTO.label}}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        {{form.ST_DIRECCION_PROYECTO}}
+                                        {% if form.ST_DIRECCION_PROYECTO.errors %}
+                                            {% for error in form.ST_DIRECCION_PROYECTO.errors %}
+                                            <small class="form-text d-block text-danger">{{ error }}</small>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="inputEmail4">
+                                            {{form.ST_DESCRIPCION_PROYECTO.label}}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        {{form.ST_DESCRIPCION_PROYECTO}}
+                                        {% if form.ST_DESCRIPCION_PROYECTO.errors %}
+                                            {% for error in form.ST_DESCRIPCION_PROYECTO.errors %}
+                                            <small class="form-text d-block text-danger">{{ error }}</small>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-md-6">
-                                    <label for="inputEmail4">
-                                        {{form.ST_DIRECCION_PROYECTO.label}}
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    {{form.ST_DIRECCION_PROYECTO}}
-                                    {% if form.ST_DIRECCION_PROYECTO.errors %}
-                                        {% for error in form.ST_DIRECCION_PROYECTO.errors %}
-                                        <small class="form-text d-block text-danger">{{ error }}</small>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="inputEmail4">
-                                        {{form.ST_DESCRIPCION_PROYECTO.label}}
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    {{form.ST_DESCRIPCION_PROYECTO}}
-                                    {% if form.ST_DESCRIPCION_PROYECTO.errors %}
-                                        {% for error in form.ST_DESCRIPCION_PROYECTO.errors %}
-                                        <small class="form-text d-block text-danger">{{ error }}</small>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                        <div id="default-primary-step-2" class="tab-pane" role="tabpanel">
-                            
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -126,6 +118,8 @@
                 "border-color": "gray"
             });
 
+            $(".sw-btn-next").attr('onclick',"serviceSelect()");
+
 
             $(".select2").each(function() {
 				$(this)
@@ -136,6 +130,12 @@
 					});
 			})
         });
+
+        const serviceSelect = () =>{
+            //window.location="{% url 'AddProyecto' %}";
+            $("#frmStep1").submit();
+        };
+
 
     </script>
 {% endblock %}
