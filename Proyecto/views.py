@@ -10,9 +10,16 @@ def add(request):
     if request.method == 'POST':
         form = ProyectoForm(request.POST)        
         if form.is_valid():
-            messages.success(request, request.POST["FK_TIPO_SERVICIO"])
-            
-            #return render(request, 'Proyecto/add2.html')
+            tipoServicio = request.POST["FK_TIPO_SERVICIO"]
+
+            if tipoServicio == "1" or tipoServicio == "5" or tipoServicio == "6" or tipoServicio == "7":
+                context = {
+                    "tipo": tipoServicio,
+                    "form": form,
+                }               
+                return render(request, 'Proyecto/step-5.html',context)            
+            else:
+                messages.error(request, "En construcción")
         else:
             for field, errors in form.errors.items():
                 form.fields[field].widget.attrs.update({

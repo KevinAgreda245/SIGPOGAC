@@ -1,0 +1,89 @@
+{% extends 'General/dashboard.html' %}
+
+{% block title %} Administrador {% endblock %}
+
+{% block main %}
+<div class="header">
+    <h1 class="header-title">
+        Nuevo Proyecto
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Registro</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div id="smartwizard-default-success" class="wizard wizard-success mb-4">
+                    <ul class="nav">
+                        <li class="nav-item"><a class="nav-link" href="#default-success-step-1">First Step<br /><small>Step description</small></a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#default-success-step-2">Second Step<br /><small>Step description</small></a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#default-success-step-3">Third Step<br /><small>Step description</small></a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#default-success-step-4">Fourth Step<br /><small>Step description</small></a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="default-success-step-1" class="tab-pane" role="tabpanel">
+                            Step Content 1
+                        </div>
+                        <div id="default-success-step-2" class="tab-pane" role="tabpanel">
+                            Step Content 2
+                        </div>
+                        <div id="default-success-step-3" class="tab-pane" role="tabpanel">
+                            Step Content 3
+                        </div>
+                        <div id="default-success-step-4" class="tab-pane" role="tabpanel">
+                            Step Content 4
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $("#smartwizard-default-success").smartWizard({
+                theme: "default",
+                lang: {
+                    next: 'Siguiente',
+                    previous: 'Anterior'
+                },
+                selected: 2,
+			});
+           
+            $(".sw-btn-next").css({
+                "background-color": "white",
+                "color": "gray",
+                "border-color": "gray"
+                
+            });
+
+            $(".sw-btn-prev").css({
+                "background-color": "white",
+                "color": "gray" ,
+                "border-color": "gray"
+            });
+
+            $(".select2").each(function() {
+				$(this)
+					.wrap("<div class=\"position-relative\"></div>")
+					.select2({
+						placeholder: "Seleccione una opción",
+						dropdownParent: $(this).parent()
+					});
+			})
+
+        });
+    </script>
+{% endblock %}

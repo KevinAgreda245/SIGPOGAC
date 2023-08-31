@@ -17,10 +17,10 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div id="smartwizard-default-primary" class="wizard wizard-primary mb-4">
+                <div id="smartwizard-default-success" class="wizard wizard-success mb-4">
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#default-primary-step-1">
+                            <a class="nav-link" href="#default-success-step-1">
                                 Información General
                                 <br/>
                                 <small>Detalles generales del proyecto</small>
@@ -28,7 +28,7 @@
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div id="default-primary-step-1" class="tab-pane" role="tabpanel">
+                        <div id="default-success-step-1" class="tab-pane" role="tabpanel">
                             <form method="POST" id="frmStep1">
                                 {% csrf_token %}
                                 <div class="row">
@@ -96,7 +96,7 @@
 {% block js %}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            $("#smartwizard-default-primary").smartWizard({
+            $("#smartwizard-default-success").smartWizard({
 				theme: "default",
 				showStepURLhash: false,
                 lang: {
