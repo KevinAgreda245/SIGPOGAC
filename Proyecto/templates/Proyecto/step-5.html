@@ -55,12 +55,14 @@
         document.addEventListener("DOMContentLoaded", function() {
             $("#smartwizard-default-success").smartWizard({
                 theme: "default",
+                selected: 1,
                 lang: {
                     next: 'Siguiente',
                     previous: 'Anterior'
                 },
-                selected: 2,
+                
 			});
+
            
             $(".sw-btn-next").css({
                 "background-color": "white",
