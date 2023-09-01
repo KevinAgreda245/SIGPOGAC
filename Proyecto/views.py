@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import ProyectoForm, TransporteForm, ConcretoForm
+from .forms import ProyectoForm, TransporteForm, ConcretoForm, LevantamientoToporgraficoForm
 
 
 def index(request):
@@ -13,9 +13,15 @@ def add(request):
             tipoServicio = request.POST["FK_TIPO_SERVICIO"]
 
             if tipoServicio == "1" or tipoServicio == "5" or tipoServicio == "6" or tipoServicio == "7":
+                if tipoServicio == "1":
+                    formEspecificaciones = ConcretoForm
+                elif tipoServicio == "5":
+                    formEspecificaciones = LevantamientoToporgraficoForm
+
                 context = {
-                    "tipo": tipoServicio,
+                    "tipoServicio": form.cleaned_data['FK_TIPO_SERVICIO'], 
                     "form": form,
+                    "formEspecificaciones": formEspecificaciones 
                 }               
                 return render(request, 'Proyecto/step-5.html',context)            
             else:

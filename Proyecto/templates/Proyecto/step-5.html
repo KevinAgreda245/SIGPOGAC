@@ -17,32 +17,120 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div id="smartwizard-default-success" class="wizard wizard-success mb-4">
+                <div id="smartwizard-default-primary" class="wizard wizard-primary mb-4">
                     <ul class="nav">
-                        <li class="nav-item"><a class="nav-link" href="#default-success-step-1">First Step<br /><small>Step description</small></a>
+                        <li class="nav-item"><a class="nav-link" href="#default-primary-step-1">Información General<br /><small>Detalles generales del proyecto</small></a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#default-success-step-2">Second Step<br /><small>Step description</small></a>
+                        <li class="nav-item"><a class="nav-link" href="#default-primary-step-2">Especificaciones<br /><small>Especificaciones del proyeto: {{ tipoServicio }}</small></a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#default-success-step-3">Third Step<br /><small>Step description</small></a>
+                        <li class="nav-item"><a class="nav-link" href="#default-primary-step-3">Material<br /><small>Selección de los materiales del proyecto</small></a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#default-success-step-4">Fourth Step<br /><small>Step description</small></a>
+                        <li class="nav-item"><a class="nav-link" href="#default-primary-step-4">Equipo<br /><small>Selección de los equipos del proyecto</small></a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#default-primary-step-5">Empleado<br /><small>Selección de los empleados del proyecto</small></a>
                         </li>
                     </ul>
-
-                    <div class="tab-content">
-                        <div id="default-success-step-1" class="tab-pane" role="tabpanel">
-                            Step Content 1
+                    <form method="POST" >
+                        {% csrf_token %}
+                        <div class="tab-content">
+                            <div id="default-primary-step-1" class="tab-pane" role="tabpanel">
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label for="inputEmail4">
+                                            {{form.FK_CLIENTE.label}}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        {{form.FK_CLIENTE}}
+                                        {% if form.FK_CLIENTE.errors %}
+                                            {% for error in form.FK_CLIENTE.errors %}
+                                            <small class="form-text d-block text-danger">{{ error }}</small>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="inputEmail4">
+                                            {{form.FK_TIPO_SERVICIO.label}}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        {{form.FK_TIPO_SERVICIO}}
+                                        {% if form.FK_TIPO_SERVICIO.errors %}
+                                            {% for error in form.FK_TIPO_SERVICIO.errors %}
+                                            <small class="form-text d-block text-danger">{{ error }}</small>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label for="inputEmail4">
+                                            {{form.ST_DIRECCION_PROYECTO.label}}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        {{form.ST_DIRECCION_PROYECTO}}
+                                        {% if form.ST_DIRECCION_PROYECTO.errors %}
+                                            {% for error in form.ST_DIRECCION_PROYECTO.errors %}
+                                            <small class="form-text d-block text-danger">{{ error }}</small>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="inputEmail4">
+                                            {{form.ST_DESCRIPCION_PROYECTO.label}}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        {{form.ST_DESCRIPCION_PROYECTO}}
+                                        {% if form.ST_DESCRIPCION_PROYECTO.errors %}
+                                            {% for error in form.ST_DESCRIPCION_PROYECTO.errors %}
+                                            <small class="form-text d-block text-danger">{{ error }}</small>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="default-primary-step-2" class="tab-pane" role="tabpanel">
+                                {% if form.FK_TIPO_SERVICIO.value == "1" %}
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label for="inputEmail4">
+                                                {{formEspecificaciones.ST_TIPO_DOC_CONCRETO.label}}
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            {{formEspecificaciones.ST_TIPO_DOC_CONCRETO}}
+                                            {% if formEspecificaciones.ST_TIPO_DOC_CONCRETO.errors %}
+                                                {% for error in form.ST_TIPO_DOC_CONCRETO.errors %}
+                                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="inputEmail4">
+                                                {{formEspecificaciones.ST_DOC_CONCRETO.label}}
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            {{formEspecificaciones.ST_DOC_CONCRETO}}
+                                            {% if formEspecificaciones.ST_DOC_CONCRETO.errors %}
+                                                {% for error in form.ST_DOC_CONCRETO.errors %}
+                                                <small class="form-text d-block text-danger">{{ error }}</small>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                <h1>En desarrollo</h1>
+                                {% endif %}
+                            </div>
+                            <div id="default-primary-step-3" class="tab-pane" role="tabpanel">
+                                Step Content 3
+                            </div>
+                            <div id="default-primary-step-4" class="tab-pane" role="tabpanel">
+                                Step Content 4
+                            </div>
+                            <div id="default-primary-step-5" class="tab-pane" role="tabpanel">
+                                Step Content 5
+                            </div>
+                        
                         </div>
-                        <div id="default-success-step-2" class="tab-pane" role="tabpanel">
-                            Step Content 2
-                        </div>
-                        <div id="default-success-step-3" class="tab-pane" role="tabpanel">
-                            Step Content 3
-                        </div>
-                        <div id="default-success-step-4" class="tab-pane" role="tabpanel">
-                            Step Content 4
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -53,17 +141,17 @@
 {% block js %}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            $("#smartwizard-default-success").smartWizard({
-                theme: "default",
+            
+            $("#smartwizard-default-primary").smartWizard({
+				theme: "default",
+				showStepURLhash: false,
                 selected: 1,
                 lang: {
                     next: 'Siguiente',
                     previous: 'Anterior'
                 },
-                
 			});
 
-           
             $(".sw-btn-next").css({
                 "background-color": "white",
                 "color": "gray",
