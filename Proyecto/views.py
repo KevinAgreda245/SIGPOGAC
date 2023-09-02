@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import ProyectoForm, TransporteForm, ConcretoForm, LevantamientoToporgraficoForm
+from .forms import ProyectoForm, TransporteForm, ConcretoForm, LevantamientoToporgraficoForm,RentaEquipoForm,RentaDesimetroForm,AsesoriaConstructivaForm,EstructuraMetalicaForm, SenializacionVialForm
 
 
 def index(request):
@@ -12,18 +12,30 @@ def add(request):
         if form.is_valid():
             tipoServicio = request.POST["FK_TIPO_SERVICIO"]
 
-            if tipoServicio == "1" or tipoServicio == "5" or tipoServicio == "6" or tipoServicio == "7":
-                if tipoServicio == "1":
-                    formEspecificaciones = ConcretoForm
-                elif tipoServicio == "5":
-                    formEspecificaciones = LevantamientoToporgraficoForm
+            form_mapping = {
+                "1": ConcretoForm,
+                "2": RentaEquipoForm,
+                "3": RentaDesimetroForm,
+                "4": TransporteForm,
+                "5": LevantamientoToporgraficoForm,
+                "6": EstructuraMetalicaForm,
+                "7": SenializacionVialForm,
+                "8": AsesoriaConstructivaForm,
+            }
 
+            if tipoServicio in form_mapping:
+                formEspecificaciones = form_mapping[tipoServicio]
+                
                 context = {
                     "tipoServicio": form.cleaned_data['FK_TIPO_SERVICIO'], 
                     "form": form,
                     "formEspecificaciones": formEspecificaciones 
-                }               
-                return render(request, 'Proyecto/step-5.html',context)            
+                }
+
+                if tipoServicio in ["1", "5", "6", "7"]:
+                    return render(request, 'Proyecto/step-5.html', context)
+                elif tipoServicio in ["2", "3", "4", "8"]:
+                    return render(request, 'Proyecto/step-3.html', context)   
             else:
                 messages.error(request, "En construcción")
         else:
