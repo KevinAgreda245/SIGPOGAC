@@ -201,6 +201,34 @@
 					});
 			})
 
+            let valueAnterior = $("#id_FK_TIPO_SERVICIO").val();
+
+            $("#id_FK_TIPO_SERVICIO").on("change",() => {
+                var tipoServicio = "{{tipoServicio}}";
+                var selectServicio = $("#id_FK_TIPO_SERVICIO option:selected").text();
+                Swal.fire({
+                    title: 'Confirmación',
+                    text: `¿Estás seguro de que deseas cambiar el tipo de servicio ${tipoServicio} al ${selectServicio}?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar',
+                    cancelButtonText: 'Cancelar',
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: 'btn btn-success m-2',
+                        cancelButton: 'btn btn-danger m-2'
+                    }
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        alert("Bien");
+                    } else {
+                        $("#id_FK_TIPO_SERVICIO").val(valorAnterior);
+                    }
+                  });
+            })
+
         });
     </script>
 {% endblock %}
