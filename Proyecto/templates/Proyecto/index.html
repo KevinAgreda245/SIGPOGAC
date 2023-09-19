@@ -1,0 +1,88 @@
+{% extends 'General/dashboard.html' %}
+
+{% block title %} Administración de Proyecto {% endblock %}
+
+{% block main %}
+<div class="header">
+    <h1 class="header-title">
+        Administración de Proyectos
+    </h1>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Filtros de búsqueda</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">
+                                {{form.cliente.label}}
+                            </label>
+                            {{form.cliente}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">
+                                {{form.estado.label}}
+                            </label>
+                            {{form.estado}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">
+                                {{form.fecha_inicio.label}}
+                            </label>
+                            {{form.fecha_inicio}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">
+                                {{form.fecha_fin.label}}
+                            </label>
+                            {{form.fecha_fin}}
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Resultados</h5>
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        initTable("#tbl-Materiales","materiales");
+
+        $(".select2").each(function() {
+            $(this)
+                .wrap("<div class=\"position-relative\"></div>")
+                .select2({
+                    placeholder: "Seleccione una opción",
+                    dropdownParent: $(this).parent()
+                });
+        })
+
+        $("#id_fecha_inicio").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true
+        });
+
+        $("#id_fecha_fin").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true
+        });
+    });
+</script>
+{% endblock %}

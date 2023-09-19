@@ -1,10 +1,32 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import ProyectoForm, TransporteForm, ConcretoForm, LevantamientoToporgraficoForm,RentaEquipoForm,RentaDesimetroForm,AsesoriaConstructivaForm,EstructuraMetalicaForm, SenializacionVialForm
-
+from .forms import *
+from .models import Proyecto
 
 def index(request):
-    return render(request, 'Proyecto/index.html')
+    proyectos = Proyecto.objects.all()  # Inicialmente, obtén todos los proyectos
+    if request.method == 'POST':
+        form = FiltroProyectosForm(request.POST)
+        if form.is_valid():
+            cliente = form.cleaned_data['cliente']
+            fecha_inicio = form.cleaned_data['fecha_inicio']
+            fecha_fin = form.cleaned_data['fecha_fin']
+            estado = form.cleaned_data['estado']
+
+            # Aplica los filtros según los valores seleccionados en el formulario
+            if cliente:
+                proyectos = proyectos.filter(SK_CLIENTE=cliente)
+            if fecha_inicio:
+                proyectos = proyectos.filter(FC_INGRESO_PROYECTO__gte=fecha_inicio)
+            if fecha_fin:
+                proyectos = proyectos.filter(FC_INGRESO_PROYECTO__lte=fecha_fin)
+            if estado:
+                proyectos = proyectos.filter(SK_ESTADO_PROYECTO=estado)
+
+    else:
+        form = FiltroProyectosForm()
+
+    return render(request, 'Proyecto/index.html',{'form': form, 'proyectos': proyectos})
 
 def add(request):
     if request.method == 'POST':

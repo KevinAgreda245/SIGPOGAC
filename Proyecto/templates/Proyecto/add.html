@@ -1,92 +1,23 @@
 {% extends 'General/dashboard.html' %}
 
-{% block title %} Administrador {% endblock %}
+{% block title %} Registro de Proyecto {% endblock %}
 
 {% block main %}
 <div class="header">
     <h1 class="header-title">
-        Nuevo Proyecto
+        Registro de Proyectos
     </h1>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">Registro</li>
-        </ol>
-    </nav>
 </div>
 <div class="row">
     <div class="col-12">
         <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Información general</h5>
+            </div>
             <div class="card-body">
-                <div id="smartwizard-default-success" class="wizard wizard-primary mb-4">
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#default-success-step-1">
-                                Información General
-                                <br/>
-                                <small>Detalles generales del proyecto</small>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div id="default-success-step-1" class="tab-pane" role="tabpanel">
-                            <form method="POST" id="frmStep1">
-                                {% csrf_token %}
-                                <div class="row">
-                                    <div class="mb-3 col-md-6">
-                                        <label for="inputEmail4">
-                                            {{form.FK_CLIENTE.label}}
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        {{form.FK_CLIENTE}}
-                                        {% if form.FK_CLIENTE.errors %}
-                                            {% for error in form.FK_CLIENTE.errors %}
-                                            <small class="form-text d-block text-danger">{{ error }}</small>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="inputEmail4">
-                                            {{form.FK_TIPO_SERVICIO.label}}
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        {{form.FK_TIPO_SERVICIO}}
-                                        {% if form.FK_TIPO_SERVICIO.errors %}
-                                            {% for error in form.FK_TIPO_SERVICIO.errors %}
-                                            <small class="form-text d-block text-danger">{{ error }}</small>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="mb-3 col-md-6">
-                                        <label for="inputEmail4">
-                                            {{form.ST_DIRECCION_PROYECTO.label}}
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        {{form.ST_DIRECCION_PROYECTO}}
-                                        {% if form.ST_DIRECCION_PROYECTO.errors %}
-                                            {% for error in form.ST_DIRECCION_PROYECTO.errors %}
-                                            <small class="form-text d-block text-danger">{{ error }}</small>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="inputEmail4">
-                                            {{form.ST_DESCRIPCION_PROYECTO.label}}
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        {{form.ST_DESCRIPCION_PROYECTO}}
-                                        {% if form.ST_DESCRIPCION_PROYECTO.errors %}
-                                            {% for error in form.ST_DESCRIPCION_PROYECTO.errors %}
-                                            <small class="form-text d-block text-danger">{{ error }}</small>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                <form method="POST">
+                    
+                </form>
             </div>
         </div>
     </div>
@@ -94,48 +25,16 @@
 {% endblock %}
 
 {% block js %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            $("#smartwizard-default-success").smartWizard({
-				theme: "default",
-				showStepURLhash: false,
-                lang: {
-                    next: 'Siguiente',
-                    previous: 'Anterior'
-                },
-			});
-           
-            $(".sw-btn-next").css({
-                "background-color": "white",
-                "color": "gray",
-                "border-color": "gray"
-                
-            });
-
-            $(".sw-btn-prev").css({
-                "background-color": "white",
-                "color": "gray" ,
-                "border-color": "gray"
-            });
-
-            $(".sw-btn-next").attr('onclick',"serviceSelect()");
-
-
-            $(".select2").each(function() {
-				$(this)
-					.wrap("<div class=\"position-relative\"></div>")
-					.select2({
-						placeholder: "Seleccione una opción",
-						dropdownParent: $(this).parent()
-					});
-			})
-        });
-
-        const serviceSelect = () =>{
-            //window.location="{% url 'AddProyecto' %}";
-            $("#frmStep1").submit();
-        };
-
-
-    </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        $(".select2").each(function() {
+            $(this)
+                .wrap("<div class=\"position-relative\"></div>")
+                .select2({
+                    placeholder: "Seleccione una opción",
+                    dropdownParent: $(this).parent()
+                });
+        })
+    });
+</script>
 {% endblock %}

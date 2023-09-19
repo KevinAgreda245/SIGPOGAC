@@ -23,6 +23,9 @@ class EstadoProyecto(models.Model):
 
     class Meta: 
         db_table = "estado_proyecto"
+    
+    def __str__(self):
+        return self.ST_ESTADO_PROYECTO
 
 # Modelo de la tabla "proyecto"
 class Proyecto(models.Model):
