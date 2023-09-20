@@ -1,5 +1,5 @@
 from django import forms
-from Proyecto.models import Proyecto,Concreto,Transporte,RentaEquipo,RentaDesimetro,LevantamientoTopografico,EstructuraMetalica,SenializacionVial,AsesoriaConstructiva,EstadoProyecto
+from Proyecto.models import Proyecto,EstadoProyecto
 from Cliente.models import Cliente
 
 
