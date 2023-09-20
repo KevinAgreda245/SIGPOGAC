@@ -1,5 +1,5 @@
 from django import forms
-from Proyecto.models import Proyecto,Concreto,Transporte,RentaEquipo,RentaDesimetro,LevantamientoTopografico,EstructuraMetalica,SenializacionVial,AsesoriaConstructiva,EstadoProyecto
+from Proyecto.models import Proyecto,EstadoProyecto,TipoServicio
 from Cliente.models import Cliente
 
 
@@ -22,23 +22,21 @@ class ProyectoForm(forms.ModelForm):
 
 class FiltroProyectosForm(forms.Form):
     cliente = forms.ModelChoiceField(
-        queryset=Cliente.objects.filter(BN_ESTA_ACTIVO=True),  
+        queryset=Cliente.objects.all(),  
         required=False,
         empty_label="Todos los clientes",
-        widget=forms.Select(attrs={'class': 'form-control select2'})
-    )
-    fecha_inicio = forms.DateField(
-        label="Fecha de inicio",
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        required=False
-    )
-    fecha_fin = forms.DateField(
-        label="Fecha de fin",
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        required=False
+        widget=forms.Select(attrs={'class': 'form-control select2'}),
+        label="Cliente:"
     )
     estado = forms.ModelChoiceField(
         queryset=EstadoProyecto.objects.all(), 
         required=False,
-        widget=forms.Select(attrs={'class': 'form-control select2'})
+        widget=forms.Select(attrs={'class': 'form-control select2'}),
+        label="Estado:"
+    )
+    tipo = forms.ModelChoiceField(
+        queryset=TipoServicio.objects.all(), 
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control select2'}),
+        label="Tipo de Servicio:"
     )

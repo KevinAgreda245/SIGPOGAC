@@ -16,12 +16,21 @@
             </div>
             <div class="card-body">
                 <form method="POST">
+                    {% csrf_token %}
                     <div class="row">
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-12">
                             <label for="inputEmail4">
                                 {{form.cliente.label}}
                             </label>
                             {{form.cliente}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">
+                                {{form.tipo.label}}
+                            </label>
+                            {{form.tipo}}
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">
@@ -30,45 +39,50 @@
                             {{form.estado}}
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">
-                                {{form.fecha_inicio.label}}
-                            </label>
-                            {{form.fecha_inicio}}
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="inputEmail4">
-                                {{form.fecha_fin.label}}
-                            </label>
-                            {{form.fecha_fin}}
-                        </div>
-                    </div>
-                    
+                    <button type="submit" class="btn btn-success">Buscar</button>
+                    <a type="button" class="btn btn-secondary" href="{% url "Proyecto" %}">Limpiar</a>
                 </form>
             </div>
         </div>
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Resultados</h5>
+                <h5 class="card-title mb-0">Resultados {{cliente}}</h5>
             </div>
             <div>
                 {% if proyectos %}
                     {% for proyecto in proyectos %}
-                        <div class="card">
+                        <div class="card m-3">
                             <div class="card-header">
-                                <h5 class="card-title mb-0">Card with links</h5>
+                                <h5 class="card-title mb-0">{{proyecto.FK_CLIENTE}}</h5>
                             </div>
                             <div class="card-body">
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="card-link">Card link</a>
-                                <a href="#" class="card-link">Another link</a>
+                                <p class="card-text">{{proyecto.ST_DESCRIPCION_PROYECTO}}</p>
+                                <div class="row">
+                                    <div class="col-md-10 col-lg-11 mt-2">
+                                        <!-- Badges a la izquierda -->
+                                        <span class="badge rounded-pill bg-primary">{{proyecto.FK_ESTADO_PROYECTO}}</span>
+                                        <span class="badge rounded-pill bg-success">{{proyecto.FK_TIPO_SERVICIO}}</span>
+                                    </div>
+                                    <div class="col-md-2 col-lg-1 mt-2">
+                                        <!-- Etiquetas "a" a la derecha -->
+                                        <a href="{% url "DetailsProyecto" proyecto.SK_PROYECTO %}" class="card-link">Detalle</a>      
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
                 {% else %}
                     <div>
-                        <h2>No hay resultados, intente de nuevo</h2>
+                        <div class="alert alert-warning alert-outline-coloured alert-dismissible m-3" role="alert">
+                            <div class="alert-icon">
+                                <i class="far fa-fw fa-bell"></i>
+                            </div>
+                            <div class="alert-message">
+                                No hay resultados de la búsqueda
+                            </div>
+
+                            <a class="btn-close" href="{% url "Proyecto" %}"></a>
+                        </div>
                     </div>
                 {% endif %}
 
@@ -115,15 +129,7 @@
                 });
         })
 
-        $("#id_fecha_inicio").daterangepicker({
-            singleDatePicker: true,
-            showDropdowns: true
-        });
-
-        $("#id_fecha_fin").daterangepicker({
-            singleDatePicker: true,
-            showDropdowns: true
-        });
+       
     });
 </script>
 {% endblock %}
