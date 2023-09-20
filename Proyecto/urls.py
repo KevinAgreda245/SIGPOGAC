@@ -6,4 +6,7 @@ urlpatterns = [
     path('add', views.add, name = "AddProyecto"),
     path('details/<id>', views.details, name = "DetailsProyecto"),
 
+
+    path('transporte', views.transporteForm, name = "transporteForm"),
+    path('agregar_empleado', views.agregarEmpleado, name = "agregarEmpleado")
 ]

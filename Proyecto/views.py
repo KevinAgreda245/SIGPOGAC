@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import *
-from .models import Proyecto
+from .models import *
+from Administrador.models import *
 from django.core.paginator import Paginator
 from django.contrib import messages
 
@@ -35,6 +36,7 @@ def index(request):
     return render(request, 'Proyecto/index.html',{'form': form, 'proyectos': paged_proyecto})
 
 def add(request):
+    request.session['empleados'] = []
     if request.method == 'POST':
         form = ProyectoForm(request.POST)        
         if form.is_valid():
@@ -58,7 +60,7 @@ def add(request):
             elif tipoServicio =="3":
                     return render(request, 'Proyecto/rentadesimetro.html', context)
             elif tipoServicio =="4":
-                 return render(request, 'Proyecto/transporte.html', context)
+                 return redirect('transporteForm')
             elif tipoServicio =="8":  
                  return render(request, 'Proyecto/asesoria.html', context)            
             else: messages.error(request, "En construcción")
@@ -78,3 +80,23 @@ def add(request):
 
 def details(request):
     return render(request, 'Proyecto/add.html')
+
+def transporteForm(request):
+    unidades = Transporte.UNIDADES
+    cc_empleados = Usuario.objects.filter(BN_ESTADO_USUARIO=1)
+    empleados = request.session['empleados']
+    context = {'unidades':unidades, 'cc_empleados':cc_empleados, 'empleados':empleados}
+    print(empleados)
+    return render(request, 'Proyecto/transporte.html', context)
+
+
+def agregarEmpleado(request):
+    if request.method == 'POST':
+        empleado =  Usuario.objects.get(id = request.POST.get['empleado-id'])
+        request.session['empleados'].append({
+             'id': empleado.id,
+             'nombre':empleado.first_name,
+             'apellido': empleado.last_name
+        })
+        messages.success(request, "¡Empleado añadido!")
+        print(empleado)
