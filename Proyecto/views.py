@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import *
 from .models import Proyecto
+from django.core.paginator import Paginator
 
 def index(request):
     proyectos = Proyecto.objects.all()  # Inicialmente, obtén todos los proyectos
@@ -25,8 +26,11 @@ def index(request):
 
     else:
         form = FiltroProyectosForm()
-
-    return render(request, 'Proyecto/index.html',{'form': form, 'proyectos': proyectos})
+    paginator = Paginator(proyectos,1)
+    page = request.GET.get('page')
+    paged_proyecto = paginator.get_page(page)
+    proyecto_count = proyectos.count()
+    return render(request, 'Proyecto/index.html',{'form': form, 'proyectos': paged_proyecto,'proyecto_count': proyecto_count})
 
 def add(request):
     if request.method == 'POST':
