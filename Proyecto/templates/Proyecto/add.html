@@ -16,7 +16,36 @@
             </div>
             <div class="card-body">
                 <form method="POST">
-                    
+                    {% csrf_token %}
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="inputEmail4">
+                                    {{form.FK_CLIENTE.label}}
+                                </label>
+                                {{form.FK_CLIENTE}}
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="inputEmail4">
+                                    {{form.FK_TIPO_SERVICIO.label}}
+                                </label>
+                                {{form.FK_TIPO_SERVICIO}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="inputEmail4">
+                                    {{form.ST_DIRECCION_PROYECTO.label}}
+                                </label>
+                                {{form.ST_DIRECCION_PROYECTO}}
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="inputEmail4">
+                                    {{form.ST_DESCRIPCION_PROYECTO.label}}
+                                </label>
+                                {{form.ST_DESCRIPCION_PROYECTO}}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Siguiente</button>
                 </form>
             </div>
         </div>
