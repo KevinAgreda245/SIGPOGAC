@@ -92,6 +92,10 @@ def transporteForm(request):
 
 def agregarEmpleado(request):
     if request.method == 'POST':
+        if 'empleados' not in request.session:
+            request.session['empleados'] = []
+        else:
+            request.session['empleados'] = request.session['empleados']
         empleado =  Usuario.objects.get(id = request.POST.get['empleado-id'])
         request.session['empleados'].append({
              'id': empleado.id,
