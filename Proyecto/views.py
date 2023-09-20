@@ -40,6 +40,28 @@ def add(request):
         if form.is_valid():
             tipoServicio = request.POST["FK_TIPO_SERVICIO"]
 
+            context = {
+                    "tipoServicio": form.cleaned_data['FK_TIPO_SERVICIO'], 
+                    "form": form,
+                }
+            
+            if tipoServicio == "1":
+                    return render(request, 'Proyecto/concreto.html', context)
+            elif tipoServicio == "5":
+                    return render(request, 'Proyecto/levantamiento.html', context)
+            elif tipoServicio == "6":
+                     return render(request, 'Proyecto/metalica.html', context)
+            elif tipoServicio =="7":
+                    return render(request, 'Proyecto/senializacionvial.html', context)
+            elif tipoServicio =="2":
+                    return render(request, 'Proyecto/rentaequipo.html', context)
+            elif tipoServicio =="3":
+                    return render(request, 'Proyecto/rentadesimetro.html', context)
+            elif tipoServicio =="4":
+                 return render(request, 'Proyecto/transporte.html', context)
+            elif tipoServicio =="8":  
+                 return render(request, 'Proyecto/asesoria.html', context)            
+            else: messages.error(request, "En construcción")
         else:
             for field, errors in form.errors.items():
                 form.fields[field].widget.attrs.update({
