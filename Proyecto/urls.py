@@ -8,5 +8,6 @@ urlpatterns = [
 
 
     path('transporte', views.transporteForm, name = "transporteForm"),
-    path('agregar_empleado', views.agregarEmpleado, name = "agregarEmpleado")
+    path('agregar_empleado', views.agregarEmpleado, name = "agregarEmpleado"),
+    path('eliminar_empleado/<int:id>', views.eliminarEmpleado, name = "eliminarEmpleado")
 ]

@@ -1,101 +1,116 @@
-{% extends 'General/dashboard.html' %}
-
-{% block title %} Registro de Proyecto {% endblock %}
-
-{% block main %}
+{% extends 'General/dashboard.html' %} {% block title %} Registro de Proyecto
+{%endblock %} {% block main %}
 
 <div class="header">
-    <h1 class="header-title">
-        Transporte
-    </h1>
+  <h1 class="header-title">Proyecto de tipo transporte</h1>
 </div>
 <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Información general</h5>
-            </div>
-            <div class="card-body">
-                <form method="POST">
-                    {% csrf_token %}
-                        <div class="row">
-                            <div class="mb-3 col-md-6">
-                                <label for="inputEmail4">
-                                    Unidad de medida
-                                </label>
-                                <select id="cuenta-id" name="cuenta-id" class="form-control cuenta-select">
-                                    <option value="0" selected>Seleccione una medida</option>
-                                    {% for u_value, u_label in unidades %}
-                                        <option value="{{ u_value}}">{{ u_label }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="inputEmail4">
-                                    Volumen
-                                </label>
-                                <input type="number" name="volumen-cant" id="volumen-cant" class="form-control" step = ".01" min="0.00">
-                            </div>
-                        </div>
-                        <h3 class="card-title">Personal a participar</h3>
-                        <div class="row">
-                            <div class="mb-3 col-md-6">
-                                <label for="inputEmail4">
-                                    Empleado
-                                </label>
-                                <select id="empleado-id" name="empleado-id" class="form-control cuenta-select">
-                                    <option value="0" selected>Seleccione un empleado</option>
-                                    {% for emp in cc_empleados%}
-                                        <option value="{{ emp.id}}">{{ emp.first_name}} {{emp.last_name}}</option>
-                                    {% endfor %}
-                                </select>                              
-                            </div>
-                            <div class="my-4 col-md-6">
-                                <button type="submit" class="btn btn-primary" href="{% url 'agregarEmpleado' %}">Agregar</button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            
-                            <table id="tbl-Empleados" class="table table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Nombre</th>
-                                        <th>Apellido</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for emp in empleados %}
-                                        <tr>
-                                            <td>{{forloop.counter}}</td>
-                                            <td>{{emp.first_name}}</td>
-                                            <td>{{emp.last_name}}</td>
-                                            <td>
-                                                <span class="badge rounded-pill bg-danger pt-sm-2 pb-sm-2 px-3">Inactivo</span>
-                                            </td>
-                                            <td class="text-nowrap">
-                                                <a class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}                        
-                                </tbody>
-                            </table>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Siguiente</button>
-                </form>
-            </div>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Información general</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="inputEmail4">
+              {{form.ST_UNIDAD_TRANSPORTE.label}}
+              <span class="text-danger">*</span>
+            </label>
+            {{form.ST_UNIDAD_TRANSPORTE}}
+            {% if form.ST_UNIDAD_TRANSPORTE.errors%} 
+                {% for error in form.ST_UNIDAD_TRANSPORTE.errors %}
+                <small class="form-text d-block text-danger">{{ error }}</small>
+                {% endfor %} 
+            {% endif %}
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="inputEmail4">
+              {{form.NM_VOLUMEN.label}}
+              <span class="text-danger">*</span>
+            </label>
+            {{form.NM_VOLUMEN}} 
+            {% if form.NM_VOLUMEN.errors %} 
+                {% for error in form.NM_VOLUMEN.errors %}
+                <small class="form-text d-block text-danger">{{ error }}</small>
+                {% endfor %} 
+            {% endif %}
+          </div>
         </div>
+        <br />
+        <h3 class="card-title">Personal a participar</h3>
+        <form method="POST" action="{% url 'agregarEmpleado'%}">
+          {% csrf_token %}
+          <div class="row">
+            <div class="mb-3 col-md-6">
+              <label for="inputEmail4"> Empleado </label>
+              <select
+                id="empleado-id"
+                name="empleado-id"
+                class="form-control cuenta-select"
+              >
+                <option value="0" selected>Seleccione un empleado</option>
+                {% for emp in cc_empleados%}
+                <option value="{{ emp.id}}">
+                  {{ emp.first_name}} {{emp.last_name}}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="my-4 col-md-6">
+              <button type="submit" class="btn btn-primary">Agregar</button>
+            </div>
+          </div>
+        </form>
+        <div class="card-body">
+          <table
+            id="tbl-Empleados"
+            class="table table-striped"
+            style="width: 100%"
+          >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for emp in empleados %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{emp.nombre}}</td>
+                <td>{{emp.apellido}}</td>
+                <td class="text-nowrap">
+                  <a
+                    href="{% url 'eliminarEmpleado' forloop.counter %}"
+                    class="btn btn-danger"
+                    ><i class="fas fa-trash"></i
+                  ></a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="row justify-content-end mt-3">
+          <div class="col-auto">
+            <a class="btn btn-danger" href="">Cancelar</a>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-success">Registrar</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
-
-{% endblock %}
-
-{% block js %}
+{% endblock %} {% block js %}
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        initTable("#tbl-Empleados","empleados");
-    });
+  document.addEventListener("DOMContentLoaded", function () {
+    initTable("#tbl-Empleados", "empleados");
+  });
 </script>
 {% endblock %}

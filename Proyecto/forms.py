@@ -1,5 +1,5 @@
 from django import forms
-from Proyecto.models import Proyecto,EstadoProyecto,TipoServicio
+from Proyecto.models import Proyecto,EstadoProyecto,TipoServicio, Transporte
 from Cliente.models import Cliente
 
 
@@ -40,3 +40,14 @@ class FiltroProyectosForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control select2'}),
         label="Tipo de Servicio:"
     )
+
+
+class TransporteForm(forms.ModelForm):
+    class Meta:
+        model = Transporte
+        fields = '__all__'
+        exclude = ['NM_VOLUMEN,FK_PROYECTO']
+        widgets = {
+            'ST_UNIDAD_TRANSPORTE': forms.Select(attrs={'class': 'form-control select2', 'data-bs-toggle':'select2'}),
+            'NM_VOLUMEN' :  forms.TextInput(attrs={'class': 'form-control','required': 'required', 'type': 'number', 'step': '.01', 'min':'0.00'}),
+        }

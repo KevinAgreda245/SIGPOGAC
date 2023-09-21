@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from .forms import *
 from .models import *
 from Administrador.models import *
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.db.models import Q
 
 def index(request):
     proyectos = Proyecto.objects.all()  # Inicialmente, obtén todos los proyectos
@@ -83,10 +85,11 @@ def details(request):
 
 def transporteForm(request):
     unidades = Transporte.UNIDADES
-    cc_empleados = Usuario.objects.filter(BN_ESTADO_USUARIO=1)
+    form = TransporteForm()
     empleados = request.session['empleados']
-    context = {'unidades':unidades, 'cc_empleados':cc_empleados, 'empleados':empleados}
-    print(empleados)
+    empleados_agregados = [empleado['id'] for empleado in empleados]
+    cc_empleados = Usuario.objects.filter(BN_ESTADO_USUARIO=1).exclude(Q(id__in=empleados_agregados))
+    context = {'unidades':unidades, 'cc_empleados':cc_empleados, 'empleados':empleados, 'form':form}
     return render(request, 'Proyecto/transporte.html', context)
 
 
@@ -96,11 +99,18 @@ def agregarEmpleado(request):
             request.session['empleados'] = []
         else:
             request.session['empleados'] = request.session['empleados']
-        empleado =  Usuario.objects.get(id = request.POST.get['empleado-id'])
+        empleado =  Usuario.objects.get(id = request.POST['empleado-id'])
         request.session['empleados'].append({
              'id': empleado.id,
              'nombre':empleado.first_name,
              'apellido': empleado.last_name
         })
         messages.success(request, "¡Empleado añadido!")
-        print(empleado)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
+def eliminarEmpleado(request, id):
+    index = id - 1
+    del request.session['empleados'][index]
+    request.session.modified = True
+    messages.info(request, "¡El empleado fue retirado del listado!")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
