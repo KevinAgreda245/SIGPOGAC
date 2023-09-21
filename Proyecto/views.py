@@ -201,7 +201,7 @@ def registerMaterial(request):
         materiales = request.session['materiales']
         materiales_agregados = [material['id'] for material in materiales]
         cc_materiales = Material.objects.filter(BN_ESTADO_MATERIAL=1).exclude(Q(SK_MATERIAL__in=materiales_agregados))
-        context = {'cc_equipos':cc_materiales, 'equipos':materiales}
+        context = {'cc_materiales':cc_materiales, 'materiales':materiales}
         return render(request, 'Proyecto/asignacionMaterial.html', context)
     
 def deleteMaterial(request, id):
