@@ -97,8 +97,8 @@ class RentaEquipo(models.Model):
     SK_RENTA_EQUIPO = models.AutoField(primary_key=True)
     FC_SALIDA_EQUIPO = models.DateTimeField(null=False,blank=False)
     FC_ENTRADA_EQUIPO = models.DateTimeField(null=False,blank=False)
-    ST_TIPO_USO = models.CharField(max_length=100,null=False,blank=False)
-    ST_OBSERVACION_EQUIPO = models.CharField(max_length=120, null=True,blank=False) 
+    ST_TIPO_USO = models.CharField(max_length=100,null=False,blank=False, verbose_name="Tipo de uso:")
+    ST_OBSERVACION_EQUIPO = models.CharField(max_length=120, null=True,blank=False, verbose_name="Observación:") 
     FK_PROYECTO = models.ForeignKey(Proyecto,models.CASCADE)
     class Meta:
         db_table = "renta_equipo"
@@ -122,8 +122,8 @@ class Transporte(models.Model):
         ('GALON','Galón')
     ]
     SK_TRANSPORTE = models.AutoField(primary_key=True)
-    NM_VOLUMEN = models.DecimalField(max_digits=10,decimal_places=2,null=False,blank=False)
-    ST_UNIDAD_TRANSPORTE = models.CharField(max_length=50,choices=UNIDADES)
+    NM_VOLUMEN = models.DecimalField(max_digits=10,decimal_places=2,null=False,blank=False, verbose_name="Volumen:")
+    ST_UNIDAD_TRANSPORTE = models.CharField(max_length=50,choices=UNIDADES, verbose_name="Unidad de volumen:")
     FK_PROYECTO = models.ForeignKey(Proyecto,models.CASCADE)
     class Meta:
         db_table = "transporte"

@@ -1,0 +1,76 @@
+{% extends 'General/dashboard.html' %} 
+{% block title %} Asignación de Materiales{% endblock %} 
+{% block main %}
+<div class="header">
+  <h1 class="header-title">Asignación de materiales</h1>
+</div>
+<div class="card">
+  <div class="card-body">
+    <form method="POST" action="{% url 'registerMaterial'%}">
+      {% csrf_token %}
+      <div class="row">
+        <div class="mb-3 col-md-6">
+          <label for="inputEmail4"> Material </label>
+          <select
+            id="material-id"
+            name="material-id"
+            class="form-control material-select"
+            required
+          >
+            <option value="" disabled selected>Seleccione un material</option>
+            {% for material in cc_materiales%}
+            <option value="{{ material.SK_MATERIAL}}">
+              {{ material.ST_NOMBRE_MATERIAL}}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="my-4 col-md-6">
+          <button type="submit" class="btn btn-primary">Agregar</button>
+        </div>
+      </div>
+    </form>
+    <table id="tbl-Materiales" class="table table-striped" style="width: 100%">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for mat in materiales %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{mat.nombre}}</td>
+          <td>{{mat.descripcion}}</td>
+          <td class="text-nowrap">
+            <a
+              href="{% url 'deleteMaterial' forloop.counter %}"
+              class="btn btn-danger"
+              ><i class="fas fa-trash"></i
+            ></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="row justify-content-end mt-3">
+      <div class="col-auto">
+        <a class="btn btn-danger" href="{% url 'Proyecto' %}">Cancelar</a>
+      </div>
+      <div class="col-auto">
+        <a class="btn btn-success" href = "{% url 'saveProyecto' %}">Finalizar</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 
+{% block js %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    initTable("#tbl-Materiales", "materiales");
+  });
+</script>
+{% endblock %}

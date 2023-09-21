@@ -1,5 +1,5 @@
 from django import forms
-from Proyecto.models import Proyecto,EstadoProyecto,TipoServicio, Transporte
+from Proyecto.models import Proyecto,EstadoProyecto, RentaEquipo,TipoServicio, Transporte
 from Cliente.models import Cliente
 
 
@@ -50,4 +50,15 @@ class TransporteForm(forms.ModelForm):
         widgets = {
             'ST_UNIDAD_TRANSPORTE': forms.Select(attrs={'class': 'form-control select2', 'data-bs-toggle':'select2'}),
             'NM_VOLUMEN' :  forms.TextInput(attrs={'class': 'form-control','required': 'required', 'type': 'number', 'step': '.01', 'min':'0.00'}),
+        }
+
+
+class RentaEquipoForm(forms.ModelForm):
+    class Meta:
+        model = RentaEquipo
+        fields = '__all__'
+        exclude = ['SK_RENTA_EQUIPO, FK_PROYECTO,FC_SALIDA_EQUIPO,FC_ENTRADA_EQUIPO']
+        widgets = {
+            'ST_TIPO_USO' : forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
+            'ST_OBSERVACION_EQUIPO' : forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
         }

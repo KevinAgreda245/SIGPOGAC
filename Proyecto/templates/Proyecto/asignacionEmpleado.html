@@ -1,0 +1,76 @@
+{% extends 'General/dashboard.html' %} 
+{% block title %} Asignación de Empleados{% endblock %} 
+{% block main %}
+<div class="header">
+  <h1 class="header-title">Asignación de empleados</h1>
+</div>
+<div class="card">
+  <div class="card-body">
+    <form method="POST" action="{% url 'registerEmployees'%}">
+      {% csrf_token %}
+      <div class="row">
+        <div class="mb-3 col-md-6">
+          <label for="inputEmail4"> Empleado </label>
+          <select
+            id="empleado-id"
+            name="empleado-id"
+            class="form-control empleado-select"
+            required
+          >
+            <option value="" disabled selected>Seleccione un empleado</option>
+            {% for emp in cc_empleados%}
+            <option value="{{ emp.id}}">
+              {{ emp.first_name}} {{emp.last_name}}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="my-4 col-md-6">
+          <button type="submit" class="btn btn-primary">Agregar</button>
+        </div>
+      </div>
+    </form>
+    <table id="tbl-Empleados" class="table table-striped" style="width: 100%">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for emp in empleados %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{emp.nombre}}</td>
+          <td>{{emp.apellido}}</td>
+          <td class="text-nowrap">
+            <a
+              href="{% url 'deleteEmployee' forloop.counter %}"
+              class="btn btn-danger"
+              ><i class="fas fa-trash"></i
+            ></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="row justify-content-end mt-3">
+      <div class="col-auto">
+        <a class="btn btn-danger" href="{% url 'Proyecto' %}">Cancelar</a>
+      </div>
+      <div class="col-auto">
+        <a class="btn btn-success" href = "{% url 'registerMaterial' %}">Siguiente</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 
+{% block js %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    initTable("#tbl-Empleados", "empleados");
+  });
+</script>
+{% endblock %}

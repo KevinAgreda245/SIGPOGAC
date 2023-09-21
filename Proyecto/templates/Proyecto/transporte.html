@@ -11,106 +11,45 @@
         <h5 class="card-title mb-0">Información general</h5>
       </div>
       <div class="card-body">
-        <div class="row">
-          <div class="mb-3 col-md-6">
-            <label for="inputEmail4">
-              {{form.ST_UNIDAD_TRANSPORTE.label}}
-              <span class="text-danger">*</span>
-            </label>
-            {{form.ST_UNIDAD_TRANSPORTE}}
-            {% if form.ST_UNIDAD_TRANSPORTE.errors%} 
-                {% for error in form.ST_UNIDAD_TRANSPORTE.errors %}
-                <small class="form-text d-block text-danger">{{ error }}</small>
-                {% endfor %} 
-            {% endif %}
-          </div>
-          <div class="mb-3 col-md-6">
-            <label for="inputEmail4">
-              {{form.NM_VOLUMEN.label}}
-              <span class="text-danger">*</span>
-            </label>
-            {{form.NM_VOLUMEN}} 
-            {% if form.NM_VOLUMEN.errors %} 
-                {% for error in form.NM_VOLUMEN.errors %}
-                <small class="form-text d-block text-danger">{{ error }}</small>
-                {% endfor %} 
-            {% endif %}
-          </div>
-        </div>
-        <br />
-        <h3 class="card-title">Personal a participar</h3>
-        <form method="POST" action="{% url 'agregarEmpleado'%}">
+        <form method="POST" action = "{% url 'transporteForm'%}">
           {% csrf_token %}
           <div class="row">
             <div class="mb-3 col-md-6">
-              <label for="inputEmail4"> Empleado </label>
-              <select
-                id="empleado-id"
-                name="empleado-id"
-                class="form-control cuenta-select"
-              >
-                <option value="0" selected>Seleccione un empleado</option>
-                {% for emp in cc_empleados%}
-                <option value="{{ emp.id}}">
-                  {{ emp.first_name}} {{emp.last_name}}
-                </option>
-                {% endfor %}
-              </select>
+              <label for="inputEmail4">
+                {{form.ST_UNIDAD_TRANSPORTE.label}}
+                <span class="text-danger">*</span>
+              </label>
+              {{form.ST_UNIDAD_TRANSPORTE}} 
+              {% if form.ST_UNIDAD_TRANSPORTE.errors%} 
+                {% for error in form.ST_UNIDAD_TRANSPORTE.errors %}
+                <small class="form-text d-block text-danger">{{ error }}</small>
+                {% endfor %} 
+              {% endif %}
             </div>
-            <div class="my-4 col-md-6">
-              <button type="submit" class="btn btn-primary">Agregar</button>
+            <div class="mb-3 col-md-6">
+              <label for="inputEmail4">
+                {{form.NM_VOLUMEN.label}}
+                <span class="text-danger">*</span>
+              </label>
+              {{form.NM_VOLUMEN}} 
+              {% if form.NM_VOLUMEN.errors %} 
+                {% for error in form.NM_VOLUMEN.errors %}
+                <small class="form-text d-block text-danger">{{ error }}</small>
+                {% endfor %} 
+              {% endif %}
+            </div>
+          </div>
+          <div class="row justify-content-end mt-3">
+            <div class="col-auto">
+              <a class="btn btn-danger" href="{% url 'Proyecto' %}">Cancelar</a>
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-success">Siguiente</button>
             </div>
           </div>
         </form>
-        <div class="card-body">
-          <table
-            id="tbl-Empleados"
-            class="table table-striped"
-            style="width: 100%"
-          >
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for emp in empleados %}
-              <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{emp.nombre}}</td>
-                <td>{{emp.apellido}}</td>
-                <td class="text-nowrap">
-                  <a
-                    href="{% url 'eliminarEmpleado' forloop.counter %}"
-                    class="btn btn-danger"
-                    ><i class="fas fa-trash"></i
-                  ></a>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        <div class="row justify-content-end mt-3">
-          <div class="col-auto">
-            <a class="btn btn-danger" href="">Cancelar</a>
-          </div>
-          <div class="col-auto">
-            <button type="submit" class="btn btn-success">Registrar</button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </div>
-
-{% endblock %} {% block js %}
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    initTable("#tbl-Empleados", "empleados");
-  });
-</script>
-{% endblock %}
+{% endblock %} 

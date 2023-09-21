@@ -1,0 +1,81 @@
+{% extends 'General/dashboard.html' %} 
+{% block title %} Asignación de Equipos{% endblock %} 
+{% block main %}
+<div class="header">
+  <h1 class="header-title">Asignación de equipos</h1>
+</div>
+<div class="card">
+  <div class="card-body">
+    <form method="POST" action="{% url 'registerEquipment'%}">
+      {% csrf_token %}
+      <div class="row">
+        <div class="mb-3 col-md-6">
+          <label for="inputEmail4"> Equipo</label>
+          <select
+            id="equipo-id"
+            name="equipo-id"
+            class="form-control equipo-select"
+            required
+          >
+            <option value="" disabled selected>Seleccione un equipo</option>
+            {% for equipo in cc_equipos%}
+            <option value="{{ equipo.SK_EQUIPO}}">
+              {{ equipo.ST_NOMBRE_EQUIPO}}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="my-4 col-md-6">
+          <button type="submit" class="btn btn-primary">Agregar</button>
+        </div>
+      </div>
+    </form>
+    <table id="tbl-Equipos" class="table table-striped" style="width: 100%">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for equipo in equipos %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{equipo.nombre}}</td>
+          <td>{{equipo.descripcion}}</td>
+          <td class="text-nowrap">
+            <a
+              href="{% url 'deleteEquipment' forloop.counter %}"
+              class="btn btn-danger"
+              ><i class="fas fa-trash"></i
+            ></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="row justify-content-end mt-3">
+      <div class="col-auto">
+        <a class="btn btn-danger" href="{% url 'Proyecto' %}">Cancelar</a>
+      </div>
+      <div class="col-auto">
+        {% if tipo_servicio in servicios %}
+            <a class="btn btn-success" href = "{% url 'registerEmployees' %}">Siguiente</a>
+        {% else %}
+            <a type="submit" class="btn btn-success" href = "{% url 'saveProyecto' %}">Finalizar</a>
+        {% endif %}
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} 
+{% block js %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    initTable("#tbl-Equipos", "equipos");
+  });
+</script>
+{% endblock %}
