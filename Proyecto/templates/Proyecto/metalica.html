@@ -6,9 +6,57 @@
 
 <div class="header">
     <h1 class="header-title">
-        Metalica
+        Estructura Metalica
     </h1>
 </div>
 
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Información general</h5>
+            </div>
+            <div class="card-body">
+                <form action = "{% url 'estructuraMetalicaForm' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">
+                            {{form.ST_TIPO_DOC_CONCRETO.label}}
+                            <span class="text-danger">*</span>
+                            </label>
+                            {{form.ST_TIPO_DOC_CONCRETO}} 
+                            {% if form.ST_TIPO_DOC_CONCRETO.errors%} 
+                            {% for error in form.ST_TIPO_DOC_CONCRETO.errors %}
+                            <small class="form-text d-block text-danger">{{ error }}</small>
+                            {% endfor %} 
+                            {% endif %}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">
+                            {{form.ST_DOC_CONCRETO.label}}
+                            <span class="text-danger">*</span>
+                            </label>
+                            {{form.ST_DOC_CONCRETO}} 
+                            {% if form.ST_DOC_CONCRETO.errors %} 
+                            {% for error in form.ST_DOC_CONCRETO.errors %}
+                            <small class="form-text d-block text-danger">{{ error }}</small>
+                            {% endfor %} 
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row justify-content-end mt-3">
+                        <div class="col-auto">
+                            <a class="btn btn-danger" href="{% url 'Proyecto' %}">Cancelar</a>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-success">Siguiente</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -106,3 +106,13 @@ class LevantamientoTopograficoForm(forms.ModelForm):
             'NM_AREA': forms.NumberInput(attrs={'class': 'form-control'}),
             'ST_UNIDAD_LEVANTAMIENTO' : forms.Select(attrs={'class': 'form-control select2', 'data-bs-toggle':'select2'}),
         }
+
+class EstructuraMetalicaForm(forms.ModelForm):
+    class Meta:
+        model = EstructuraMetalica
+        fields = '__all__'
+        exclude = ['SK_ESTRUCTURA_METALICA', 'FK_PROYECTO']
+        widgets = {
+          'ST_TIPO_DOC_CONCRETO': forms.Select(attrs={'class': 'form-control select2', 'data-bs-toggle':'select2'}),
+          'ST_DOC_CONCRETO': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }

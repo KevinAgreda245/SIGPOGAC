@@ -72,7 +72,7 @@ def add(request):
             elif tipoServicio == "5":
                 return redirect('levantamientoTopograficoForm')
             elif tipoServicio == "6":
-                return render(request, 'Proyecto/metalica.html', context)
+                return redirect('estructuraMetalicaForm')
             elif tipoServicio =="7":
                     return render(request, 'Proyecto/senializacionvial.html', context)
             elif tipoServicio =="8":  
@@ -159,7 +159,6 @@ def concretoForm(request):
         form = ConcretoForm()
     return render(request, 'Proyecto/concreto.html', {'form':form})
 
-
 def levantamientoTopograficoForm(request):
     if request.method == 'POST':
         form = LevantamientoTopograficoForm(request.POST)      
@@ -170,7 +169,29 @@ def levantamientoTopograficoForm(request):
         return redirect("registerEquipment")
     else:
         form = LevantamientoTopograficoForm()
-        return render(request, 'Proyecto/levantamiento.html', {'form':form})
+    return render(request, 'Proyecto/levantamiento.html', {'form':form})
+
+def estructuraMetalicaForm(request):
+    if request.method == 'POST':
+        form = EstructuraMetalicaForm(request.POST,request.FILES)
+        if form.is_valid():
+            uploaded_file = request.FILES['ST_DOC_CONCRETO']
+
+            # Define la ubicación en la que deseas guardar el archivo en el servidor
+            file_path = os.path.join(settings.MEDIA_ROOT, 'temp', uploaded_file.name)
+
+            # Abre el archivo y guárdalo en el servidor
+            with open(file_path, 'wb') as file:
+                for chunk in uploaded_file.chunks():
+                    file.write(chunk)
+            request.session['form'] = {
+                'post_data': request.POST,
+                'files_data': file_path,
+            }
+            return redirect("registerEmployees")
+    else:
+        form = EstructuraMetalicaForm()
+    return render(request, 'Proyecto/metalica.html', {'form': form})
 
 
 def registerEmployees(request):
@@ -343,9 +364,32 @@ def saveEspecifications(form_data, tipo_servicio):
         )
         return ConcretoForm(form_data['post_data'],files={'ST_DOC_CONCRETO': archivo_upload})    
     elif tipo_servicio == "5":
-        return RentaEquipoForm(form_data)
+        return LevantamientoTopograficoForm(form_data)
     elif tipo_servicio == "6":
-        return RentaEquipoForm(form_data)
+                # Ruta de archivo
+        archivo_ruta = form_data['files_data']
+
+        # Nombre de archivo y extensión
+        nombre_archivo = os.path.basename(archivo_ruta)
+        nombre, extension = os.path.splitext(nombre_archivo)
+
+        # Abre el archivo en modo binario
+        with open(archivo_ruta, 'rb') as archivo:
+            archivo_bytes = archivo.read()
+
+        # Crea un objeto BytesIO para simular un archivo en memoria
+        archivo_en_memoria = io.BytesIO(archivo_bytes)
+        
+        # Crea un objeto InMemoryUploadedFile
+        archivo_upload = InMemoryUploadedFile(
+            archivo_en_memoria,
+            None,  
+            nombre_archivo,
+            'application/pdf',
+            len(archivo_bytes),
+            None
+        )
+        return EstructuraMetalicaForm(form_data['post_data'],files={'ST_DOC_CONCRETO': archivo_upload}) 
     elif tipo_servicio =="7":
         return RentaEquipoForm(form_data)
     elif tipo_servicio =="2":
@@ -353,6 +397,6 @@ def saveEspecifications(form_data, tipo_servicio):
     elif tipo_servicio =="3":
         return RentaDesimetroForm(form_data)
     elif tipo_servicio =="4":
-        return RentaEquipoForm(form_data)
+        return TransporteForm(form_data)
     elif tipo_servicio =="8":  
         return RentaEquipoForm(form_data)
