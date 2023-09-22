@@ -164,6 +164,7 @@ def levantamientoTopograficoForm(request):
         form = LevantamientoTopograficoForm(request.POST)      
         if form.is_valid():
             form_data = form.cleaned_data
+            form_data['NM_AREA'] = int(form_data['NM_AREA'])
             request.session['form'] = form_data
         return redirect("registerEquipment")
     else:

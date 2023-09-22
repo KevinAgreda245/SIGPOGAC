@@ -103,6 +103,6 @@ class LevantamientoTopograficoForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['SK_LEVANTAMIENTO_TOPOGRAFICO', 'FK_PROYECTO']
         widgets = {
-            'NM_AREA' : forms.Textarea(attrs={'class': 'form-control', 'rows' : '3'}),
-            'ST_UNIDAD_LEVANTAMIENTO' : forms.Textarea(attrs={'class': 'form-control', 'rows' : '3'}),
+            'NM_AREA': forms.NumberInput(attrs={'class': 'form-control'}),
+            'ST_UNIDAD_LEVANTAMIENTO' : forms.Select(attrs={'class': 'form-control select2', 'data-bs-toggle':'select2'}),
         }
