@@ -65,6 +65,18 @@ class RentaEquipoForm(forms.ModelForm):
             'ST_OBSERVACION_EQUIPO' : forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
         }
 
+class RentaDesimetroForm(forms.ModelForm):
+    class Meta:
+        model = RentaDesimetro
+        fields = '__all__'
+        exclude = ['SK_RENTA_DESIMETRO', 'FK_PROYECTO']
+        widgets ={
+            'FC_SALIDA_DESIMETRO': forms.TextInput(attrs={'class': 'form-control data-picker', 'placeholder': 'dd/mm/aaaa'}),
+            'FC_ENTRADA_DESIMETRO': forms.TextInput(attrs={'class': 'form-control data-picker', 'placeholder': 'dd/mm/aaaa'}),
+            'ST_NOMBRE_TECNICO' : forms.TextInput(attrs={'class': 'form-control'}),
+            'ST_OBSERVACION_DESIMETRO' : forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
+        }
+
 class ConcretoForm(forms.ModelForm):
     class Meta:
         model = Concreto

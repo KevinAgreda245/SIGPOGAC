@@ -126,7 +126,6 @@ def rentaEquipoForm(request):
 def concretoForm(request):
     if request.method == 'POST':
         form = ConcretoForm(request.POST,request.FILES)
-        print(request.POST)
         if form.is_valid():
             uploaded_file = request.FILES['ST_DOC_CONCRETO']
 
@@ -178,7 +177,6 @@ def deleteEmployee(request, id):
 
 
 def registerEquipment(request):
-    print(request.session.get('form', None))
     if request.method == 'POST':
         if 'equipos' not in request.session:
             request.session['equipos'] = []
