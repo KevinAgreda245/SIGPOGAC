@@ -31,8 +31,8 @@ class EstadoProyecto(models.Model):
 class Proyecto(models.Model):
     SK_PROYECTO = models.AutoField(primary_key=True)
     ST_DIRECCION_PROYECTO = models.CharField(max_length=120,null=False,blank=False,verbose_name="Dirección:")
-    NM_LATITUD_PROYECTO = models.FloatField(null=False,blank=False)
-    NM_LONGITUD_PROYECTO = models.FloatField(null=False,blank=False)
+    NM_LATITUD_PROYECTO = models.FloatField(null=True,blank=True, default=None)
+    NM_LONGITUD_PROYECTO = models.FloatField(null=True,blank=True, default=None)
     ST_DESCRIPCION_PROYECTO = models.CharField(max_length=120,null=False,blank=False,verbose_name="Descripción:")
     FK_CLIENTE = models.ForeignKey(Cliente,models.CASCADE,verbose_name="Cliente")
     FK_ESTADO_PROYECTO = models.ForeignKey(EstadoProyecto,models.CASCADE,verbose_name="Estado:")
@@ -95,8 +95,8 @@ class Concreto(models.Model):
     
 class RentaEquipo(models.Model):
     SK_RENTA_EQUIPO = models.AutoField(primary_key=True)
-    FC_SALIDA_EQUIPO = models.DateTimeField(null=False,blank=False)
-    FC_ENTRADA_EQUIPO = models.DateTimeField(null=False,blank=False)
+    FC_SALIDA_EQUIPO = models.DateTimeField(null=False,blank=False, verbose_name="Fecha de salida:")
+    FC_ENTRADA_EQUIPO = models.DateTimeField(null=False,blank=False, verbose_name="Fecha de entrada:")
     ST_TIPO_USO = models.CharField(max_length=100,null=False,blank=False, verbose_name="Tipo de uso:")
     ST_OBSERVACION_EQUIPO = models.CharField(max_length=120, null=True,blank=False, verbose_name="Observación:") 
     FK_PROYECTO = models.ForeignKey(Proyecto,models.CASCADE)

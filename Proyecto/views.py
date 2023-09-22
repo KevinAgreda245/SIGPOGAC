@@ -49,7 +49,7 @@ def add(request):
 
             #Extraer data general de proyecto
             request.session['cliente'] = request.POST['FK_CLIENTE']
-            request.session['direcccion'] = request.POST['ST_DIRECCION_PROYECTO']
+            request.session['direccion'] = request.POST['ST_DIRECCION_PROYECTO']
             request.session['descripcion'] = request.POST['ST_DESCRIPCION_PROYECTO']
             request.session['tipo_servicio'] = request.POST['FK_TIPO_SERVICIO']
 
@@ -109,11 +109,13 @@ def transporteForm(request):
 
 def rentaEquipoForm(request):
     if request.method == 'POST':
-        form = RentaEquipoForm(request.POST)      
+        form = RentaEquipoForm(request.POST)    
         if form.is_valid():
-            request.session['rentaEquipoForm_ST_TIPO_USO'] = request.POST['ST_TIPO_USO']
-            request.session['rentaEquipoForm_ST_OBSERVACION_EQUIPO'] = request.POST['ST_OBSERVACION_EQUIPO']
-        return redirect("registerEquipment")
+            form_data = form.cleaned_data
+            form_data['FC_ENTRADA_EQUIPO'] = form_data['FC_ENTRADA_EQUIPO'].strftime('%Y-%m-%d %H:%M:%S')
+            form_data['FC_SALIDA_EQUIPO'] = form_data['FC_SALIDA_EQUIPO'].strftime('%Y-%m-%d %H:%M:%S')
+            request.session['form'] = form_data
+            return redirect("registerEquipment")
     else:
         form = RentaEquipoForm()
         return render(request, 'Proyecto/rentaequipo.html', {'form':form})
@@ -152,6 +154,7 @@ def deleteEmployee(request, id):
 
 
 def registerEquipment(request):
+    print(request.session.get('form', None))
     if request.method == 'POST':
         if 'equipos' not in request.session:
             request.session['equipos'] = []
@@ -212,4 +215,71 @@ def deleteMaterial(request, id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def save(request):
-    return redirect("Main")
+    if 'tipo_servicio' in request.session:
+        cliente = Cliente.objects.get(SK_CLIENTE = request.session['cliente'])
+        tipo_servicio = TipoServicio.objects.get(SK_TIPO_SERVICIO = request.session['tipo_servicio'])
+        estado_proyecto = EstadoProyecto.objects.get(SK_ESTADO_PROYECTO = 1)
+        proyecto = Proyecto.objects.create(
+            FK_CLIENTE = cliente,
+            FK_TIPO_SERVICIO = tipo_servicio,
+            FK_ESTADO_PROYECTO = estado_proyecto,
+            ST_DESCRIPCION_PROYECTO = request.session['descripcion'],
+            ST_DIRECCION_PROYECTO = request.session['direccion'],
+            FK_USUARIO = request.user
+        )
+        if 'form' in request.session:
+            form_data = request.session['form']        
+            form = saveEspecifications(form_data, request.session['tipo_servicio'])
+            if form.is_valid():
+                especificaciones = form.save(commit=False)
+                especificaciones.FK_PROYECTO = proyecto
+                especificaciones.save()
+        if 'empleados' in request.session:
+            for empleado in request.session['empleados']:
+                usuario = Usuario.objects.get(id = empleado['id'])
+                AsignacionEmpleado.objects.create(
+                    SK_PROYECTO = proyecto,
+                    FK_USUARIO = usuario
+                )
+        if 'equipos' in request.session:
+            for equipo in request.session['equipos']:
+                equipo = Equipo.objects.get(SK_EQUIPO = equipo['id'])
+                AsignacionEquipo.objects.create(
+                    SK_PROYECTO = proyecto,
+                    FK_EQUIPO = equipo
+                )
+        if 'materiales' in request.session:
+            for material in request.session['materiales']:
+                material = Material.objects.get(SK_MATERIAL = material['id'])
+                AsignacionMaterial.objects.create(
+                    SK_MATERIAL = material,
+                    FK_PROYECTO = proyecto,
+                    ST_DESCRIPCION = None
+                )
+        del request.session['tipo_servicio']
+        del request.session['empleados']
+        del request.session['equipos']
+        del request.session['materiales']
+        request.session.modified = True
+        return redirect("Main")
+    else:
+        return redirect("AddProyecto")
+    
+
+def saveEspecifications(form_data, tipo_servicio):
+    if tipo_servicio == "1":
+        return RentaEquipoForm(form_data)
+    elif tipo_servicio == "5":
+        return RentaEquipoForm(form_data)
+    elif tipo_servicio == "6":
+        return RentaEquipoForm(form_data)
+    elif tipo_servicio =="7":
+        return RentaEquipoForm(form_data)
+    elif tipo_servicio =="2":
+        return RentaEquipoForm(form_data)
+    elif tipo_servicio =="3":
+        return RentaEquipoForm(form_data)
+    elif tipo_servicio =="4":
+        return RentaEquipoForm(form_data)
+    elif tipo_servicio =="8":  
+        return RentaEquipoForm(form_data)

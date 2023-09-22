@@ -44,6 +44,32 @@
                 {% endif %}
               </div>
             </div>
+            <div class = "row">
+              <div class="mb-3 col-md-6">
+                <label for="inputEmail4">
+                  {{form.FC_ENTRADA_EQUIPO.label}}
+                  <span class="text-danger">*</span>
+                </label>
+                {{form.FC_ENTRADA_EQUIPO}} 
+                {% if form.FC_ENTRADA_EQUIPO.errors%} 
+                  {% for error in form.FC_ENTRADA_EQUIPO.errors %}
+                  <small class="form-text d-block text-danger">{{ error }}</small>
+                  {% endfor %} 
+                {% endif %}
+              </div>
+              <div class="mb-3 col-md-6">
+                <label for="inputEmail4">
+                  {{form.FC_SALIDA_EQUIPO.label}}
+                  <span class="text-danger">*</span>
+                </label>
+                {{form.FC_SALIDA_EQUIPO}} 
+                {% if form.FC_SALIDA_EQUIPO.errors%} 
+                  {% for error in form.FC_SALIDA_EQUIPO.errors %}
+                  <small class="form-text d-block text-danger">{{ error }}</small>
+                  {% endfor %} 
+                {% endif %}
+              </div>
+            </div>
             <div class="row justify-content-end mt-3">
               <div class="col-auto">
                 <a class="btn btn-danger" href="{% url 'Proyecto' %}">Cancelar</a>
@@ -58,4 +84,35 @@
     </div>
   </div>
 
+{% endblock %}
+
+{% block js %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        $(".data-picker").daterangepicker({
+            maxDate: moment().subtract(18, 'years').endOf('day'),
+            startDate: moment().subtract(18, 'years').endOf('day'),
+            singleDatePicker: true,
+            showDropdowns: true,
+            timePicker: true, // Habilita la selección de horas
+            timePickerIncrement: 30,
+            locale: {
+                format: 'YYYY-MM-DD HH:mm:ss',
+                separator: ' / ',
+                applyLabel: 'Seleccionar',
+                cancelLabel: 'Cancelar',
+                fromLabel: 'Desde',
+                toLabel: 'Hasta',
+                customRangeLabel: 'Personalizado',
+                weekLabel: 'S',
+                daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                monthNames: [
+                    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                    'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+                ],
+                firstDay: 1
+            }
+        });
+    });
+  </script>
 {% endblock %}

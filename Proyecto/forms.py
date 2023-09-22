@@ -57,8 +57,10 @@ class RentaEquipoForm(forms.ModelForm):
     class Meta:
         model = RentaEquipo
         fields = '__all__'
-        exclude = ['SK_RENTA_EQUIPO, FK_PROYECTO,FC_SALIDA_EQUIPO,FC_ENTRADA_EQUIPO']
+        exclude = ['SK_RENTA_EQUIPO', 'FK_PROYECTO']
         widgets = {
+            'FC_SALIDA_EQUIPO': forms.TextInput(attrs={'class': 'form-control data-picker', 'placeholder': 'dd/mm/aaaa'}),
+            'FC_ENTRADA_EQUIPO': forms.TextInput(attrs={'class': 'form-control data-picker', 'placeholder': 'dd/mm/aaaa'}),
             'ST_TIPO_USO' : forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
             'ST_OBSERVACION_EQUIPO' : forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
         }
