@@ -1,14 +1,56 @@
 {% extends 'General/dashboard.html' %}
-
-{% block title %} Registro de Proyecto {% endblock %}
-
+{% block title %} Registro de Proyecto {% endblock %} 
 {% block main %}
 
 <div class="header">
-    <h1 class="header-title">
-        levantamiento
-    </h1>
+  <h1 class="header-title">Levantamiento Topográfico</h1>
 </div>
-
-
-{% endblock %}
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Información general</h5>
+      </div>
+      <div class="card-body">
+        <form method="POST" action = "{% url 'levantamientoTopograficoForm'%}">
+          {% csrf_token %}
+          <div class="row">
+            <div class="mb-3 col-md-6">
+              <label for="inputEmail4">
+                {{form.NM_AREA.label}}
+                <span class="text-danger">*</span>
+              </label>
+              {{form.NM_AREA}} 
+              {% if form.NM_AREA.errors%} 
+                {% for error in form.NM_AREA.errors %}
+                <small class="form-text d-block text-danger">{{ error }}</small>
+                {% endfor %} 
+              {% endif %}
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="inputEmail4">
+                {{form.ST_UNIDAD_LEVANTAMIENTO.label}}
+                <span class="text-danger">*</span>
+              </label>
+              {{form.ST_UNIDAD_LEVANTAMIENTO}} 
+              {% if form.ST_UNIDAD_LEVANTAMIENTO.errors %} 
+                {% for error in form.ST_UNIDAD_LEVANTAMIENTO.errors %}
+                <small class="form-text d-block text-danger">{{ error }}</small>
+                {% endfor %} 
+              {% endif %}
+            </div>
+          </div>
+          <div class="row justify-content-end mt-3">
+            <div class="col-auto">
+              <a class="btn btn-danger" href="{% url 'Proyecto' %}">Cancelar</a>
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-success">Siguiente</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

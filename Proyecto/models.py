@@ -137,8 +137,8 @@ class LevantamientoTopografico(models.Model):
         ('ACRE','Acre')
     ]
     SK_LEVANTAMIENTO_TOPOGRAFICO = models.AutoField(primary_key=True)
-    NM_AREA = models.DecimalField(max_digits=10,decimal_places=2,null=False,blank=False)
-    ST_UNIDAD_LEVANTAMIENTO = models.CharField(max_length=50,choices=UNIDADES)
+    NM_AREA = models.DecimalField(max_digits=10,decimal_places=2,null=False,blank=False, verbose_name="Área:")
+    ST_UNIDAD_LEVANTAMIENTO = models.CharField(max_length=50,choices=UNIDADES, verbose_name="Unidad de medida:")
     FK_PROYECTO = models.ForeignKey(Proyecto,models.CASCADE)
     class Meta:
         db_table = "levantamiento_topografico"

@@ -63,20 +63,20 @@ def add(request):
             
             if tipoServicio == "1":
                 return redirect('concretoForm')
-            elif tipoServicio == "5":
-                    return render(request, 'Proyecto/levantamiento.html', context)
-            elif tipoServicio == "6":
-                     return render(request, 'Proyecto/metalica.html', context)
-            elif tipoServicio =="7":
-                    return render(request, 'Proyecto/senializacionvial.html', context)
             elif tipoServicio =="2":
                 return redirect('rentaEquipoForm')
             elif tipoServicio =="3":
                 return redirect('rentaDesimetroForm')    
             elif tipoServicio =="4":
                 return redirect('transporteForm')
+            elif tipoServicio == "5":
+                return redirect('levantamientoTopograficoForm')
+            elif tipoServicio == "6":
+                return render(request, 'Proyecto/metalica.html', context)
+            elif tipoServicio =="7":
+                    return render(request, 'Proyecto/senializacionvial.html', context)
             elif tipoServicio =="8":  
-                 return render(request, 'Proyecto/asesoria.html', context)            
+                return render(request, 'Proyecto/asesoria.html', context)            
             else: messages.error(request, "En construcción")
         else:
             for field, errors in form.errors.items():
@@ -102,8 +102,8 @@ def transporteForm(request):
     if request.method == 'POST':
         form = TransporteForm(request.POST)      
         if form.is_valid():
-            request.session['transporteForm_ST_UNIDAD_TRANSPORTE'] = request.POST['ST_UNIDAD_TRANSPORTE']
-            request.session['transporteForm_ST_OBSERVACION_EQUIPO'] = request.POST['ST_OBSERVACION_EQUIPO']
+            form_data = form.cleaned_data
+            request.session['form'] = form_data
         return redirect("registerEquipment")
     else:
         form = TransporteForm()
@@ -157,6 +157,18 @@ def concretoForm(request):
     else:
         form = ConcretoForm()
     return render(request, 'Proyecto/concreto.html', {'form':form})
+
+
+def levantamientoTopograficoForm(request):
+    if request.method == 'POST':
+        form = LevantamientoTopograficoForm(request.POST)      
+        if form.is_valid():
+            form_data = form.cleaned_data
+            request.session['form'] = form_data
+        return redirect("registerEquipment")
+    else:
+        form = LevantamientoTopograficoForm()
+        return render(request, 'Proyecto/levantamiento.html', {'form':form})
 
 
 def registerEmployees(request):
@@ -296,6 +308,7 @@ def save(request):
         del request.session['equipos']
         del request.session['materiales']
         request.session.modified = True
+        messages.success(request, "El proyecto fue creado exitosamente.")
         return redirect("Main")
     else:
         return redirect("AddProyecto")

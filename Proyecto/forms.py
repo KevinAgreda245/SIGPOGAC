@@ -46,7 +46,7 @@ class TransporteForm(forms.ModelForm):
     class Meta:
         model = Transporte
         fields = '__all__'
-        exclude = ['NM_VOLUMEN,FK_PROYECTO']
+        exclude = ['SK_TRANSPORTE', 'FK_PROYECTO']
         widgets = {
             'ST_UNIDAD_TRANSPORTE': forms.Select(attrs={'class': 'form-control select2', 'data-bs-toggle':'select2'}),
             'NM_VOLUMEN' :  forms.TextInput(attrs={'class': 'form-control','required': 'required', 'type': 'number', 'step': '.01', 'min':'0.00'}),
@@ -85,4 +85,14 @@ class ConcretoForm(forms.ModelForm):
         widgets={
           'ST_TIPO_DOC_CONCRETO': forms.Select(attrs={'class': 'form-control select2', 'data-bs-toggle':'select2'}),
           'ST_DOC_CONCRETO': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+
+class LevantamientoTopograficoForm(forms.ModelForm):
+    class Meta:
+        model = LevantamientoTopografico
+        fields = '__all__'
+        exclude = ['SK_LEVANTAMIENTO_TOPOGRAFICO', 'FK_PROYECTO']
+        widgets = {
+            'NM_AREA' : forms.Textarea(attrs={'class': 'form-control', 'rows' : '3'}),
+            'ST_UNIDAD_LEVANTAMIENTO' : forms.Textarea(attrs={'class': 'form-control', 'rows' : '3'}),
         }
