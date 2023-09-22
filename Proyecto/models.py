@@ -169,8 +169,8 @@ class AsesoriaConstructiva(models.Model):
         ('AÑO','Año')
     ]
     SK_ASESORIA = models.AutoField(primary_key=True)
-    NM_TIEMPO = models.IntegerField(null=False,blank=False)
-    ST_UNIDAD_ASESORIA = models.CharField(max_length=50,choices=UNIDADES)
+    NM_TIEMPO = models.IntegerField(null=False,blank=False,verbose_name="N° de tiempo:")
+    ST_UNIDAD_ASESORIA = models.CharField(max_length=50,choices=UNIDADES,verbose_name="Unidades de tiempo")
     FK_PROYECTO = models.ForeignKey(Proyecto,models.CASCADE)
 
     class Meta:
