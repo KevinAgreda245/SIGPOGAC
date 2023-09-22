@@ -77,6 +77,16 @@ class RentaDesimetroForm(forms.ModelForm):
             'ST_OBSERVACION_DESIMETRO' : forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
         }
 
+class AsesoriaConstructivaForm(forms.ModelForm):
+    class Meta:
+        model = AsesoriaConstructiva
+        fields = '__all__'
+        exclude = ['SK_ASESORIA, FK_PROYECTO']
+        widgets = {
+            'NM_TIEMPO' : forms.TextInput(attrs={'class': 'form-control'}),
+            'ST_UNIDAD_ASESORIA' : forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
+        }
+
 class ConcretoForm(forms.ModelForm):
     class Meta:
         model = Concreto
