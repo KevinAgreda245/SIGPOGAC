@@ -59,7 +59,7 @@ def add(request):
                 }
             
             if tipoServicio == "1":
-                    return render(request, 'Proyecto/concreto.html', context)
+                return redirect('concretoForm')
             elif tipoServicio == "5":
                     return render(request, 'Proyecto/levantamiento.html', context)
             elif tipoServicio == "6":
@@ -120,7 +120,19 @@ def rentaEquipoForm(request):
         form = RentaEquipoForm()
         return render(request, 'Proyecto/rentaequipo.html', {'form':form})
     
-        
+def concretoForm(request):
+    if request.method == 'POST':
+        form = ConcretoForm(request.POST,request.FILES)
+        print(request.POST)
+        if form.is_valid():
+            request.session['form'] = {
+                'post_data': request.POST,
+                'files_data': request.FILES,
+            }
+            return redirect("registerEmployees")
+    else:
+        form = ConcretoForm()
+    return render(request, 'Proyecto/concreto.html', {'form':form})
 
 
 def registerEmployees(request):
@@ -268,7 +280,7 @@ def save(request):
 
 def saveEspecifications(form_data, tipo_servicio):
     if tipo_servicio == "1":
-        return RentaEquipoForm(form_data)
+        return RentaEquipoForm(form_data)    
     elif tipo_servicio == "5":
         return RentaEquipoForm(form_data)
     elif tipo_servicio == "6":

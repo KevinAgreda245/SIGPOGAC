@@ -45,7 +45,14 @@
                                 {{form.ST_DESCRIPCION_PROYECTO}}
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Siguiente</button>
+                        <div class="row justify-content-end mt-3">
+                            <div class="col-auto">
+                                <a class="btn btn-danger" href="{% url 'Proyecto' %}">Cancelar</a>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-success">Siguiente</button>
+                            </div>
+                        </div>
                 </form>
             </div>
         </div>

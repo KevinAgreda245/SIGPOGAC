@@ -1,5 +1,5 @@
 from django import forms
-from Proyecto.models import Proyecto,EstadoProyecto, RentaEquipo,TipoServicio, Transporte
+from Proyecto.models import *
 from Cliente.models import Cliente
 
 
@@ -63,4 +63,14 @@ class RentaEquipoForm(forms.ModelForm):
             'FC_ENTRADA_EQUIPO': forms.TextInput(attrs={'class': 'form-control data-picker', 'placeholder': 'dd/mm/aaaa'}),
             'ST_TIPO_USO' : forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
             'ST_OBSERVACION_EQUIPO' : forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
+        }
+
+class ConcretoForm(forms.ModelForm):
+    class Meta:
+        model = Concreto
+        fields = '__all__'
+        exclude = ['FK_PROYECTO']
+        widgets={
+          'ST_TIPO_DOC_CONCRETO': forms.Select(attrs={'class': 'form-control select2', 'data-bs-toggle':'select2'}),
+          'ST_DOC_CONCRETO': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }

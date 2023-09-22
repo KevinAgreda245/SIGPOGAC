@@ -86,8 +86,8 @@ class Concreto(models.Model):
         ('ESPECIFICACIONES','Especificaciones')
     ]
     SK_CONCRETO = models.AutoField(primary_key=True)
-    ST_TIPO_DOC_CONCRETO = models.CharField(max_length=25,choices=TIPO_DOC)
-    ST_DOC_CONCRETO = models.FileField(upload_to='doc_concreto/',null=False,blank=False)
+    ST_TIPO_DOC_CONCRETO = models.CharField(max_length=25,choices=TIPO_DOC,verbose_name="Tipo de documento:")
+    ST_DOC_CONCRETO = models.FileField(upload_to='doc_concreto/',null=False,blank=False,verbose_name="Documento:")
     FK_PROYECTO = models.ForeignKey(Proyecto,models.CASCADE)
 
     class Meta:
