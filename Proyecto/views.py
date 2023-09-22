@@ -153,7 +153,7 @@ def concretoForm(request):
                 'post_data': request.POST,
                 'files_data': file_path,
             }
-            return redirect("registerEmployees")
+            return redirect("registerEquipment")
     else:
         form = ConcretoForm()
     return render(request, 'Proyecto/concreto.html', {'form':form})
