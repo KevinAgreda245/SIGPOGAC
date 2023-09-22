@@ -74,7 +74,7 @@ def add(request):
             elif tipoServicio == "6":
                 return redirect('estructuraMetalicaForm')
             elif tipoServicio =="7":
-                    return render(request, 'Proyecto/senializacionvial.html', context)
+                return redirect('senializacionVialForm')
             elif tipoServicio =="8":  
                 return render(request, 'Proyecto/asesoria.html', context)            
             else: messages.error(request, "En construcción")
@@ -192,6 +192,17 @@ def estructuraMetalicaForm(request):
     else:
         form = EstructuraMetalicaForm()
     return render(request, 'Proyecto/metalica.html', {'form': form})
+
+def senializacionVialForm(request):
+    if request.method == 'POST':
+        form = SenializacionVialForm(request.POST)      
+        if form.is_valid():
+            form_data = form.cleaned_data
+            request.session['form'] = form_data
+        return redirect("registerEquipment")
+    else:
+        form = SenializacionVialForm()
+    return render(request, 'Proyecto/senializacionvial.html', {'form':form})
 
 
 def registerEmployees(request):
@@ -391,7 +402,7 @@ def saveEspecifications(form_data, tipo_servicio):
         )
         return EstructuraMetalicaForm(form_data['post_data'],files={'ST_DOC_CONCRETO': archivo_upload}) 
     elif tipo_servicio =="7":
-        return RentaEquipoForm(form_data)
+        return SenializacionVialForm(form_data)
     elif tipo_servicio =="2":
         return RentaEquipoForm(form_data)
     elif tipo_servicio =="3":

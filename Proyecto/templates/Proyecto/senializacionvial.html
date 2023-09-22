@@ -9,6 +9,41 @@
         Señalizacion vial
     </h1>
 </div>
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Información general</h5>
+        </div>
+        <div class="card-body">
+          <form method="POST" action = "{% url 'senializacionVialForm'%}">
+            {% csrf_token %}
+              <div class="mb-3 col-md-9">
+                <label for="inputEmail4">
+                  {{form.ST_ESPECIFICACION_VIAL.label}}
+                  <span class="text-danger">*</span>
+                </label>
+                {{form.ST_ESPECIFICACION_VIAL}} 
+                {% if form.ST_ESPECIFICACION_VIAL.errors %} 
+                  {% for error in form.ST_ESPECIFICACION_VIAL.errors %}
+                  <small class="form-text d-block text-danger">{{ error }}</small>
+                  {% endfor %} 
+                {% endif %}
+              </div>            
+              <div class="row justify-content-end mt-3">
+              <div class="col-auto">
+                <a class="btn btn-danger" href="{% url 'Proyecto' %}">Cancelar</a>
+              </div>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-success">Siguiente</button>
+              </div>
+            </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+</div>
 
 
 {% endblock %}

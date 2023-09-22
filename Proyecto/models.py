@@ -149,15 +149,15 @@ class EstructuraMetalica(models.Model):
         ('ESPECIFICACIONES','Especificaciones')
     ]
     SK_ESTRUCTURA_METALICA = models.AutoField(primary_key=True)
-    ST_TIPO_DOC_CONCRETO = models.CharField(max_length=25,choices=TIPO_DOC)
-    ST_DOC_CONCRETO = models.FileField(upload_to='doc_vial/',null=False,blank=False)
+    ST_TIPO_DOC_CONCRETO = models.CharField(max_length=25,choices=TIPO_DOC, verbose_name="Tipo de documento:")
+    ST_DOC_CONCRETO = models.FileField(upload_to='doc_vial/',null=False,blank=False,verbose_name="Documento:")
     FK_PROYECTO = models.ForeignKey(Proyecto,models.CASCADE)
     class Meta:
         db_table = "estructura_metalica"
 
 class SenializacionVial(models.Model):
     SK_SENIALIZACION_VIAL = models.AutoField(primary_key=True)
-    ST_ESPECIFICACION_VIAL = models.CharField(max_length=120,null=False,blank=False)
+    ST_ESPECIFICACION_VIAL = models.CharField(max_length=120,null=False,blank=False, verbose_name="Especificacion:")
     FK_PROYECTO = models.ForeignKey(Proyecto,models.CASCADE)
     class Meta:
         db_table = "senializacion_vial"
