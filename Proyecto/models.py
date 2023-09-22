@@ -105,10 +105,10 @@ class RentaEquipo(models.Model):
 
 class RentaDesimetro(models.Model):
     SK_RENTA_DESIMETRO = models.AutoField(primary_key=True)
-    FC_SALIDA_DESIMETRO = models.DateTimeField(null=False,blank=False)
-    FC_ENTRADA_DESIMETRO = models.DateTimeField(null=False,blank=False)
-    ST_NOMBRE_TECNICO = models.CharField(max_length=50,null=False,blank=False)
-    ST_OBSERVACION_DESIMETRO = models.CharField(max_length=120, null=True,blank=False)
+    FC_SALIDA_DESIMETRO = models.DateTimeField(null=False,blank=False,verbose_name="Fecha de salida:")
+    FC_ENTRADA_DESIMETRO = models.DateTimeField(null=False,blank=False,verbose_name="Fecha de entrada:")
+    ST_NOMBRE_TECNICO = models.CharField(max_length=50,null=False,blank=False,verbose_name="Nombre del técnico:")
+    ST_OBSERVACION_DESIMETRO = models.CharField(max_length=120, null=True,blank=False,verbose_name="Observación:")
     FK_PROYECTO = models.ForeignKey(Proyecto,models.CASCADE)
     class Meta:
         db_table = "renta_desimetro"

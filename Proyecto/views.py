@@ -72,9 +72,9 @@ def add(request):
             elif tipoServicio =="2":
                 return redirect('rentaEquipoForm')
             elif tipoServicio =="3":
-                    return render(request, 'Proyecto/rentadesimetro.html', context)
+                return redirect('rentaDesimetroForm')    
             elif tipoServicio =="4":
-                 return redirect('transporteForm')
+                return redirect('transporteForm')
             elif tipoServicio =="8":  
                  return render(request, 'Proyecto/asesoria.html', context)            
             else: messages.error(request, "En construcción")
@@ -122,6 +122,19 @@ def rentaEquipoForm(request):
     else:
         form = RentaEquipoForm()
         return render(request, 'Proyecto/rentaequipo.html', {'form':form})
+    
+def rentaDesimetroForm(request):
+    if request.method == 'POST':
+        form = RentaDesimetroForm(request.POST)    
+        if form.is_valid():
+            form_data = form.cleaned_data
+            form_data['FC_SALIDA_DESIMETRO'] = form_data['FC_SALIDA_DESIMETRO'].strftime('%Y-%m-%d %H:%M:%S')
+            form_data['FC_ENTRADA_DESIMETRO'] = form_data['FC_ENTRADA_DESIMETRO'].strftime('%Y-%m-%d %H:%M:%S')
+            request.session['form'] = form_data
+            return redirect("registerEquipment")
+    else:
+        form = RentaDesimetroForm()
+        return render(request, 'Proyecto/rentadesimetro.html', {'form':form})
     
 def concretoForm(request):
     if request.method == 'POST':
@@ -323,7 +336,7 @@ def saveEspecifications(form_data, tipo_servicio):
     elif tipo_servicio =="2":
         return RentaEquipoForm(form_data)
     elif tipo_servicio =="3":
-        return RentaEquipoForm(form_data)
+        return RentaDesimetroForm(form_data)
     elif tipo_servicio =="4":
         return RentaEquipoForm(form_data)
     elif tipo_servicio =="8":  

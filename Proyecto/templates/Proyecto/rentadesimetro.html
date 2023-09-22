@@ -6,9 +6,111 @@
 
 <div class="header">
     <h1 class="header-title">
-        rentaDesimetro
+        Renta de Desimetro
     </h1>
 </div>
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Información general</h5>
+        </div>
+        <div class="card-body">
+          <form method="POST" action = "{% url 'rentaDesimetroForm'%}">
+            {% csrf_token %}
+            <div class="row">
+              <div class="mb-3 col-md-6">
+                <label for="inputEmail4">
+                  {{form.ST_NOMBRE_TECNICO.label}}
+                  <span class="text-danger">*</span>
+                </label>
+                {{form.ST_NOMBRE_TECNICO}} 
+                {% if form.ST_NOMBRE_TECNICO.errors%} 
+                  {% for error in form.ST_NOMBRE_TECNICO.errors %}
+                  <small class="form-text d-block text-danger">{{ error }}</small>
+                  {% endfor %} 
+                {% endif %}
+              </div>
+              <div class="mb-3 col-md-6">
+                <label for="inputEmail4">
+                  {{form.ST_OBSERVACION_DESIMETRO.label}}
+                  <span class="text-danger">*</span>
+                </label>
+                {{form.ST_OBSERVACION_DESIMETRO}} 
+                {% if form.ST_OBSERVACION_DESIMETRO.errors %} 
+                  {% for error in form.ST_OBSERVACION_DESIMETRO.errors %}
+                  <small class="form-text d-block text-danger">{{ error }}</small>
+                  {% endfor %} 
+                {% endif %}
+              </div>
+            </div>
+            <div class = "row">
+              <div class="mb-3 col-md-6">
+                <label for="inputEmail4">
+                  {{form.FC_SALIDA_DESIMETRO.label}}
+                  <span class="text-danger">*</span>
+                </label>
+                {{form.FC_SALIDA_DESIMETRO}} 
+                {% if form.FC_SALIDA_DESIMETRO.errors%} 
+                  {% for error in form.FC_SALIDA_DESIMETRO.errors %}
+                  <small class="form-text d-block text-danger">{{ error }}</small>
+                  {% endfor %} 
+                {% endif %}
+              </div>
+              <div class="mb-3 col-md-6">
+                <label for="inputEmail4">
+                  {{form.FC_ENTRADA_DESIMETRO.label}}
+                  <span class="text-danger">*</span>
+                </label>
+                {{form.FC_ENTRADA_DESIMETRO}} 
+                {% if form.FC_ENTRADA_DESIMETRO.errors%} 
+                  {% for error in form.FC_ENTRADA_DESIMETRO.errors %}
+                  <small class="form-text d-block text-danger">{{ error }}</small>
+                  {% endfor %} 
+                {% endif %}
+              </div>
+            </div>
+            <div class="row justify-content-end mt-3">
+              <div class="col-auto">
+                <a class="btn btn-danger" href="{% url 'Proyecto' %}">Cancelar</a>
+              </div>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-success">Siguiente</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
+{% endblock %}
 
+{% block js %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        $(".data-picker").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            timePicker: true, // Habilita la selección de horas
+            timePickerIncrement: 30,
+            locale: {
+                format: 'YYYY-MM-DD HH:mm:ss',
+                separator: ' / ',
+                applyLabel: 'Seleccionar',
+                cancelLabel: 'Cancelar',
+                fromLabel: 'Desde',
+                toLabel: 'Hasta',
+                customRangeLabel: 'Personalizado',
+                weekLabel: 'S',
+                daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                monthNames: [
+                    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                    'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+                ],
+                firstDay: 1
+            }
+        });
+    });
+  </script>
 {% endblock %}
