@@ -103,6 +103,7 @@ def transporteForm(request):
         form = TransporteForm(request.POST)      
         if form.is_valid():
             form_data = form.cleaned_data
+            form_data["NM_VOLUMEN"] = float(form_data["NM_VOLUMEN"])
             request.session['form'] = form_data
         return redirect("registerEquipment")
     else:
