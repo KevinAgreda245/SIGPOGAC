@@ -1,3 +1,6 @@
+import io
+from django.conf import settings
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib import messages
@@ -125,9 +128,18 @@ def concretoForm(request):
         form = ConcretoForm(request.POST,request.FILES)
         print(request.POST)
         if form.is_valid():
+            uploaded_file = request.FILES['ST_DOC_CONCRETO']
+
+            # Define la ubicación en la que deseas guardar el archivo en el servidor
+            file_path = os.path.join(settings.MEDIA_ROOT, 'temp', uploaded_file.name)
+
+            # Abre el archivo y guárdalo en el servidor
+            with open(file_path, 'wb') as file:
+                for chunk in uploaded_file.chunks():
+                    file.write(chunk)
             request.session['form'] = {
                 'post_data': request.POST,
-                'files_data': request.FILES,
+                'files_data': file_path,
             }
             return redirect("registerEmployees")
     else:
@@ -280,7 +292,30 @@ def save(request):
 
 def saveEspecifications(form_data, tipo_servicio):
     if tipo_servicio == "1":
-        return RentaEquipoForm(form_data)    
+        # Ruta de archivo
+        archivo_ruta = form_data['files_data']
+
+        # Nombre de archivo y extensión
+        nombre_archivo = os.path.basename(archivo_ruta)
+        nombre, extension = os.path.splitext(nombre_archivo)
+
+        # Abre el archivo en modo binario
+        with open(archivo_ruta, 'rb') as archivo:
+            archivo_bytes = archivo.read()
+
+        # Crea un objeto BytesIO para simular un archivo en memoria
+        archivo_en_memoria = io.BytesIO(archivo_bytes)
+        
+        # Crea un objeto InMemoryUploadedFile
+        archivo_upload = InMemoryUploadedFile(
+            archivo_en_memoria,
+            None,  
+            nombre_archivo,
+            'application/pdf',
+            len(archivo_bytes),
+            None
+        )
+        return ConcretoForm(form_data['post_data'],files={'ST_DOC_CONCRETO': archivo_upload})    
     elif tipo_servicio == "5":
         return RentaEquipoForm(form_data)
     elif tipo_servicio == "6":
