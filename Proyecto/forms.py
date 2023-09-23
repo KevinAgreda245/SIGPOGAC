@@ -91,7 +91,7 @@ class ConcretoForm(forms.ModelForm):
     class Meta:
         model = Concreto
         fields = '__all__'
-        exclude = ['FK_PROYECTO']
+        exclude = ['SK_CONCRETO','FK_PROYECTO']
         widgets={
           'ST_TIPO_DOC_CONCRETO': forms.Select(attrs={'class': 'form-control select2', 'data-bs-toggle':'select2'}),
           'ST_DOC_CONCRETO': forms.ClearableFileInput(attrs={'class': 'form-control'}),
@@ -130,7 +130,7 @@ class AsesoriaConstructivaForm(forms.ModelForm):
     class Meta:
         model = AsesoriaConstructiva
         fields = '__all__'
-        exclude = ['SK_ASESORIA, FK_PROYECTO']
+        exclude = ['SK_ASESORIA' ,'FK_PROYECTO']
         widgets = {
             'NM_TIEMPO' : forms.NumberInput(attrs={'class': 'form-control'}),
             'ST_UNIDAD_ASESORIA' : forms.Select(attrs={'class': 'form-control select2', 'data-bs-toggle':'select2'}),
