@@ -76,7 +76,7 @@ def add(request):
             elif tipoServicio =="7":
                 return redirect('senializacionVialForm')
             elif tipoServicio =="8":  
-                return render(request, 'Proyecto/asesoria.html', context)            
+                return redirect('asesoriaForm')            
             else: messages.error(request, "En construcción")
         else:
             for field, errors in form.errors.items():
@@ -204,6 +204,16 @@ def senializacionVialForm(request):
         form = SenializacionVialForm()
     return render(request, 'Proyecto/senializacionvial.html', {'form':form})
 
+def asesoramientoForm(request):
+    if request.method == 'POST':
+        form = AsesoriaConstructivaForm(request.POST)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            request.session['form'] = form_data
+        return redirect("registerEmployees")
+    else:
+        form = AsesoriaConstructivaForm()
+    return render(request, 'Proyecto/asesoria.html', {'form':form})
 
 def registerEmployees(request):
     if request.method == 'POST':
@@ -220,10 +230,11 @@ def registerEmployees(request):
         messages.success(request, "¡Empleado añadido!")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
+        tipo_servicio = request.session['tipo_servicio']
         empleados = request.session['empleados']
         empleados_agregados = [empleado['id'] for empleado in empleados]
         cc_empleados = Usuario.objects.filter(BN_ESTADO_USUARIO=1).exclude(Q(id__in=empleados_agregados))
-        context = {'cc_empleados':cc_empleados, 'empleados':empleados}
+        context = {'cc_empleados':cc_empleados, 'empleados':empleados, 'tipo_servicio':tipo_servicio}
         return render(request, 'Proyecto/asignacionEmpleado.html', context)
     
 def deleteEmployee(request, id):
@@ -277,6 +288,7 @@ def registerMaterial(request):
         request.session['materiales'].append({
              'id': equipo.SK_MATERIAL,
              'nombre':equipo.ST_NOMBRE_MATERIAL,
+             'cantidad': request.POST['cant-material'],
              'descripcion': equipo.ST_DESCRIPCION_MATERIAL
         })
         messages.success(request, "¡Material añadido!")
@@ -330,12 +342,13 @@ def save(request):
                     FK_EQUIPO = equipo
                 )
         if 'materiales' in request.session:
-            for material in request.session['materiales']:
-                material = Material.objects.get(SK_MATERIAL = material['id'])
+            for mat in request.session['materiales']:
+                material = Material.objects.get(SK_MATERIAL = mat['id'])
+                cant = mat['cantidad']
                 AsignacionMaterial.objects.create(
                     SK_MATERIAL = material,
                     FK_PROYECTO = proyecto,
-                    ST_DESCRIPCION = None
+                    ST_DESCRIPCION = cant
                 )
         del request.session['tipo_servicio']
         del request.session['empleados']
@@ -410,4 +423,4 @@ def saveEspecifications(form_data, tipo_servicio):
     elif tipo_servicio =="4":
         return TransporteForm(form_data)
     elif tipo_servicio =="8":  
-        return RentaEquipoForm(form_data)
+        return AsesoriaConstructivaForm(form_data)

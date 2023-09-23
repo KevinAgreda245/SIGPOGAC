@@ -14,6 +14,7 @@ urlpatterns = [
     path('levantamiento_topografico', views.levantamientoTopograficoForm, name = "levantamientoTopograficoForm"),
     path('estructura_metalica', views.estructuraMetalicaForm, name="estructuraMetalicaForm"),
     path('senializacion_vial', views.senializacionVialForm, name= "senializacionVialForm"),
+    path('asesoramiento', views.asesoramientoForm, name = "asesoriaForm"),
 
     path('empleado', views.registerEmployees, name = "registerEmployees"),
     path('empleado/delete/<int:id>', views.deleteEmployee, name = "deleteEmployee"),

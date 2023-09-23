@@ -125,3 +125,13 @@ class SenializacionVialForm(forms.ModelForm):
         widgets = {
             'ST_ESPECIFICACION_VIAL': forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
         }
+
+class AsesoriaConstructivaForm(forms.ModelForm):
+    class Meta:
+        model = AsesoriaConstructiva
+        fields = '__all__'
+        exclude = ['SK_ASESORIA, FK_PROYECTO']
+        widgets = {
+            'NM_TIEMPO' : forms.NumberInput(attrs={'class': 'form-control'}),
+            'ST_UNIDAD_ASESORIA' : forms.Select(attrs={'class': 'form-control select2', 'data-bs-toggle':'select2'}),
+        }

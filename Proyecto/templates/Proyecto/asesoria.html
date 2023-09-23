@@ -1,14 +1,56 @@
 {% extends 'General/dashboard.html' %}
-
-{% block title %} Registro de Proyecto {% endblock %}
-
+{% block title %} Registro de Proyecto {% endblock %} 
 {% block main %}
 
 <div class="header">
-    <h1 class="header-title">
-        Asesoria
-    </h1>
+  <h1 class="header-title">Asesoría Constructiva</h1>
 </div>
-
-
-{% endblock %}
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Información general</h5>
+      </div>
+      <div class="card-body">
+        <form method="POST" action = "{% url 'asesoriaForm'%}">
+          {% csrf_token %}
+          <div class="row">
+            <div class="mb-3 col-md-6">
+              <label for="inputEmail4">
+                {{form.NM_TIEMPO.label}}
+                <span class="text-danger">*</span>
+              </label>
+              {{form.NM_TIEMPO}} 
+              {% if form.NM_TIEMPO.errors%} 
+                {% for error in form.NM_TIEMPO.errors %}
+                <small class="form-text d-block text-danger">{{ error }}</small>
+                {% endfor %} 
+              {% endif %}
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="inputEmail4">
+                {{form.ST_UNIDAD_ASESORIA.label}}
+                <span class="text-danger">*</span>
+              </label>
+              {{form.ST_UNIDAD_ASESORIA}} 
+              {% if form.ST_UNIDAD_ASESORIA.errors %} 
+                {% for error in form.ST_UNIDAD_ASESORIA.errors %}
+                <small class="form-text d-block text-danger">{{ error }}</small>
+                {% endfor %} 
+              {% endif %}
+            </div>
+          </div>
+          <div class="row justify-content-end mt-3">
+            <div class="col-auto">
+              <a class="btn btn-danger" href="{% url 'Proyecto' %}">Cancelar</a>
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-success">Siguiente</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

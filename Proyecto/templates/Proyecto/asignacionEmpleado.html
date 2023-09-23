@@ -60,9 +60,15 @@
       <div class="col-auto">
         <a class="btn btn-danger" href="{% url 'Proyecto' %}">Cancelar</a>
       </div>
-      <div class="col-auto">
-        <a class="btn btn-success" href = "{% url 'registerMaterial' %}">Siguiente</a>
-      </div>
+      {% if tipo_servicio == "8" %}
+        <div class="col-auto">
+          <a type="submit" class="btn btn-success" href = "{% url 'saveProyecto' %}">Finalizar</a>
+        </div>
+      {% else %}
+        <div class="col-auto">
+          <a class="btn btn-success" href = "{% url 'registerMaterial' %}">Siguiente</a>
+        </div>
+      {% endif %}
     </div>
   </div>
 </div>

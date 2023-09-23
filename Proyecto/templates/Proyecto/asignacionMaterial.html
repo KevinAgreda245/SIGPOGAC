@@ -25,7 +25,11 @@
             {% endfor %}
           </select>
         </div>
-        <div class="my-4 col-md-6">
+        <div class="mb-3 col-md-3">
+          <label for="inputEmail4"> Cantidad </label>
+          <input class="px-2 form-control" id = "cant-material" name = "cant-material" type="number" min="1" max = "999" value="" required autocomplete=off>
+        </div>
+        <div class="my-4 col-md-3">
           <button type="submit" class="btn btn-primary">Agregar</button>
         </div>
       </div>
@@ -35,7 +39,7 @@
         <tr>
           <th>#</th>
           <th>Nombre</th>
-          <th>Descripción</th>
+          <th>Cantidad</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -44,7 +48,7 @@
         <tr>
           <td>{{forloop.counter}}</td>
           <td>{{mat.nombre}}</td>
-          <td>{{mat.descripcion}}</td>
+          <td>{{mat.cantidad}}</td>
           <td class="text-nowrap">
             <a
               href="{% url 'deleteMaterial' forloop.counter %}"
