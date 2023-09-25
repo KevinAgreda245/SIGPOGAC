@@ -1,0 +1,90 @@
+{% extends 'General/dashboard.html' %}
+{% load static %}
+
+{% block title %} Administrador {% endblock %}
+
+{% block main %}
+<div class="header">
+    <h1 class="header-title">
+        Detalle del Proyecto.
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'Proyecto' %}">Administración de Proyecto</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detalle</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Proyecto N° {{proyecto.SK_PROYECTO}}</h5>
+            </div>
+            <div class="card-body">
+                <h6 class="card-title mb-0">Información general.</h6>
+                <table class="table table-sm my-2">
+                    <tbody>
+                        <tr>
+                            <th>Nombre del cliente:</th>
+                            <td>{{proyecto.FK_CLIENTE}}</td>
+                        </tr>
+                        <tr>
+                            <th>Descripción:</th>
+                            <td>{{proyecto.ST_DESCRIPCION_PROYECTO}}</td>
+                        </tr>
+                        <tr>
+                            <th>Dirección:</th>
+                            <td>{{proyecto.ST_DIRECCION_PROYECTO}}</td>
+                        </tr>
+                        <tr>
+                            <th>Estado actual:</th>
+                            <td>{{proyecto.FK_ESTADO_PROYECTO}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                {% if personal %}
+                    <h6 class="card-title mb-0">Personal asignado.</h6>
+                    <table class="table table-sm my-2">
+                        <tbody>
+                            {% for pers in personal %}
+                            <tr>
+                                <th>Nombre del empleado:</th>
+                                <td>{{pers.FK_USUARIO.first_name}} {{pers.FK_USUARIO.last_name}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                {% if materiales %}
+                    <h6 class="card-title mb-0">Material asignado.</h6>
+                    <table class="table table-sm my-2">
+                        <tbody>
+                            {% for material in materiales %}
+                            <tr>
+                                <th>Material:</th>
+                                <td>{{material.SK_MATERIAL.ST_NOMBRE_MATERIAL}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                {% if equipos %}
+                    <h6 class="card-title mb-0">Equipo asignado.</h6>
+                    <table class="table table-sm my-2">
+                        <tbody>
+                            {% for equipo in equipos %}
+                            <tr>
+                                <th>Equipo:</th>
+                                <td>{{equipo.FK_EQUIPO.ST_NOMBRE_EQUIPO}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
