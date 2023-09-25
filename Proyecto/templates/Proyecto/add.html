@@ -21,12 +21,14 @@
                             <div class="mb-3 col-md-6">
                                 <label for="inputEmail4">
                                     {{form.FK_CLIENTE.label}}
+                                    <span class="text-danger">*</span>
                                 </label>
                                 {{form.FK_CLIENTE}}
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="inputEmail4">
                                     {{form.FK_TIPO_SERVICIO.label}}
+                                    <span class="text-danger">*</span>
                                 </label>
                                 {{form.FK_TIPO_SERVICIO}}
                             </div>
@@ -35,14 +37,26 @@
                             <div class="mb-3 col-md-6">
                                 <label for="inputEmail4">
                                     {{form.ST_DIRECCION_PROYECTO.label}}
+                                    <span class="text-danger">*</span>
                                 </label>
                                 {{form.ST_DIRECCION_PROYECTO}}
+                                {% if form.ST_DIRECCION_PROYECTO.errors %}
+                                    {% for error in ST_DIRECCION_PROYECTO.errors %}
+                                        <small class="form-text d-block text-danger">{{ error }}</small>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="inputEmail4">
                                     {{form.ST_DESCRIPCION_PROYECTO.label}}
+                                    <span class="text-danger">*</span>
                                 </label>
                                 {{form.ST_DESCRIPCION_PROYECTO}}
+                                {% if form.ST_DESCRIPCION_PROYECTO.errors %}
+                                    {% for error in ST_DESCRIPCION_PROYECTO.errors %}
+                                        <small class="form-text d-block text-danger">{{ error }}</small>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
                         <div class="row justify-content-end mt-3">

@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import FileExtensionValidator
 from django.utils import timezone
 from Cliente.models import Cliente
 from Administrador.models import Usuario
@@ -34,7 +35,7 @@ class Proyecto(models.Model):
     NM_LATITUD_PROYECTO = models.FloatField(null=True,blank=True, default=None)
     NM_LONGITUD_PROYECTO = models.FloatField(null=True,blank=True, default=None)
     ST_DESCRIPCION_PROYECTO = models.CharField(max_length=120,null=False,blank=False,verbose_name="Descripción:")
-    FK_CLIENTE = models.ForeignKey(Cliente,models.CASCADE,verbose_name="Cliente")
+    FK_CLIENTE = models.ForeignKey(Cliente,models.CASCADE,verbose_name="Cliente:")
     FK_ESTADO_PROYECTO = models.ForeignKey(EstadoProyecto,models.CASCADE,verbose_name="Estado:")
     FK_TIPO_SERVICIO = models.ForeignKey(TipoServicio,models.CASCADE,verbose_name="Tipo de Servicio:") 
     FK_USUARIO = models.ForeignKey(Usuario,models.CASCADE)
@@ -86,8 +87,8 @@ class Concreto(models.Model):
         ('ESPECIFICACIONES','Especificaciones')
     ]
     SK_CONCRETO = models.AutoField(primary_key=True)
-    ST_TIPO_DOC_CONCRETO = models.CharField(max_length=25,choices=TIPO_DOC,verbose_name="Tipo de documento:")
-    ST_DOC_CONCRETO = models.FileField(upload_to='doc_concreto/',null=False,blank=False,verbose_name="Documento:")
+    ST_TIPO_DOC_CONCRETO = models.CharField(max_length=25,choices=TIPO_DOC,blank=False,verbose_name="Tipo de documento:")
+    ST_DOC_CONCRETO = models.FileField(upload_to='doc_concreto/',null=False,blank=False,verbose_name="Documento:",validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
     FK_PROYECTO = models.ForeignKey(Proyecto,models.CASCADE)
 
     class Meta:
@@ -170,7 +171,7 @@ class AsesoriaConstructiva(models.Model):
     ]
     SK_ASESORIA = models.AutoField(primary_key=True)
     NM_TIEMPO = models.IntegerField(null=False,blank=False,verbose_name="Cantidad de tiempo:")
-    ST_UNIDAD_ASESORIA = models.CharField(max_length=50,choices=UNIDADES,verbose_name="Unidades de tiempo")
+    ST_UNIDAD_ASESORIA = models.CharField(max_length=50,choices=UNIDADES,verbose_name="Unidades de tiempo:")
     FK_PROYECTO = models.ForeignKey(Proyecto,models.CASCADE)
 
     class Meta:

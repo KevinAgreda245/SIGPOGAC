@@ -14,7 +14,8 @@
           <select
             id="equipo-id"
             name="equipo-id"
-            class="form-control equipo-select"
+            class="form-control select2"
+            data-bs-toggle="select2"
             required
           >
             <option value="" disabled selected>Seleccione un equipo</option>
@@ -76,6 +77,14 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     initTable("#tbl-Equipos", "equipos");
+    $(".select2").each(function() {
+      $(this)
+          .wrap("<div class=\"position-relative\"></div>")
+          .select2({
+              placeholder: "Seleccione una opción",
+              dropdownParent: $(this).parent()
+          });
+  })
   });
 </script>
 {% endblock %}

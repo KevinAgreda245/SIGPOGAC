@@ -77,7 +77,7 @@ def add(request):
                 return redirect('senializacionVialForm')
             elif tipoServicio =="8":  
                 return redirect('asesoriaForm')            
-            else: messages.error(request, "En construcción")
+            
         else:
             for field, errors in form.errors.items():
                 form.fields[field].widget.attrs.update({
@@ -231,11 +231,15 @@ def registerEmployees(request):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         tipo_servicio = request.session['tipo_servicio']
-        empleados = request.session['empleados']
-        empleados_agregados = [empleado['id'] for empleado in empleados]
-        cc_empleados = Usuario.objects.filter(BN_ESTADO_USUARIO=1).exclude(Q(id__in=empleados_agregados))
-        context = {'cc_empleados':cc_empleados, 'empleados':empleados, 'tipo_servicio':tipo_servicio}
-        return render(request, 'Proyecto/asignacionEmpleado.html', context)
+        if (tipo_servicio == "8" or request.session["equipos"] != []):
+            empleados = request.session['empleados']
+            empleados_agregados = [empleado['id'] for empleado in empleados]
+            cc_empleados = Usuario.objects.filter(BN_ESTADO_USUARIO=1).exclude(Q(id__in=empleados_agregados))
+            context = {'cc_empleados':cc_empleados, 'empleados':empleados, 'tipo_servicio':tipo_servicio}
+            return render(request, 'Proyecto/asignacionEmpleado.html', context)
+        else:
+            messages.warning(request,"¡No se ha asignado ningún equipo!")
+            return redirect("registerEquipment")
     
 def deleteEmployee(request, id):
     index = id - 1
@@ -280,7 +284,7 @@ def deleteEquipment(request, id):
 
 def registerMaterial(request):
     if request.method == 'POST':
-        if 'equipos' not in request.session:
+        if 'materiales' not in request.session:
             request.session['materiales'] = []
         else:
             request.session['materiales'] = request.session['materiales']
@@ -294,11 +298,15 @@ def registerMaterial(request):
         messages.success(request, "¡Material añadido!")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
-        materiales = request.session['materiales']
-        materiales_agregados = [material['id'] for material in materiales]
-        cc_materiales = Material.objects.filter(BN_ESTADO_MATERIAL=1).exclude(Q(SK_MATERIAL__in=materiales_agregados))
-        context = {'cc_materiales':cc_materiales, 'materiales':materiales}
-        return render(request, 'Proyecto/asignacionMaterial.html', context)
+        if (request.session["empleados"] != []):
+            materiales = request.session['materiales']
+            materiales_agregados = [material['id'] for material in materiales]
+            cc_materiales = Material.objects.filter(BN_ESTADO_MATERIAL=1).exclude(Q(SK_MATERIAL__in=materiales_agregados))
+            context = {'cc_materiales':cc_materiales, 'materiales':materiales}
+            return render(request, 'Proyecto/asignacionMaterial.html', context)
+        else: 
+            messages.warning(request,"¡No se ha asignado ningún empleado!")
+            return redirect("registerEmployees")
     
 def deleteMaterial(request, id):
     index = id - 1
@@ -309,6 +317,22 @@ def deleteMaterial(request, id):
 
 def save(request):
     if 'tipo_servicio' in request.session:
+        tipo_servicio = request.session['tipo_servicio']
+        servicios = ["1", "4", "5", "6", "7"]
+        if (tipo_servicio == "8"):
+            if 'empleados' not in request.session or request.session["empleados"] == []:
+                messages.warning(request,"¡No se ha asignado ningún empleado!")
+                return redirect("registerEmployees")
+        elif tipo_servicio in servicios:
+            print(request.session["materiales"])
+            if 'materiales' not in request.session or request.session["materiales"] == []:
+                messages.warning(request,"¡No se ha asignado ningún material!")
+                return redirect("registerMaterial")
+        else:
+            if 'equipos' not in request.session or request.session["equipos"] == []:
+                messages.warning(request,"¡No se ha asignado ningún equipo!")
+                return redirect("registerEquipment")
+            
         cliente = Cliente.objects.get(SK_CLIENTE = request.session['cliente'])
         tipo_servicio = TipoServicio.objects.get(SK_TIPO_SERVICIO = request.session['tipo_servicio'])
         estado_proyecto = EstadoProyecto.objects.get(SK_ESTADO_PROYECTO = 1)
@@ -335,12 +359,12 @@ def save(request):
                     FK_USUARIO = usuario
                 )
         if 'equipos' in request.session:
-            for equipo in request.session['equipos']:
-                equipo = Equipo.objects.get(SK_EQUIPO = equipo['id'])
-                AsignacionEquipo.objects.create(
-                    SK_PROYECTO = proyecto,
-                    FK_EQUIPO = equipo
-                )
+                for equipo in request.session['equipos']:
+                    equipo = Equipo.objects.get(SK_EQUIPO = equipo['id'])
+                    AsignacionEquipo.objects.create(
+                        SK_PROYECTO = proyecto,
+                        FK_EQUIPO = equipo
+                    )
         if 'materiales' in request.session:
             for mat in request.session['materiales']:
                 material = Material.objects.get(SK_MATERIAL = mat['id'])
@@ -357,6 +381,7 @@ def save(request):
         request.session.modified = True
         messages.success(request, "El proyecto fue creado exitosamente.")
         return redirect("Main")
+            
     else:
         return redirect("AddProyecto")
     

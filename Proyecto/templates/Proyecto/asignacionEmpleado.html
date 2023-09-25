@@ -14,7 +14,8 @@
           <select
             id="empleado-id"
             name="empleado-id"
-            class="form-control empleado-select"
+            class="form-control select2"
+            data-bs-toggle="select2"
             required
           >
             <option value="" disabled selected>Seleccione un empleado</option>
@@ -77,6 +78,15 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     initTable("#tbl-Empleados", "empleados");
+    $(".select2").each(function() {
+      $(this)
+          .wrap("<div class=\"position-relative\"></div>")
+          .select2({
+              placeholder: "Seleccione una opción",
+              dropdownParent: $(this).parent()
+          });
+  })
   });
 </script>
 {% endblock %}
+

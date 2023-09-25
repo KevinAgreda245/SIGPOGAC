@@ -14,7 +14,8 @@
           <select
             id="material-id"
             name="material-id"
-            class="form-control material-select"
+            class="form-control select2"
+          data-bs-toggle="select2"
             required
           >
             <option value="" disabled selected>Seleccione un material</option>
@@ -75,6 +76,14 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     initTable("#tbl-Materiales", "materiales");
+    $(".select2").each(function() {
+      $(this)
+          .wrap("<div class=\"position-relative\"></div>")
+          .select2({
+              placeholder: "Seleccione una opción",
+              dropdownParent: $(this).parent()
+          });
+  })
   });
 </script>
 {% endblock %}
