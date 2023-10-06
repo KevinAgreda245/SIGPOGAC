@@ -16,13 +16,12 @@
     </nav>
 </div>
 <div class="row">
-    <div class="col-12">
+    <div class="col-12 col-lg-6">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title mb-0">Proyecto N° {{proyecto.SK_PROYECTO}}</h4>
+                <h4 class="card-title mb-0">Información general.</h4>
             </div>
             <div class="card-body">
-                <h6 class="card-subtitle text-muted">Información general.</h6>
                 <table class="table table-sm my-2">
                     <tbody>
                         <tr>
@@ -43,45 +42,65 @@
                         </tr>
                     </tbody>
                 </table>
-                {% if personal %}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Información especifico.</h4>
+            </div>
+            <div class="card-body">
                 
-                    <h6 class="card-subtitle text-muted">Personal asignado.</h6>
-                    <table class="table table-sm my-2">
-                        <tbody>
-                            {% for pers in personal %}
-                            <tr>
-                                <th>Nombre del empleado:</th>
-                                <td>{{pers.FK_USUARIO.first_name}} {{pers.FK_USUARIO.last_name}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="tab">
+            <ul class="nav nav-tabs" role="tablist">
+                {% if equipos %}
+                    <li class="nav-item"><a class="nav-link active" href="#tab-equipo" data-bs-toggle="tab" role="tab">Equipo</a></li>
+                {% endif %}
+                {% if personal %}
+                    <li class="nav-item"><a class="nav-link" href="#tab-empleado" data-bs-toggle="tab" role="tab">Empleado</a></li>
                 {% endif %}
                 {% if materiales %}
-                    <h6 class="card-subtitle text-muted">Material asignado.</h6>
-                    <table class="table table-sm my-2">
-                        <tbody>
-                            {% for material in materiales %}
-                            <tr>
-                                <th>Material:</th>
-                                <td>{{material.SK_MATERIAL.ST_NOMBRE_MATERIAL}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    <li class="nav-item"><a class="nav-link" href="#tab-material" data-bs-toggle="tab" role="tab">Material</a></li>
                 {% endif %}
+            </ul>
+            <div class="tab-content">
                 {% if equipos %}
-                    <h6 class="card-subtitle text-muted">Equipo asignado.</h6>
-                    <table class="table table-sm my-2">
-                        <tbody>
-                            {% for equipo in equipos %}
-                            <tr>
-                                <th>Equipo:</th>
-                                <td>{{equipo.FK_EQUIPO.ST_NOMBRE_EQUIPO}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    <div class="tab-pane active" id="tab-equipo" role="tabpanel">
+                        <h4 class="tab-title">Equipo asignado.</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor tellus eget condimentum
+                            rhoncus. Aenean massa. Cum sociis natoque penatibus et magnis neque dis parturient montes, nascetur ridiculus mus.
+                        </p>
+                        <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+                            justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae,
+                            justo.</p>
+                    </div>
+                {% endif %}
+                {% if personal %}
+                    <div class="tab-pane" id="tab-empleado" role="tabpanel">
+                        <h4 class="tab-title">Empleado asignado.</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor tellus eget condimentum
+                            rhoncus. Aenean massa. Cum sociis natoque penatibus et magnis neque dis parturient montes, nascetur ridiculus mus.
+                        </p>
+                        <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+                            justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae,
+                            justo.</p>
+                    </div>
+                {% endif %}
+                {% if materiales %}
+                    <div class="tab-pane" id="tab-material" role="tabpanel">
+                        <h4 class="tab-title">Material asignado.</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor tellus eget condimentum
+                            rhoncus. Aenean massa. Cum sociis natoque penatibus et magnis neque dis parturient montes, nascetur ridiculus mus.
+                        </p>
+                        <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+                            justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae,
+                            justo.</p>
+                    </div>
                 {% endif %}
             </div>
         </div>
