@@ -1,7 +1,7 @@
 {% extends 'General/dashboard.html' %}
 {% load static %}
 
-{% block title %} Administrador {% endblock %}
+{% block title %} Proyecto N° {{proyecto.SK_PROYECTO}} {% endblock %}
 
 {% block main %}
 <div class="header">
@@ -19,10 +19,10 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Proyecto N° {{proyecto.SK_PROYECTO}}</h5>
+                <h4 class="card-title mb-0">Proyecto N° {{proyecto.SK_PROYECTO}}</h4>
             </div>
             <div class="card-body">
-                <h6 class="card-title mb-0">Información general.</h6>
+                <h6 class="card-subtitle text-muted">Información general.</h6>
                 <table class="table table-sm my-2">
                     <tbody>
                         <tr>
@@ -43,9 +43,9 @@
                         </tr>
                     </tbody>
                 </table>
-                
                 {% if personal %}
-                    <h6 class="card-title mb-0">Personal asignado.</h6>
+                
+                    <h6 class="card-subtitle text-muted">Personal asignado.</h6>
                     <table class="table table-sm my-2">
                         <tbody>
                             {% for pers in personal %}
@@ -58,7 +58,7 @@
                     </table>
                 {% endif %}
                 {% if materiales %}
-                    <h6 class="card-title mb-0">Material asignado.</h6>
+                    <h6 class="card-subtitle text-muted">Material asignado.</h6>
                     <table class="table table-sm my-2">
                         <tbody>
                             {% for material in materiales %}
@@ -71,7 +71,7 @@
                     </table>
                 {% endif %}
                 {% if equipos %}
-                    <h6 class="card-title mb-0">Equipo asignado.</h6>
+                    <h6 class="card-subtitle text-muted">Equipo asignado.</h6>
                     <table class="table table-sm my-2">
                         <tbody>
                             {% for equipo in equipos %}
