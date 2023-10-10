@@ -1,0 +1,85 @@
+<head>
+    <style>
+        .page-break {
+            page-break-before: always;
+        }
+        .title {
+            border-left: 3px solid #008374;
+            padding-top: 10px;
+            padding-left: 5px;
+            font-size: 20px;
+        }
+        .title-group {
+            font-size: 15px;
+            font-style: italic;
+            background-color: lightsteelblue;
+            padding-top: 8px;
+            padding-left: 3px;
+        }
+        
+        .h2 {
+            font-size: 13px;
+        }
+
+        table {
+            border-spacing: 1; 
+            border-collapse: collapse; 
+            background:white;
+            border-radius:6px;
+            overflow:hidden;
+            max-width:800px; 
+            width:100%;
+            margin:0 auto;
+            position:relative;
+        }
+  
+        td,th { padding-left:5px}
+
+        thead tr { 
+            height:30px;
+            background:#FFED86;
+            font-size:10px;
+        }
+  
+        tbody tr { 
+            height:48px; 
+            border-bottom:1px solid #E3F1D5 ;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            background: steelblue;
+        }
+
+        .item {
+            background: grey;
+        }
+
+        @page {
+            size: a4 portrait;
+            @frame header_frame {          
+                -pdf-frame-content: header_content;
+                left: 50pt; width: 138pt; top: 50pt; height: 40pt;
+            }
+            @frame content_frame {         
+                left: 50pt; width: 512pt; top: 90pt; height: 635pt;
+            }
+            @frame footer_frame {         
+                -pdf-frame-content: footer_content;
+                left: 50pt; width: 512pt; top: 772pt; height: 30pt;
+            }
+        }
+    </style>
+</head>
+<div id="header_content" style="margin-bottom: 20px; margin-left: 30px;">
+    <div style="background-color: #008374">
+        <h1 style="color: white;font-size: 22px;padding-left: 10px; padding-top: 8px;font-style: inherit;">SIGPOGAC<b style="color:#f85a40">.</b></b></div></h1>    
+    </div>
+</div>
+{% block pages_content %}
+
+{% endblock %}
+<div id="footer_content">
+    <p><b>Elaborado por: </b>{{user}} <b> | Fecha de impresión: </b>{{date | date:'d/m/Y h:i A'}} | <b>Página <pdf:pagenumber> </b></p>
+</div>

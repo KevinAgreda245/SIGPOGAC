@@ -1,0 +1,97 @@
+{% extends 'General/dashboard.html' %}
+
+{% block title %} Bandeja de Reportes {% endblock %}
+
+{% block main %}
+<div class="header">
+    <h1 class="header-title">
+        Generación de Reportes
+    </h1>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Filtros</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="mb-3 col-md-12">
+                            <label for="inputEmail4">
+                                {{form.cliente.label}}
+                            </label>
+                            {{form.cliente}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">
+                                {{form.tipo.label}}
+                            </label>
+                            {{form.tipo}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">
+                                {{form.estado.label}}
+                            </label>
+                            {{form.estado}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">
+                                {{form.fechaDesde.label}}
+                            </label>
+                            {{form.fechaDesde}}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="inputEmail4">
+                                {{form.fechaHasta.label}}
+                            </label>
+                            {{form.fechaHasta}}
+                        </div>
+                        {% if form.errors %}
+                            {% for error in errors %}
+                                <small class="form-text d-block text-danger">{{ error }}</small>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-success">Generar Reporte</button>
+                    <a type="button" class="btn btn-secondary" href="{% url "Proyecto" %}">Limpiar</a>
+                </form>
+            </div>
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        $(".data-picker").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            timePicker: true, // Habilita la selección de horas
+            timePickerIncrement: 30,
+            locale: {
+                format: 'DD/MM/YYYY',
+                separator: ' / ',
+                applyLabel: 'Seleccionar',
+                cancelLabel: 'Cancelar',
+                fromLabel: 'Desde',
+                toLabel: 'Hasta',
+                customRangeLabel: 'Personalizado',
+                weekLabel: 'S',
+                daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                monthNames: [
+                    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                    'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+                ],
+                firstDay: 1
+            }
+        });
+    });
+  </script>
+{% endblock %}

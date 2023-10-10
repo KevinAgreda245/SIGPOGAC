@@ -1,0 +1,32 @@
+{% extends 'Reporte/base.html' %} {% block pages_content %}
+<h2 class="title">Proyectos de tipo concreto</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>N°</th>
+      <th>Dirección</th>
+      <th>Descripción</th>
+      <th>Cliente</th>
+      <th>Estado</th>
+      <th>Usuario</th>
+      <th>Fecha de Ingreso</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for proyecto in data %}
+    <tr>
+      <td>{{ proyecto.SK_PROYECTO}}</td>
+      <td>{{ proyecto.ST_DIRECCION_PROYECTO }}</td>
+      <td>{{ proyecto.ST_DESCRIPCION_PROYECTO }}</td>
+      <td>{{ proyecto.FK_CLIENTE_id}}</td>
+      <!-- Accessing related field -->
+      <td>{{ proyecto.FK_ESTADO_PROYECTO_id}}</td>
+      <!-- Accessing related field -->
+      <td>{{ proyecto.FK_USUARIO_id}}</td>
+      <!-- Accessing related field (assuming Usuario has a username field) -->
+      <td>{{ proyecto.FC_INGRESO_PROYECTO }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
