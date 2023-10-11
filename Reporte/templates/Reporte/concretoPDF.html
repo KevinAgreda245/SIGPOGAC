@@ -1,32 +1,83 @@
 {% extends 'Reporte/base.html' %} {% block pages_content %}
-<h2 class="title">Proyectos de tipo concreto</h2>
-<table border="1">
-  <thead>
-    <tr>
-      <th>N°</th>
-      <th>Dirección</th>
-      <th>Descripción</th>
-      <th>Cliente</th>
-      <th>Estado</th>
-      <th>Usuario</th>
-      <th>Fecha de Ingreso</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for proyecto in data %}
-    <tr>
-      <td>{{ proyecto.SK_PROYECTO}}</td>
-      <td>{{ proyecto.ST_DIRECCION_PROYECTO }}</td>
-      <td>{{ proyecto.ST_DESCRIPCION_PROYECTO }}</td>
-      <td>{{ proyecto.FK_CLIENTE_id}}</td>
-      <!-- Accessing related field -->
-      <td>{{ proyecto.FK_ESTADO_PROYECTO_id}}</td>
-      <!-- Accessing related field -->
-      <td>{{ proyecto.FK_USUARIO_id}}</td>
-      <!-- Accessing related field (assuming Usuario has a username field) -->
-      <td>{{ proyecto.FC_INGRESO_PROYECTO }}</td>
-    </tr>
+<h2 class="title">Proyectos de Tipo Concreto</h2>
+{% for proyecto in data %}
+
+        <h1 style = "color:#FFA500;">Información General de Proyecto</h1>
+        <table>
+            <tr>
+                <th>Número de proyecto</th>
+                <td>{{ proyecto.proyecto.SK_PROYECTO }}</td>
+            </tr>
+            <tr>
+                <th>Dirección</th>
+                <td>{{ proyecto.proyecto.ST_DIRECCION_PROYECTO }}</td>
+            </tr>
+        </table>
+
+        <h2>Especificaciones</h2>
+      
+        <table>
+          {% for especificacion in proyecto.especificaciones %}
+                <tr>
+                    <th>Tipo de Documento</th>
+                    <td>{{ especificacion.ST_TIPO_DOC_CONCRETO }}</td>
+                </tr>
+          {% endfor %}
+        </table>
+
+        <h2>Empleados Asignados</h2>
+        <table>
+            {% for asignacion_empleado in proyecto.asignaciones_empleado %}
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ asignacion_empleado.FK_USUARIO__first_name }}</td>
+                </tr>
+                <tr>
+                    <th>Apellido</th>
+                    <td>{{ asignacion_empleado.FK_USUARIO__last_name }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">No existen empleados asignados para este proyecto.</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Equipos Asignados</h2>
+        <table>
+            {% for asignacion_equipo in proyecto.asignaciones_equipo %}
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ asignacion_equipo.FK_EQUIPO__ST_NOMBRE_EQUIPO }}</td>
+                </tr>
+                <tr>
+                    <th>Tipo</th>
+                    <td>{{ asignacion_equipo.FK_EQUIPO__FK_TIPO_EQUIPO__ST_TIPO_EQUIPO }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">No existen equipos asignados para este proyecto.</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Materiales Asignados</h2>
+        <table>
+            {% for asignacion_material in proyecto.asignaciones_material %}
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ asignacion_material.SK_MATERIAL__ST_NOMBRE_MATERIAL }}</td>
+                </tr>
+                <tr>
+                    <th>Cantidad Utilizada</th>
+                    <td>{{ asignacion_material.ST_DESCRIPCION }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">No existen materiales asignados para este proyecto.</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <hr></hr>
     {% endfor %}
-  </tbody>
-</table>
 {% endblock %}
