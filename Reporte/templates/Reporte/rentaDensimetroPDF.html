@@ -1,5 +1,5 @@
 {% extends 'Reporte/base.html' %} {% block pages_content %}
-<h2 class="title">Proyectos de Tipo Concreto</h2>
+<h2 class="title">Proyectos de Tipo Renta de Equipo de Terracería</h2>
 {% for proyecto in data %}
 <div style="background-color:gray; height: 0.1px;"><p style="color: gray;">.</p></div>
         <h1 style = "color:#a88f61; font-size: 15px;">Información General de Proyecto</h1>
@@ -14,33 +14,28 @@
             </tr>
         </table>
 
+
         <h2 style = "color:#a88f61;">Especificaciones</h2>
-      
         <table>
           {% for especificacion in proyecto.especificaciones %}
                 <tr>
-                    <th>Tipo de Documento</th>
-                    <td>{{ especificacion.ST_TIPO_DOC_CONCRETO }}</td>
+                    <th>Nombre del técnico</th>
+                    <td>{{ especificacion.ST_NOMBRE_TECNICO }}</td>
                 </tr>
+                <tr>
+                    <th>Observación</th>
+                    <td>{{ especificacion.ST_OBSERVACION_DESIMETRO }}</td>
+                </tr>
+                <tr>
+                    <th>Hora de salida</th>
+                    <td>{{ especificacion.FC_SALIDA_DESIMETRO }}</td>
+                </tr>
+                <tr>
+                    <th>Hora de entrada</th>
+                    <td>{{ especificacion.FC_ENTRADA_DESIMETRO }}</td>
+                </tr>
+                
           {% endfor %}
-        </table>
-
-        <h2 style = "color:#a88f61;">Empleados Asignados</h2>
-        <table>
-            {% for asignacion_empleado in proyecto.asignaciones_empleado %}
-                <tr>
-                    <th>Nombre</th>
-                    <td>{{ asignacion_empleado.FK_USUARIO__first_name }}</td>
-                </tr>
-                <tr>
-                    <th>Apellido</th>
-                    <td>{{ asignacion_empleado.FK_USUARIO__last_name }}</td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="2">No existen empleados asignados para este proyecto.</td>
-                </tr>
-            {% endfor %}
         </table>
 
         <h2 style = "color:#a88f61;">Equipos Asignados</h2>
@@ -61,25 +56,9 @@
             {% endfor %}
         </table>
 
-        <h2 style = "color:#a88f61;">Materiales Asignados</h2>
-        <table>
-            {% for asignacion_material in proyecto.asignaciones_material %}
-                <tr>
-                    <th>Nombre</th>
-                    <td>{{ asignacion_material.SK_MATERIAL__ST_NOMBRE_MATERIAL }}</td>
-                </tr>
-                <tr>
-                    <th>Cantidad Utilizada</th>
-                    <td>{{ asignacion_material.ST_DESCRIPCION }}</td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="2">No existen materiales asignados para este proyecto.</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <div class="page-break"></div>
+        <div class="page-break"></div>    
     {% empty %}
-    <h2 style="font-size: 15px;">No se encontraron resultados.</h2>
+        <h2 style="font-size: 15px;">No se encontraron resultados.</h2>
     {% endfor %}
+
 {% endblock %}

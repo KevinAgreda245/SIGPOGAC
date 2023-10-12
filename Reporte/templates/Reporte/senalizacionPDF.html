@@ -1,5 +1,5 @@
 {% extends 'Reporte/base.html' %} {% block pages_content %}
-<h2 class="title">Proyectos de Tipo Concreto</h2>
+<h2 class="title">Proyectos de Tipo Señalizacion Vial</h2>
 {% for proyecto in data %}
 <div style="background-color:gray; height: 0.1px;"><p style="color: gray;">.</p></div>
         <h1 style = "color:#a88f61; font-size: 15px;">Información General de Proyecto</h1>
@@ -19,8 +19,8 @@
         <table>
           {% for especificacion in proyecto.especificaciones %}
                 <tr>
-                    <th>Tipo de Documento</th>
-                    <td>{{ especificacion.ST_TIPO_DOC_CONCRETO }}</td>
+                    <th>Especificacion</th>
+                    <td>{{ especificacion.ST_ESPECIFICACION_VIAL }}</td>
                 </tr>
           {% endfor %}
         </table>

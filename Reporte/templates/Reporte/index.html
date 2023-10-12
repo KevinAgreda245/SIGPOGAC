@@ -15,7 +15,7 @@
                 <h5 class="card-title mb-0">Filtros</h5>
             </div>
             <div class="card-body">
-                <form method="POST">
+                <form method="POST" target="_blank">
                     {% csrf_token %}
                     <div class="row">
                         <div class="mb-3 col-md-12">
@@ -58,8 +58,8 @@
                             {% endfor %}
                         {% endif %}
                     </div>
-                    <button target="_blank" type="submit" class="btn btn-success">Generar Reporte</button>
-                    <a type="button" class="btn btn-secondary" href="{% url "Proyecto" %}">Limpiar</a>
+                    <button  type="submit" class="btn btn-success">Generar Reporte</button>
+                    <a type="button" class="btn btn-secondary" href="{% url 'Proyecto'%}">Limpiar</a>
                 </form>
             </div>
         
@@ -92,6 +92,7 @@
                 firstDay: 1
             }
         });
+
     });
   </script>
 {% endblock %}

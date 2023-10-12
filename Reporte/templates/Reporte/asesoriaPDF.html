@@ -1,0 +1,55 @@
+{% extends 'Reporte/base.html' %} {% block pages_content %}
+<h2 class="title">Proyectos de Tipo Asesorías Constructivas</h2>
+{% for proyecto in data %}
+<div style="background-color:gray; height: 0.1px;"><p style="color: gray;">.</p></div>
+        <h1 style = "color:#a88f61; font-size: 15px;">Información General de Proyecto</h1>
+        <table>
+            <tr>
+                <th>Número de proyecto</th>
+                <td>{{ proyecto.proyecto.SK_PROYECTO }}</td>
+            </tr>
+            <tr>
+                <th>Dirección</th>
+                <td>{{ proyecto.proyecto.ST_DIRECCION_PROYECTO }}</td>
+            </tr>
+        </table>
+
+
+        <h2 style = "color:#a88f61;">Especificaciones</h2>
+        <table>
+          {% for especificacion in proyecto.especificaciones %}
+                <tr>
+                    <th>Unidades de tiempo</th>
+                    <td>{{ especificacion.ST_UNIDAD_ASESORIA }}</td>
+                </tr>
+                <tr>
+                    <th>Cantidad de tiempo</th>
+                    <td>{{ especificacion.NM_TIEMPO }}</td>
+                </tr>   
+          {% endfor %}
+        </table>
+
+        <h2 style = "color:#a88f61;">Empleados Asignados</h2>
+        <table>
+            {% for asignacion_empleado in proyecto.asignaciones_empleado %}
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ asignacion_empleado.FK_USUARIO__first_name }}</td>
+                </tr>
+                <tr>
+                    <th>Apellido</th>
+                    <td>{{ asignacion_empleado.FK_USUARIO__last_name }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">No existen empleados asignados para este proyecto.</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <div class="page-break"></div>    
+    {% empty %}
+        <h2 style="font-size: 15px;">No se encontraron resultados.</h2>
+    {% endfor %}
+
+{% endblock %}
