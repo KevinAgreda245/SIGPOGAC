@@ -158,8 +158,11 @@ def rentaDesimetroForm(request):
             form_data = form.cleaned_data
             form_data['FC_SALIDA_DESIMETRO'] = form_data['FC_SALIDA_DESIMETRO'].strftime('%Y-%m-%d %H:%M:%S')
             form_data['FC_ENTRADA_DESIMETRO'] = form_data['FC_ENTRADA_DESIMETRO'].strftime('%Y-%m-%d %H:%M:%S')
-            request.session['form'] = form_data
-            return redirect("registerEquipment")
+            if form_data['FC_SALIDA_DESIMETRO'] >= form_data['FC_ENTRADA_DESIMETRO']:
+                messages.error(request, 'La fecha de salida debe ser anterior a la fecha de entrada.')
+            else:
+                request.session['form'] = form_data
+                return redirect("registerEquipment")
     else:
         form = RentaDesimetroForm()
         return render(request, 'Proyecto/rentadesimetro.html', {'form':form})
