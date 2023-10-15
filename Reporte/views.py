@@ -11,17 +11,17 @@ def index(request):
     if request.method == 'POST':
         form = ReportesForm(request.POST)
         if form.is_valid():
-            cliente = form.cleaned_data['cliente']
             estado = form.cleaned_data['estado']
+            cliente = form.cleaned_data['cliente']
             tipo_servicio = form.cleaned_data['tipo']
             fecha_desde = form.cleaned_data['fechaDesde']
             fecha_hasta = form.cleaned_data['fechaHasta']
             proyectos = Proyecto.objects.filter(FK_TIPO_SERVICIO = tipo_servicio)
             print(tipo_servicio)
-            if cliente:
-                proyectos = proyectos.filter(FK_CLIENTE=cliente)
             if estado:
                 proyectos = proyectos.filter(FK_ESTADO_PROYECTO=estado)
+            if cliente:
+                proyectos = proyectos.filter(FK_CLIENTE=cliente)
             if fecha_desde and fecha_hasta:
                 fecha_desde = datetime.strptime(fecha_desde, '%d/%m/%Y').strftime('%Y-%m-%d')
                 fecha_hasta = datetime.strptime(fecha_hasta, '%d/%m/%Y').strftime('%Y-%m-%d')
