@@ -12,6 +12,6 @@ def crearPDF(plantillaHTML, data={}):
     pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf')
-    return None
+    return HttpResponse('Error al generar el PDF: %s' % pdf.err, content_type='text/plain')
 
 
