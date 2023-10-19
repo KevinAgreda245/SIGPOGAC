@@ -115,7 +115,22 @@
 {% block js %}
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-        $(".select2").each(function() {
+        $("#id_tipo").each(function() {
+            $(this)
+                .wrap("<div class=\"position-relative\"></div>")
+                .select2({
+                    placeholder: "Seleccione una opción",
+                    dropdownParent: $(this).parent()
+                });
+        })
+        $("#id_cliente").each(function() {
+            $(this)
+                .wrap("<div class=\"position-relative\"></div>")
+                .select2({
+                    dropdownParent: $(this).parent()
+                });
+        })
+        $("#id_estado").each(function() {
             $(this)
                 .wrap("<div class=\"position-relative\"></div>")
                 .select2({
