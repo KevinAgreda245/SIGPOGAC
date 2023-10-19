@@ -1,20 +1,20 @@
 {% extends 'Reporte/base.html' %} {% block pages_content %}
-<h2 class="title">Proyectos de Tipo Concreto</h2>
+<h2 class="title">Informe de proyectos de Tipo Concreto</h2>
 {% for proyecto in data %}
 <div style="background-color:gray; height: 0.1px;"><p style="color: gray;">.</p></div>
-        <h1 style = "color:#a88f61; font-size: 15px;">Información General de Proyecto</h1>
+        <h1 style = "color:#a88f61; font-size: 15px;">Información General de Proyecto N° {{ proyecto.proyecto.SK_PROYECTO }}</h1>
         <table>
             <tr>
-                <th>Número de proyecto</th>
-                <td>{{ proyecto.proyecto.SK_PROYECTO }}</td>
+                <th>Nombre del Cliente:</th>
+                <td>{{ proyecto.proyecto.FK_CLIENTE__ST_NOMBRE_CLIENTE }}</td>
             </tr>
             <tr>
-                <th>Estado del proyecto</th>
-                <td>{{ proyecto.proyecto.FK_ESTADO_PROYECTO__ST_ESTADO_PROYECTO}}</td>
-            </tr>
-            <tr>
-                <th>Dirección</th>
+                <th>Dirección:</th>
                 <td>{{ proyecto.proyecto.ST_DIRECCION_PROYECTO }}</td>
+            </tr>
+            <tr>
+                <th>Estado del proyecto:</th>
+                <td>{{ proyecto.proyecto.FK_ESTADO_PROYECTO__ST_ESTADO_PROYECTO}}</td>
             </tr>
         </table>
 
@@ -23,7 +23,7 @@
         <table>
           {% for especificacion in proyecto.especificaciones %}
                 <tr>
-                    <th>Tipo de Documento</th>
+                    <th>Tipo de Documento:</th>
                     <td>{{ especificacion.ST_TIPO_DOC_CONCRETO }}</td>
                 </tr>
           {% endfor %}
@@ -33,11 +33,11 @@
         <table>
             {% for asignacion_empleado in proyecto.asignaciones_empleado %}
                 <tr>
-                    <th>Nombre</th>
+                    <th>Nombre:</th>
                     <td>{{ asignacion_empleado.FK_USUARIO__first_name }}</td>
                 </tr>
                 <tr>
-                    <th>Apellido</th>
+                    <th>Apellido:</th>
                     <td>{{ asignacion_empleado.FK_USUARIO__last_name }}</td>
                 </tr>
             {% empty %}
@@ -51,11 +51,11 @@
         <table>
             {% for asignacion_equipo in proyecto.asignaciones_equipo %}
                 <tr>
-                    <th>Nombre</th>
+                    <th>Nombre:</th>
                     <td>{{ asignacion_equipo.FK_EQUIPO__ST_NOMBRE_EQUIPO }}</td>
                 </tr>
                 <tr>
-                    <th>Tipo</th>
+                    <th>Tipo:</th>
                     <td>{{ asignacion_equipo.FK_EQUIPO__FK_TIPO_EQUIPO__ST_TIPO_EQUIPO }}</td>
                 </tr>
             {% empty %}
@@ -69,11 +69,11 @@
         <table>
             {% for asignacion_material in proyecto.asignaciones_material %}
                 <tr>
-                    <th>Nombre</th>
+                    <th>Nombre:</th>
                     <td>{{ asignacion_material.SK_MATERIAL__ST_NOMBRE_MATERIAL }}</td>
                 </tr>
                 <tr>
-                    <th>Cantidad Utilizada</th>
+                    <th>Cantidad Utilizada:</th>
                     <td>{{ asignacion_material.ST_DESCRIPCION }}</td>
                 </tr>
             {% empty %}

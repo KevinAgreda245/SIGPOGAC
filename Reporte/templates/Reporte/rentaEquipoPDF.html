@@ -2,22 +2,21 @@
 <h2 class="title">Proyectos de Tipo Renta de Equipo de Terracería</h2>
 {% for proyecto in data %}
 <div style="background-color:gray; height: 0.1px;"><p style="color: gray;">.</p></div>
-        <h1 style = "color:#a88f61; font-size: 15px;">Información General de Proyecto</h1>
+        <h1 style = "color:#a88f61; font-size: 15px;">Información General de Proyecto N° {{ proyecto.proyecto.SK_PROYECTO }}</h1>
         <table>
             <tr>
-                <th>Número de proyecto</th>
-                <td>{{ proyecto.proyecto.SK_PROYECTO }}</td>
+                <th>Nombre del Cliente:</th>
+                <td>{{ proyecto.proyecto.FK_CLIENTE__ST_NOMBRE_CLIENTE }}</td>
             </tr>
             <tr>
-                <th>Estado del proyecto</th>
-                <td>{{ proyecto.proyecto.FK_ESTADO_PROYECTO__ST_ESTADO_PROYECTO}}</td>
-            </tr>
-            <tr>
-                <th>Dirección</th>
+                <th>Dirección:</th>
                 <td>{{ proyecto.proyecto.ST_DIRECCION_PROYECTO }}</td>
             </tr>
+            <tr>
+                <th>Estado del proyecto:</th>
+                <td>{{ proyecto.proyecto.FK_ESTADO_PROYECTO__ST_ESTADO_PROYECTO}}</td>
+            </tr>
         </table>
-
 
         <h2 style = "color:#a88f61;">Especificaciones</h2>
         <table>

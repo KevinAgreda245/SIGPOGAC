@@ -47,14 +47,17 @@
             background:#FFED86;
             font-size:10px;
         }
-  
+
+        th {
+            width: 25%; 
+            text-align: right;
+        }
+
         tbody tr { 
             height:48px; 
             border-bottom:1px solid #E3F1D5 ;
         }
 
-        
-        
         .container {
             display: flex;
             flex-direction: column;
@@ -65,8 +68,8 @@
             background: grey;
         }
 
-        .estilo {
-        
+        .right-align {
+            text-align: right;
         }
 
         @page {
@@ -108,6 +111,6 @@
 
 {% endblock %}
 
-<div id="footer_content">
+<div id="footer_content" class="right-align">
     <p><b>Elaborado por: </b>{{user}} <b> | Fecha de impresión: </b>{{date | date:'d/m/Y h:i A'}} | <b>Página <pdf:pagenumber> </b></p>
 </div>

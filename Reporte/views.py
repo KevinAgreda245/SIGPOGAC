@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
-
+from django.db.models import F
 from Proyecto.models import *
 from Reporte.utils import crearPDF
 
