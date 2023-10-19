@@ -16,16 +16,8 @@ def index(request):
             tipo_servicio = form.cleaned_data['tipo']
             fecha_desde = form.cleaned_data['fechaDesde']
             fecha_hasta = form.cleaned_data['fechaHasta']
-            proyectos = Proyecto.objects.filter(FK_TIPO_SERVICIO = tipo_servicio)
-            print(tipo_servicio)
-            if estado:
-                proyectos = proyectos.filter(FK_ESTADO_PROYECTO=estado)
-            if cliente:
-                proyectos = proyectos.filter(FK_CLIENTE=cliente)
-            if fecha_desde and fecha_hasta:
-                fecha_desde = datetime.strptime(fecha_desde, '%d/%m/%Y').strftime('%Y-%m-%d')
-                fecha_hasta = datetime.strptime(fecha_hasta, '%d/%m/%Y').strftime('%Y-%m-%d')
-                proyectos = proyectos.filter(FC_INGRESO_PROYECTO__range = (fecha_desde, fecha_hasta)).values(
+            todos_proyecto = form.cleaned_data['todos_proyectos']
+            proyectos = Proyecto.objects.filter(FK_TIPO_SERVICIO = tipo_servicio).values(
                     'SK_PROYECTO', 
                     'ST_DIRECCION_PROYECTO', 
                     'ST_DESCRIPCION_PROYECTO', 
@@ -34,6 +26,15 @@ def index(request):
                     'FK_USUARIO__username', 
                     'FC_INGRESO_PROYECTO'
                 )
+            if estado:
+                proyectos = proyectos.filter(FK_ESTADO_PROYECTO=estado)
+            if cliente:
+                proyectos = proyectos.filter(FK_CLIENTE=cliente)
+            if not todos_proyecto:
+                if fecha_desde and fecha_hasta:
+                    fecha_desde = datetime.strptime(fecha_desde, '%d/%m/%Y').strftime('%Y-%m-%d')
+                    fecha_hasta = datetime.strptime(fecha_hasta, '%d/%m/%Y').strftime('%Y-%m-%d')
+                    proyectos = proyectos.filter(FC_INGRESO_PROYECTO__range = (fecha_desde, fecha_hasta))
             asignaciones_empleado = AsignacionEmpleado.objects.all().values(
                 'FK_USUARIO__first_name',
                 'FK_USUARIO__last_name',

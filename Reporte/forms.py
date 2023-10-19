@@ -24,15 +24,21 @@ class ReportesForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control select2'}),
         label="Tipo de Servicio:"
     )
+    todos_proyectos = forms.BooleanField(
+        required=False, 
+        initial=True, 
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}), 
+        label='Mostrar todos los proyectos'
+    )
     fechaDesde = forms.CharField(
         required = False,
         widget = forms.TextInput(attrs={'class': 'form-control data-picker', 'placeholder': 'dd/mm/aaaa'}),
-        label = "Fecha Desde:"
+        label = "Desde:"
     )
     fechaHasta = forms.CharField(
         required = False,
         widget = forms.TextInput(attrs={'class': 'form-control data-picker', 'placeholder': 'dd/mm/aaaa'}),
-        label = "Fecha Hasta:"
+        label = "Hasta:"
     )
     def clean(self):
         cleaned_data = super().clean()

@@ -29,6 +29,7 @@
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">
                                 {{form.tipo.label}}
+                                <span class="text-danger">*</span>
                             </label>
                             {{form.tipo}}
                         </div>
@@ -39,6 +40,17 @@
                             {{form.estado}}
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <div class="form-check form-switch">
+                            <label for="inputEmail4">
+                                {{form.todos_proyectos.label}}
+                            </label>
+                            {{form.todos_proyectos}}
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="card-title mb-0">Rango de fecha</h5>
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="inputEmail4">
@@ -59,10 +71,8 @@
                         {% endif %}
                     </div>
                     <button  type="submit" class="btn btn-success">Generar Reporte</button>
-                    <a type="button" class="btn btn-secondary" href="{% url 'Proyecto'%}">Limpiar</a>
                 </form>
             </div>
-        
     </div>
 </div>
 {% endblock %}
@@ -92,7 +102,33 @@
                 firstDay: 1
             }
         });
-
+        $(".select2").each(function() {
+            $(this)
+                .wrap("<div class=\"position-relative\"></div>")
+                .select2({
+                    placeholder: "Seleccione una opción",
+                    dropdownParent: $(this).parent()
+                });
+        })
     });
+
+    var todosProyectosCheckbox = document.getElementById("id_todos_proyectos");
+    var fechaDesdeInput = document.getElementById("id_fechaDesde");
+    var fechaHastaInput = document.getElementById("id_fechaHasta");
+
+    // Función para habilitar o deshabilitar campos de fecha según la selección del usuario
+    function toggleFechaInputs() {
+        if (todosProyectosCheckbox.checked) {
+            fechaDesdeInput.disabled = true;
+            fechaHastaInput.disabled = true;
+        } else {
+            fechaDesdeInput.disabled = false;
+            fechaHastaInput.disabled = false;
+        }
+    }
+
+    // Llama a la función al cargar la página y cuando el checkbox cambia
+    window.onload = toggleFechaInputs;
+    todosProyectosCheckbox.addEventListener("change", toggleFechaInputs);
   </script>
 {% endblock %}
