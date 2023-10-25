@@ -39,6 +39,7 @@
                         <tr>
                             <th>Estado actual:</th>
                             <td>{{proyecto.FK_ESTADO_PROYECTO}}</td>
+                          
                         </tr>
                     </tbody>
                 </table>
@@ -48,10 +49,10 @@
     <div class="col-12 col-lg-6">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title mb-0">Información especifico.</h4>
+                <h4 class="card-title mb-0">Información específica.</h4>
             </div>
             <div class="card-body">
-                
+                {% include 'Proyecto/details_especificaciones.html' %}
             </div>
         </div>
     </div>
@@ -71,35 +72,42 @@
             <div class="tab-content">
                 {% if equipos %}
                     <div class="tab-pane active" id="tab-equipo" role="tabpanel">
-                        <h4 class="tab-title">Equipo asignado.</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor tellus eget condimentum
-                            rhoncus. Aenean massa. Cum sociis natoque penatibus et magnis neque dis parturient montes, nascetur ridiculus mus.
-                        </p>
-                        <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede
-                            justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae,
-                            justo.</p>
+                        <h4 class="tab-title">Equipos asignados</h4>
+                    
+                        <ol class="list-group list-group-numbered">
+                            {% for equipo in equipos %}
+                            <li class="list-group-item">
+                                {{equipo.FK_EQUIPO__ST_NOMBRE_EQUIPO}}
+                            </li>
+                            {% endfor %}
+                          </ol>
                     </div>
                 {% endif %}
                 {% if personal %}
                     <div class="tab-pane" id="tab-empleado" role="tabpanel">
-                        <h4 class="tab-title">Empleado asignado.</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor tellus eget condimentum
-                            rhoncus. Aenean massa. Cum sociis natoque penatibus et magnis neque dis parturient montes, nascetur ridiculus mus.
-                        </p>
-                        <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede
-                            justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae,
-                            justo.</p>
+                        <h4 class="tab-title">Empleados asignados</h4>
+                        <ol class="list-group list-group-numbered">
+                            {% for persona in personal %}
+                            <li class="list-group-item">
+                                {{persona.FK_USUARIO__first_name}} {{FK_USUARIO__last_name}}
+                            </li>
+                            {% endfor %}
+                        </ol>
                     </div>
                 {% endif %}
                 {% if materiales %}
                     <div class="tab-pane" id="tab-material" role="tabpanel">
-                        <h4 class="tab-title">Material asignado.</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor tellus eget condimentum
-                            rhoncus. Aenean massa. Cum sociis natoque penatibus et magnis neque dis parturient montes, nascetur ridiculus mus.
-                        </p>
-                        <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede
-                            justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae,
-                            justo.</p>
+                        <h4 class="tab-title">Materiales asignados</h4>
+                        <ol class="list-group list-group-numbered">
+                            {% for material in materiales %}
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">{{material.SK_MATERIAL__ST_NOMBRE_MATERIAL}}</div>
+                                  </div>
+                                <span class="badge bg-primary rounded-pill">Cantidad:  {{material.ST_DESCRIPCION}}</span>
+                            </li>
+                            {% endfor %}
+                        </ol>
                     </div>
                 {% endif %}
             </div>

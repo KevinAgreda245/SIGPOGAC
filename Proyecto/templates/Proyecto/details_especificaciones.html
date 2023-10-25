@@ -1,0 +1,107 @@
+{% if tipo == 1 or tipo == 6%}
+    <table class="table table-sm my-2">
+        <tbody>
+            <tr>
+                <th>Tipo de Documento:</th>
+                <td>{{ especificaciones.get_ST_TIPO_DOC_CONCRETO_display }}</td>
+            </tr>
+            <tr>
+                <th>Documento:</th>
+                <td ><a href="{{ especificaciones.ST_DOC_CONCRETO.url }}" download>Descargar</a></td>
+            </tr>
+
+        </tbody>
+    </table>
+{% elif tipo == 2%} 
+    <table class="table table-sm my-2">
+        <tbody>
+            <tr>
+                <th>Fecha de salida:</th>
+                <td>{{ especificaciones.FC_SALIDA_EQUIPO}}</td>
+            </tr>
+            <tr>
+                <th>Fecha de entrada:</th>
+                <td>{{ especificaciones.FC_ENTRADA_EQUIPO}}</td>
+            </tr>
+            <tr>
+                <th>Tipo de uso:</th>
+                <td>{{ especificaciones.ST_TIPO_USO}}</td>
+            </tr>
+            <tr>
+                <th>Observación:</th>
+                <td>{{ especificaciones.ST_OBSERVACION_EQUIPO}}</td>
+            </tr>
+        </tbody>
+    </table>
+{% elif tipo == 3%} 
+    <table class="table table-sm my-2">
+        <tbody>
+            <tr>
+                <th>Fecha de salida:</th>
+                <td>{{ especificaciones.FC_SALIDA_DESIMETRO}}</td>
+            </tr>
+            <tr>
+                <th>Fecha de entrada:</th>
+                <td>{{ especificaciones.FC_ENTRADA_DESIMETRO}}</td>
+            </tr>
+            <tr>
+                <th>Tipo de uso:</th>
+                <td>{{ especificaciones.ST_NOMBRE_TECNICO}}</td>
+            </tr>
+            <tr>
+                <th>Observación:</th>
+                <td>{{ especificaciones.ST_OBSERVACION_DESIMETRO}}</td>
+            </tr>
+        </tbody>
+    </table>
+{% elif tipo == 4%}
+    <table class="table table-sm my-2">
+        <tbody>
+            <tr>
+                <th>Unidad de medida:</th>
+                <td>{{ especificaciones.get_ST_UNIDAD_TRANSPORTE_display }}</td>
+            </tr>
+            <tr>
+                <th>Volumen:</th>
+                <td>{{ especificaciones.NM_VOLUMEN}}</td>
+            </tr>
+        </tbody>
+    </table>
+{% elif tipo == 5%}
+    <table class="table table-sm my-2">
+        <tbody>
+            <tr>
+                <th>Unidad de medida:</th>
+                <td>{{ especificaciones.get_ST_UNIDAD_LEVANTAMIENTO_display }}</td>
+            </tr>
+            <tr>
+                <th>Área:</th>
+                <td>{{ especificaciones.NM_AREA}}</td>
+            </tr>
+        </tbody>
+    </table>
+{% elif tipo == 7%}
+    <table class="table table-sm my-2">
+        <tbody>
+            <tr>
+                <th>Especificación:</th>
+                <td>{{ especificaciones.ST_ESPECIFICACION_VIAL }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% elif tipo == 8%}
+    <table class="table table-sm my-2">
+        <tbody>
+            <tr>
+                <th>Unidad de tiempo:</th>
+                <td>{{ especificaciones.get_ST_UNIDAD_ASESORIA_display}}</td>
+            </tr>
+            <tr>
+                <th>Cantidad de tiempo:</th>
+                <td>{{ especificaciones.NM_TIEMPO}}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endif %}
+
+

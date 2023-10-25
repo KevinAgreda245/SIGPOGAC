@@ -92,37 +92,49 @@ def add(request):
     }
     return render(request, 'Proyecto/add.html',context)
 
+
 def details(request, id):
     proyecto = Proyecto.objects.get(SK_PROYECTO=id)
     tipo = proyecto.FK_TIPO_SERVICIO.SK_TIPO_SERVICIO
     especificaciones = None
-    personal = AsignacionEmpleado.objects.filter(SK_PROYECTO=id)
-    materiales = AsignacionMaterial.objects.filter(FK_PROYECTO = id)
-    equipos = AsignacionEquipo.objects.filter(SK_PROYECTO = id)
+    personal = AsignacionEmpleado.objects.filter(SK_PROYECTO=id).values(
+        'FK_USUARIO__first_name',
+        'FK_USUARIO__last_name'
+    )
+    materiales = AsignacionMaterial.objects.filter(FK_PROYECTO = id).values(
+        'SK_MATERIAL__ST_NOMBRE_MATERIAL',
+        'ST_DESCRIPCION'
+    )      
+    equipos = AsignacionEquipo.objects.filter(SK_PROYECTO = id).values(
+        'FK_EQUIPO__ST_NOMBRE_EQUIPO',
+        'FK_EQUIPO__FK_TIPO_EQUIPO__ST_TIPO_EQUIPO'
+    )
     
     if tipo == 1:
         especificaciones = Concreto.objects.get(FK_PROYECTO = id)
     elif tipo ==2:
-        especificaciones = RentaEquipo.objects.filter(FK_PROYECTO = id)
+        especificaciones = RentaEquipo.objects.get(FK_PROYECTO = id)
     elif tipo ==3:
-        especificaciones = RentaDesimetro.objects.filter(FK_PROYECTO = id)    
+        especificaciones = RentaDesimetro.objects.get(FK_PROYECTO = id)    
     elif tipo ==4:
-        especificaciones = Transporte.objects.filter(FK_PROYECTO = id)
+        especificaciones = Transporte.objects.get(FK_PROYECTO = id)
     elif tipo == 5:
-        especificaciones = LevantamientoTopografico.objects.filter(FK_PROYECTO = id)
+        especificaciones = LevantamientoTopografico.objects.get(FK_PROYECTO = id)
     elif tipo == 6:
-        especificaciones = EstructuraMetalica.objects.filter(FK_PROYECTO = id)
+        especificaciones = EstructuraMetalica.objects.get(FK_PROYECTO = id)
     elif tipo ==7:
-        especificaciones = SenializacionVial.objects.filter(FK_PROYECTO = id)
+        especificaciones = SenializacionVial.objects.get(FK_PROYECTO = id)
     elif tipo ==8:             
-        especificaciones = AsesoriaConstructiva.objects.filter(FK_PROYECTO = id)
+        especificaciones = AsesoriaConstructiva.objects.get(FK_PROYECTO = id)
     contexto = {
         'proyecto': proyecto,
         'personal': personal,
         'materiales': materiales,
         'equipos': equipos,
-        'especificaciones': especificaciones
+        'especificaciones': especificaciones,
+        'tipo':tipo
     }
+
     return render(request, 'Proyecto/details.html',contexto)
 
 def transporteForm(request):
