@@ -13,7 +13,15 @@ from django.db.models import Q
 import json
 
 def index(request):
-    proyectos = Proyecto.objects.all()  # Inicialmente, obtén todos los proyectos
+    user = request.user
+    print(user)
+    if user.groups.filter(name='Empleado').exists():
+        # Si el usuario es Empleado, se recuperan unicamente los proyectos a los que se encuentra asignado
+        asignaciones = AsignacionEmpleado.objects.filter(FK_USUARIO_id=user)
+        proyectos = Proyecto.objects.filter(pk__in=asignaciones.values_list('SK_PROYECTO', flat=True))
+    else:
+        # Si el usuario no pertenece a Empleado, se recuperan todos los proyectos
+        proyectos = Proyecto.objects.all()
     if request.method == 'POST':
         form = FiltroProyectosForm(request.POST)
         if form.is_valid():
@@ -32,7 +40,6 @@ def index(request):
     else:
         form = FiltroProyectosForm()
     
-
     # Aplicar paginación
     page_number = request.GET.get('page')
     per_page = 10  # Número de proyectos por página
