@@ -25,6 +25,9 @@ urlpatterns = [
     path('material', views.registerMaterial, name = "registerMaterial"),
     path('material/delete/<int:id>', views.deleteMaterial, name = "deleteMaterial"),
 
-    path('save', views.save, name = "saveProyecto")
+    path('save', views.save, name = "saveProyecto"),
+
+    path('get_estados/', views.getEstados, name='getEstados'),
+    path('proyecto/<int:proyecto_id>/save_estado/<int:nuevo_estado_id>', views.saveEstado, name = "saveEstado")
 
 ]

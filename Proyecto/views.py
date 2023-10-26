@@ -2,7 +2,7 @@ import io
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from .forms import *
 from .models import *
@@ -498,3 +498,18 @@ def saveEspecifications(form_data, tipo_servicio):
         return TransporteForm(form_data)
     elif tipo_servicio =="8":  
         return AsesoriaConstructivaForm(form_data)
+    
+
+def getEstados(request):
+    estados = EstadoProyecto.objects.all()
+    estados_list = [{'id': estado.SK_ESTADO_PROYECTO, 'nombre': estado.ST_ESTADO_PROYECTO} for estado in estados]
+    return JsonResponse(estados_list, safe=False)
+
+
+def saveEstado(request, proyecto_id, nuevo_estado_id):
+    proyecto = Proyecto.objects.get(SK_PROYECTO=proyecto_id)
+    nuevo_estado = EstadoProyecto.objects.get(SK_ESTADO_PROYECTO=nuevo_estado_id)
+    proyecto.FK_ESTADO_PROYECTO = nuevo_estado
+    proyecto.save()
+    estado_nombre = nuevo_estado.ST_ESTADO_PROYECTO
+    return JsonResponse({'success': True, 'estado_nombre': estado_nombre})

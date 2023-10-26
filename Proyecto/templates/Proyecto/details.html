@@ -1,117 +1,219 @@
-{% extends 'General/dashboard.html' %}
-{% load static %}
-
-{% block title %} Proyecto N° {{proyecto.SK_PROYECTO}} {% endblock %}
-
-{% block main %}
+{% extends 'General/dashboard.html' %} {% load static %} {% block title %}
+Proyecto N° {{proyecto.SK_PROYECTO}} {% endblock %} {% block main %}
 <div class="header">
-    <h1 class="header-title">
-        Detalle del Proyecto.
-    </h1>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'Proyecto' %}">Administración de Proyecto</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Detalle</li>
-        </ol>
-    </nav>
+  <h1 class="header-title">Detalle del Proyecto.</h1>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url 'Proyecto' %}">Administración de Proyecto</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Detalle</li>
+    </ol>
+  </nav>
 </div>
 <div class="row">
-    <div class="col-12 col-lg-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title mb-0">Información general.</h4>
-            </div>
-            <div class="card-body">
-                <table class="table table-sm my-2">
-                    <tbody>
-                        <tr>
-                            <th>Nombre del cliente:</th>
-                            <td>{{proyecto.FK_CLIENTE}}</td>
-                        </tr>
-                        <tr>
-                            <th>Descripción:</th>
-                            <td>{{proyecto.ST_DESCRIPCION_PROYECTO}}</td>
-                        </tr>
-                        <tr>
-                            <th>Dirección:</th>
-                            <td>{{proyecto.ST_DIRECCION_PROYECTO}}</td>
-                        </tr>
-                        <tr>
-                            <th>Estado actual:</th>
-                            <td>{{proyecto.FK_ESTADO_PROYECTO}}</td>
-                          
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+  <div class="col-12 col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0">Información general.</h4>
+      </div>
+      <div class="card-body">
+        <table class="table table-sm my-2">
+          <tbody>
+            <tr>
+              <th>Nombre del cliente:</th>
+              <td>{{proyecto.FK_CLIENTE}}</td>
+            </tr>
+            <tr>
+              <th>Descripción:</th>
+              <td>{{proyecto.ST_DESCRIPCION_PROYECTO}}</td>
+            </tr>
+            <tr>
+              <th>Dirección:</th>
+              <td>{{proyecto.ST_DIRECCION_PROYECTO}}</td>
+            </tr>
+            <tr>
+              <th>Estado actual:</th>
+            {% if request.user.is_staff%}
+              <td>
+                <select class = "form-control select2" name="estado" id="estado" data-original-value="{{ proyecto.FK_ESTADO_PROYECTO }}" disabled>
+                  <option value="{{ proyecto.FK_ESTADO_PROYECTO }}">
+                    {{ proyecto.FK_ESTADO_PROYECTO}}
+                  </option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <button type="button" id = "cambiar_estado"class="btn btn-secondary">Actualizar Estado</button>
+        <button type="button" id="guardar" class="btn btn-primary" style="display: none;">Guardar</button>
+        <button type="button" id="cancelar" class="btn btn-danger" style="display: none;">Cancelar</button>
+        {% else %}
+            <td>
+                {{proyecto.FK_ESTADO_PROYECTO}}
+            </td>
+            </tr>
+            </tbody>
+        </table>
+        {% endif %}
+
+      </div>
     </div>
-    <div class="col-12 col-lg-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title mb-0">Información específica.</h4>
-            </div>
-            <div class="card-body">
-                {% include 'Proyecto/details_especificaciones.html' %}
-            </div>
-        </div>
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0">Información específica.</h4>
+      </div>
+      <div class="card-body">
+        {% include 'Proyecto/details_especificaciones.html' %}
+      </div>
     </div>
-    <div class="col-12">
-        <div class="tab">
-            <ul class="nav nav-tabs" role="tablist">
-                {% if equipos %}
-                    <li class="nav-item"><a class="nav-link active" href="#tab-equipo" data-bs-toggle="tab" role="tab">Equipo</a></li>
-                {% endif %}
-                {% if personal %}
-                    <li class="nav-item"><a class="nav-link" href="#tab-empleado" data-bs-toggle="tab" role="tab">Empleado</a></li>
-                {% endif %}
-                {% if materiales %}
-                    <li class="nav-item"><a class="nav-link" href="#tab-material" data-bs-toggle="tab" role="tab">Material</a></li>
-                {% endif %}
-            </ul>
-            <div class="tab-content">
-                {% if equipos %}
-                    <div class="tab-pane active" id="tab-equipo" role="tabpanel">
-                        <h4 class="tab-title">Equipos asignados</h4>
-                    
-                        <ol class="list-group list-group-numbered">
-                            {% for equipo in equipos %}
-                            <li class="list-group-item">
-                                {{equipo.FK_EQUIPO__ST_NOMBRE_EQUIPO}}
-                            </li>
-                            {% endfor %}
-                          </ol>
-                    </div>
-                {% endif %}
-                {% if personal %}
-                    <div class="tab-pane" id="tab-empleado" role="tabpanel">
-                        <h4 class="tab-title">Empleados asignados</h4>
-                        <ol class="list-group list-group-numbered">
-                            {% for persona in personal %}
-                            <li class="list-group-item">
-                                {{persona.FK_USUARIO__first_name}} {{persona.FK_USUARIO__last_name}}
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
-                {% endif %}
-                {% if materiales %}
-                    <div class="tab-pane" id="tab-material" role="tabpanel">
-                        <h4 class="tab-title">Materiales asignados</h4>
-                        <ol class="list-group list-group-numbered">
-                            {% for material in materiales %}
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">{{material.SK_MATERIAL__ST_NOMBRE_MATERIAL}}</div>
-                                  </div>
-                                <span class="badge bg-primary rounded-pill">Cantidad:  {{material.ST_DESCRIPCION}}</span>
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
-                {% endif %}
-            </div>
+  </div>
+  <div class="col-12">
+    <div class="tab">
+      <ul class="nav nav-tabs" role="tablist">
+        {% if equipos %}
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            href="#tab-equipo"
+            data-bs-toggle="tab"
+            role="tab"
+            >Equipo</a
+          >
+        </li>
+        {% endif %} {% if personal %}
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="#tab-empleado"
+            data-bs-toggle="tab"
+            role="tab"
+            >Empleado</a
+          >
+        </li>
+        {% endif %} {% if materiales %}
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="#tab-material"
+            data-bs-toggle="tab"
+            role="tab"
+            >Material</a
+          >
+        </li>
+        {% endif %}
+      </ul>
+      <div class="tab-content">
+        {% if equipos %}
+        <div class="tab-pane active" id="tab-equipo" role="tabpanel">
+          <h4 class="tab-title">Equipos asignados</h4>
+
+          <ol class="list-group list-group-numbered">
+            {% for equipo in equipos %}
+            <li class="list-group-item">
+              {{equipo.FK_EQUIPO__ST_NOMBRE_EQUIPO}}
+            </li>
+            {% endfor %}
+          </ol>
         </div>
+        {% endif %} {% if personal %}
+        <div class="tab-pane" id="tab-empleado" role="tabpanel">
+          <h4 class="tab-title">Empleados asignados</h4>
+          <ol class="list-group list-group-numbered">
+            {% for persona in personal %}
+            <li class="list-group-item">
+              {{persona.FK_USUARIO__first_name}}
+              {{persona.FK_USUARIO__last_name}}
+            </li>
+            {% endfor %}
+          </ol>
+        </div>
+        {% endif %} {% if materiales %}
+        <div class="tab-pane" id="tab-material" role="tabpanel">
+          <h4 class="tab-title">Materiales asignados</h4>
+          <ol class="list-group list-group-numbered">
+            {% for material in materiales %}
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">
+                  {{material.SK_MATERIAL__ST_NOMBRE_MATERIAL}}
+                </div>
+              </div>
+              <span class="badge bg-primary rounded-pill"
+                >Cantidad: {{material.ST_DESCRIPCION}}</span
+              >
+            </li>
+            {% endfor %}
+          </ol>
+        </div>
+        {% endif %}
+      </div>
     </div>
+  </div>
 </div>
+{% endblock %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#cambiar_estado').on('click', function() {
+            estadoOriginal = $('#estado').data('original-value'); 
+            $('#guardar, #cancelar').show();
+            $(this).hide();
+            $.ajax({
+                url: '{% url "getEstados" %}', 
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#estado').empty();        
+                    $.each(data, function(index, estado) {
+                        $('#estado').append('<option value="' + estado.id + '">' + estado.nombre + '</option>');
+                    });
+                    $('#estado').prop('disabled', false);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching estados:', error);
+                }
+            });
+        });
+
+        $('#cancelar').on('click', function() {
+            $('#estado').empty(); 
+            $('#estado').append('<option value="' + estadoOriginal + '" selected>' + estadoOriginal + '</option>');
+            $('#cambiar_estado').show();
+            $('#guardar, #cancelar').hide();
+            $('#estado').prop('disabled', true);
+        });
+
+        $('#guardar').on('click', function() {
+            var nombreEstado;
+            var nuevoEstado = $('#estado').val();
+            var proyectoId =  {{proyecto.SK_PROYECTO}};
+            $.ajax({
+                url: '{% url "saveEstado" proyecto_id=0 nuevo_estado_id=0 %}'.replace('0', proyectoId).replace('0', nuevoEstado),
+                type: 'GET', 
+                dataType: 'json',
+                success: function(data) {
+                    nombreEstado = data.estado_nombre;
+                    $('#estado').empty(); 
+                    $('#estado').append('<option value="' + nuevoEstado + '" selected>' + nombreEstado  + '</option>');
+                    $('#cambiar_estado').show();
+                    $('#guardar, #cancelar').hide();
+                    $('#estado').prop('disabled', true);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error saving estado:', error);
+                }
+                
+            });
+            
+        });
+    });
+</script>
 {% endblock %}
