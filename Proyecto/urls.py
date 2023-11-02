@@ -28,6 +28,9 @@ urlpatterns = [
     path('save', views.save, name = "saveProyecto"),
 
     path('get_estados/', views.getEstados, name='getEstados'),
-    path('proyecto/<int:proyecto_id>/save_estado/<int:nuevo_estado_id>', views.saveEstado, name = "saveEstado")
+    path('proyecto/<int:proyecto_id>/save_estado/<int:nuevo_estado_id>', views.saveEstado, name = "saveEstado"),
+    path('proyecto/upload_factura/<int:proyecto_id>', views.uploadFactura, name='uploadFactura'),
+    path('proyecto/delete_factura/<int:factura_id>', views.deleteFactura, name = 'deleteFactura'),
+    path('proyecto/get_facturas/<int:proyecto_id>', views.getFacturas, name = "getFacturas")
 
 ]

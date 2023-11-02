@@ -156,6 +156,35 @@ Proyecto N° {{proyecto.SK_PROYECTO}} {% endblock %} {% block main %}
     </div>
   </div>
 </div>
+<div class="row">
+  <div class ="card">
+    <div class="col-12">
+      <h4 class="mt-4">Facturas</h4>
+      <ul id ="facturas">
+        {% for factura in facturas %}
+          <li>
+            <div class="d-flex justify-content-between my-2">
+              <a href="{{ factura.ST_FACTURA.url }}">{{ factura.ST_FACTURA.name }}</a>
+              <button class="btn btn-danger btn-sm delete-btn" data-invoice-id="{{ factura.SK_FACTURA }}">Eliminar</button>
+            </div>
+          </li>
+
+        {% empty %}
+          <li>No hay facturas disponibles.</li>
+        {% endfor %}
+      </ul>
+      <form id = "uploadFactura" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="facturaFile">Subir Factura:</label>
+          <input type="file" class="form-control" id="facturaFile" name="facturaFile" required>
+        </div>
+        <button type="submit" class="btn btn-secondary my-3">Subir Factura</button>
+      </form>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block js %}
@@ -211,9 +240,62 @@ Proyecto N° {{proyecto.SK_PROYECTO}} {% endblock %} {% block main %}
                     console.error('Error saving estado:', error);
                 }
                 
-            });
-            
+            });           
         });
+
+        $('#uploadFactura').submit(function(event) {
+          event.preventDefault();
+    
+          var formData = new FormData(this);
+    
+          $.ajax({
+            url: '{% url "uploadFactura" proyecto.SK_PROYECTO %}',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+              $.get('{% url "getFacturas" proyecto.SK_PROYECTO %}', function(data) {
+                // Clear the current list
+                $('#facturas').empty();
+
+                // Populate the list with the updated invoices
+                data.forEach(function(factura) {
+                    $('#facturas').append('<li>' +
+                        '<div class="d-flex justify-content-between my-2">' +
+                        '<a href="' + factura.url + '">' + factura.nombre + '</a>' +
+                        '<button class="btn btn-danger btn-sm delete-btn" data-invoice-id="' + factura.id + '">Eliminar</button>' +
+                        '</div>' +
+                        '</li>');
+                });
+            });
+            },
+            error: function(xhr, status, error) {
+
+            }
+          });
+        });
+
+        $('#facturas').on('click', '.delete-btn', function() {
+
+          var facturaId = $(this).data('invoice-id');
+    
+          $.ajax({
+            url: '{% url "deleteFactura" 0 %}'.replace('0', facturaId),
+            type: 'POST',
+            data: {
+              csrfmiddlewaretoken: '{{ csrf_token }}',
+              factura_id: facturaId
+            },
+            success: function(response) {
+              $(`#facturas li:has(button[data-invoice-id="${facturaId}"])`).remove();
+            },
+            error: function(xhr, status, error) {
+              console.error('Error deleting factura:', error);
+            }
+          });
+        });
+
     });
 </script>
 {% endblock %}

@@ -1,8 +1,8 @@
 import io
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404, render, redirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from .forms import *
 from .models import *
@@ -102,8 +102,10 @@ def add(request):
 
 def details(request, id):
     proyecto = Proyecto.objects.get(SK_PROYECTO=id)
+    facturas = Factura.objects.filter(FK_PROYECTO=proyecto)
     tipo = proyecto.FK_TIPO_SERVICIO.SK_TIPO_SERVICIO
     especificaciones = None
+
     personal = AsignacionEmpleado.objects.filter(SK_PROYECTO=id).values(
         'FK_USUARIO__first_name',
         'FK_USUARIO__last_name'
@@ -133,13 +135,15 @@ def details(request, id):
         especificaciones = SenializacionVial.objects.get(FK_PROYECTO = id)
     elif tipo ==8:             
         especificaciones = AsesoriaConstructiva.objects.get(FK_PROYECTO = id)
+
     contexto = {
         'proyecto': proyecto,
         'personal': personal,
         'materiales': materiales,
         'equipos': equipos,
         'especificaciones': especificaciones,
-        'tipo':tipo
+        'tipo':tipo,
+        'facturas': facturas
     }
 
     return render(request, 'Proyecto/details.html',contexto)
@@ -513,3 +517,29 @@ def saveEstado(request, proyecto_id, nuevo_estado_id):
     proyecto.save()
     estado_nombre = nuevo_estado.ST_ESTADO_PROYECTO
     return JsonResponse({'success': True, 'estado_nombre': estado_nombre})
+
+
+def uploadFactura(request, proyecto_id):
+    if request.method == 'POST':
+        factura_file = request.FILES.get('facturaFile')
+        if factura_file:
+            factura = Factura(ST_FACTURA=factura_file, FK_PROYECTO_id=proyecto_id)
+            factura.save()
+            return HttpResponse('Factura subida exitosamente.')
+    return HttpResponse('Error al subir la factura.')
+
+def deleteFactura(request, factura_id ):
+    factura = get_object_or_404(Factura, SK_FACTURA=factura_id)
+    factura.delete()
+    return JsonResponse({'message': 'Factura eliminada correctamente.'})
+
+def getFacturas(request, proyecto_id):
+    facturas = Factura.objects.filter(FK_PROYECTO_id=proyecto_id)
+    facturas_data = []
+    for factura in facturas:
+        facturas_data.append({
+            'id': factura.SK_FACTURA,
+            'url': factura.ST_FACTURA.url,
+            'nombre': factura.ST_FACTURA.name
+        })
+    return JsonResponse(facturas_data, safe=False)
