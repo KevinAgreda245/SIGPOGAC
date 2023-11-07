@@ -104,6 +104,8 @@ def details(request, id):
     proyecto = Proyecto.objects.get(SK_PROYECTO=id)
     facturas = Factura.objects.filter(FK_PROYECTO=proyecto)
     tipo = proyecto.FK_TIPO_SERVICIO.SK_TIPO_SERVICIO
+    estado = proyecto.FK_ESTADO_PROYECTO_id
+    print(estado)
     especificaciones = None
 
     personal = AsignacionEmpleado.objects.filter(SK_PROYECTO=id).values(

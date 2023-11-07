@@ -34,7 +34,7 @@ Proyecto N° {{proyecto.SK_PROYECTO}} {% endblock %} {% block main %}
             </tr>
             <tr>
               <th>Estado actual:</th>
-            {% if request.user.is_staff%}
+            {% if request.user.is_staff and proyecto.FK_ESTADO_PROYECTO_id != 4%}
               <td>
                 <select class = "form-control select2" name="estado" id="estado" data-original-value="{{ proyecto.FK_ESTADO_PROYECTO }}" disabled>
                   <option value="{{ proyecto.FK_ESTADO_PROYECTO }}">
@@ -173,14 +173,16 @@ Proyecto N° {{proyecto.SK_PROYECTO}} {% endblock %} {% block main %}
           <li>No hay facturas disponibles.</li>
         {% endfor %}
       </ul>
-      <form id = "uploadFactura" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="facturaFile">Subir Factura:</label>
-          <input type="file" class="form-control" id="facturaFile" name="facturaFile" required>
-        </div>
-        <button type="submit" class="btn btn-secondary my-3">Subir Factura</button>
-      </form>
+      {% if proyecto.FK_ESTADO_PROYECTO_id != 4%}
+        <form id = "uploadFactura" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="facturaFile">Subir Factura:</label>
+            <input type="file" class="form-control" id="facturaFile" name="facturaFile" required>
+          </div>
+          <button type="submit" class="btn btn-secondary my-3">Subir Factura</button>
+        </form>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -235,6 +237,11 @@ Proyecto N° {{proyecto.SK_PROYECTO}} {% endblock %} {% block main %}
                     $('#cambiar_estado').show();
                     $('#guardar, #cancelar').hide();
                     $('#estado').prop('disabled', true);
+
+                    if(nuevoEstado==4){
+                      $('#cambiar_estado').hide();
+                      $('#uploadFactura').hide();
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error('Error saving estado:', error);
