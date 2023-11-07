@@ -165,15 +165,17 @@ Proyecto N° {{proyecto.SK_PROYECTO}} {% endblock %} {% block main %}
           <li>
             <div class="d-flex justify-content-between my-2">
               <a href="{{ factura.ST_FACTURA.url }}">{{ factura.ST_FACTURA.name }}</a>
-              <button class="btn btn-danger btn-sm delete-btn" data-invoice-id="{{ factura.SK_FACTURA }}">Eliminar</button>
-            </div>
+              {% if proyecto.FK_ESTADO_PROYECTO_id != 4 %}
+                <button class="btn btn-danger btn-sm delete-btn" data-invoice-id="{{ factura.SK_FACTURA }}">Eliminar</button>
+              {% endif %}
+              </div>
           </li>
 
         {% empty %}
-          <li>No hay facturas disponibles.</li>
+          <p>No hay facturas disponibles.</p>
         {% endfor %}
       </ul>
-      {% if proyecto.FK_ESTADO_PROYECTO_id != 4%}
+      {% if request.user.is_staff and proyecto.FK_ESTADO_PROYECTO_id != 4%}
         <form id = "uploadFactura" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="form-group">
@@ -226,6 +228,29 @@ Proyecto N° {{proyecto.SK_PROYECTO}} {% endblock %} {% block main %}
             var nombreEstado;
             var nuevoEstado = $('#estado').val();
             var proyectoId =  {{proyecto.SK_PROYECTO}};
+            if(nuevoEstado==4){
+              console.log($('#facturas li').length);
+              if ($('#facturas li').length < 1) {
+                var message = "Debe de adjuntar una factura antes de completar el proyecto.";
+                var title = "Error";
+                var type = "error";
+                toastr[type](message, title, {
+                    positionClass: "toast-top-right",
+                    closeButton: true,
+                    progressBar: true,
+                    newestOnTop: true,
+                    rtl: $("body").attr("dir") === "rtl" || $("html").attr("dir") === "rtl",
+                    timeOut: 2500
+                });
+
+                $('#estado').empty(); 
+                $('#estado').append('<option value="' + estadoOriginal + '" selected>' + estadoOriginal + '</option>');
+                $('#cambiar_estado').show();
+                $('#guardar, #cancelar').hide();
+                $('#estado').prop('disabled', true);
+
+                return;
+            }}
             $.ajax({
                 url: '{% url "saveEstado" proyecto_id=0 nuevo_estado_id=0 %}'.replace('0', proyectoId).replace('0', nuevoEstado),
                 type: 'GET', 
@@ -237,11 +262,11 @@ Proyecto N° {{proyecto.SK_PROYECTO}} {% endblock %} {% block main %}
                     $('#cambiar_estado').show();
                     $('#guardar, #cancelar').hide();
                     $('#estado').prop('disabled', true);
-
                     if(nuevoEstado==4){
                       $('#cambiar_estado').hide();
                       $('#uploadFactura').hide();
-                    }
+                      $('.delete-btn').hide();
+                    }                 
                 },
                 error: function(xhr, status, error) {
                     console.error('Error saving estado:', error);
@@ -263,10 +288,8 @@ Proyecto N° {{proyecto.SK_PROYECTO}} {% endblock %} {% block main %}
             contentType: false,
             success: function(response) {
               $.get('{% url "getFacturas" proyecto.SK_PROYECTO %}', function(data) {
-                // Clear the current list
                 $('#facturas').empty();
 
-                // Populate the list with the updated invoices
                 data.forEach(function(factura) {
                     $('#facturas').append('<li>' +
                         '<div class="d-flex justify-content-between my-2">' +
