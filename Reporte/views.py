@@ -4,9 +4,15 @@ from django.views import View
 from django.db.models import F
 from Proyecto.models import *
 from Reporte.utils import crearPDF
+from django.contrib.auth.decorators import login_required
+from Seguridad.decorators import allowed_users
+
 
 from .forms import *
 
+
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def index(request):
     if request.method == 'POST':
         form = ReportesForm(request.POST)
@@ -120,6 +126,7 @@ def getEspecificaciones(tipo_servicio, proyecto):
         return especificaciones[tipo_servicio].filter(FK_PROYECTO=proyecto).values()
     else:
         return None 
+
 
 def generarReporte(tipo_servicio, data, request):
     reporte_pdfs = {

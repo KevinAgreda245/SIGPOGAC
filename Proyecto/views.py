@@ -4,6 +4,8 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from Seguridad.decorators import allowed_users
 from .forms import *
 from .models import *
 from Administrador.models import *
@@ -12,6 +14,8 @@ from django.contrib import messages
 from django.db.models import Q
 import json
 
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def index(request):
     user = request.user
     print(user)
@@ -48,6 +52,8 @@ def index(request):
 
     return render(request, 'Proyecto/index.html',{'form': form, 'proyectos': paged_proyecto})
 
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def add(request):
     request.session['empleados'] = []
     request.session['equipos'] = []
@@ -99,7 +105,8 @@ def add(request):
     }
     return render(request, 'Proyecto/add.html',context)
 
-
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def details(request, id):
     proyecto = Proyecto.objects.get(SK_PROYECTO=id)
     facturas = Factura.objects.filter(FK_PROYECTO=proyecto)
@@ -150,6 +157,8 @@ def details(request, id):
 
     return render(request, 'Proyecto/details.html',contexto)
 
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def transporteForm(request):
     if request.method == 'POST':
         form = TransporteForm(request.POST)      
@@ -162,7 +171,8 @@ def transporteForm(request):
         form = TransporteForm()
         return render(request, 'Proyecto/transporte.html', {'form':form})
     
-
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def rentaEquipoForm(request):
     if request.method == 'POST':
         form = RentaEquipoForm(request.POST)    
@@ -175,7 +185,9 @@ def rentaEquipoForm(request):
     else:
         form = RentaEquipoForm()
         return render(request, 'Proyecto/rentaequipo.html', {'form':form})
-    
+
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])    
 def rentaDesimetroForm(request):
     if request.method == 'POST':
         form = RentaDesimetroForm(request.POST)    
@@ -191,7 +203,9 @@ def rentaDesimetroForm(request):
     else:
         form = RentaDesimetroForm()
         return render(request, 'Proyecto/rentadesimetro.html', {'form':form})
-    
+
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])    
 def concretoForm(request):
     if request.method == 'POST':
         form = ConcretoForm(request.POST,request.FILES)
@@ -214,6 +228,8 @@ def concretoForm(request):
         form = ConcretoForm()
     return render(request, 'Proyecto/concreto.html', {'form':form})
 
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def levantamientoTopograficoForm(request):
     if request.method == 'POST':
         form = LevantamientoTopograficoForm(request.POST)      
@@ -226,6 +242,8 @@ def levantamientoTopograficoForm(request):
         form = LevantamientoTopograficoForm()
     return render(request, 'Proyecto/levantamiento.html', {'form':form})
 
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def estructuraMetalicaForm(request):
     if request.method == 'POST':
         form = EstructuraMetalicaForm(request.POST,request.FILES)
@@ -248,6 +266,8 @@ def estructuraMetalicaForm(request):
         form = EstructuraMetalicaForm()
     return render(request, 'Proyecto/metalica.html', {'form': form})
 
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def senializacionVialForm(request):
     if request.method == 'POST':
         form = SenializacionVialForm(request.POST)      
@@ -259,6 +279,9 @@ def senializacionVialForm(request):
         form = SenializacionVialForm()
     return render(request, 'Proyecto/senializacionvial.html', {'form':form})
 
+
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def asesoramientoForm(request):
     if request.method == 'POST':
         form = AsesoriaConstructivaForm(request.POST)
@@ -270,6 +293,9 @@ def asesoramientoForm(request):
         form = AsesoriaConstructivaForm()
     return render(request, 'Proyecto/asesoria.html', {'form':form})
 
+
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def registerEmployees(request):
     if request.method == 'POST':
         if 'empleados' not in request.session:
@@ -295,7 +321,10 @@ def registerEmployees(request):
         else:
             messages.warning(request,"¡No se ha asignado ningún equipo!")
             return redirect("registerEquipment")
-    
+
+
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def deleteEmployee(request, id):
     index = id - 1
     del request.session['empleados'][index]
@@ -304,7 +333,8 @@ def deleteEmployee(request, id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def registerEquipment(request):
     if request.method == 'POST':
         if 'equipos' not in request.session:
@@ -328,7 +358,9 @@ def registerEquipment(request):
         servicios = ["1", "4", "5", "6", "7"]
         context = {'cc_equipos':cc_equipos, 'equipos':equipos, 'servicios':servicios, 'tipo_servicio': tipo_servicio}
         return render(request, 'Proyecto/asignacionEquipo.html', context)
-    
+
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])    
 def deleteEquipment(request, id):
     index = id - 1
     del request.session['equipos'][index]
@@ -336,7 +368,8 @@ def deleteEquipment(request, id):
     messages.info(request, "¡El equipo fue retirado del listado!")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def registerMaterial(request):
     if request.method == 'POST':
         if 'materiales' not in request.session:
@@ -362,7 +395,9 @@ def registerMaterial(request):
         else: 
             messages.warning(request,"¡No se ha asignado ningún empleado!")
             return redirect("registerEmployees")
-    
+
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])    
 def deleteMaterial(request, id):
     index = id - 1
     del request.session['materiales'][index]
@@ -370,6 +405,8 @@ def deleteMaterial(request, id):
     messages.info(request, "¡El material fue retirado del listado!")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def save(request):
     if 'tipo_servicio' in request.session:
         tipo_servicio = request.session['tipo_servicio']
@@ -441,6 +478,8 @@ def save(request):
         return redirect("AddProyecto")
     
 
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def saveEspecifications(form_data, tipo_servicio):
     if tipo_servicio == "1":
         # Ruta de archivo
@@ -505,13 +544,15 @@ def saveEspecifications(form_data, tipo_servicio):
     elif tipo_servicio =="8":  
         return AsesoriaConstructivaForm(form_data)
     
-
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def getEstados(request):
     estados = EstadoProyecto.objects.all()
     estados_list = [{'id': estado.SK_ESTADO_PROYECTO, 'nombre': estado.ST_ESTADO_PROYECTO} for estado in estados]
     return JsonResponse(estados_list, safe=False)
 
-
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def saveEstado(request, proyecto_id, nuevo_estado_id):
     proyecto = Proyecto.objects.get(SK_PROYECTO=proyecto_id)
     nuevo_estado = EstadoProyecto.objects.get(SK_ESTADO_PROYECTO=nuevo_estado_id)
@@ -520,7 +561,8 @@ def saveEstado(request, proyecto_id, nuevo_estado_id):
     estado_nombre = nuevo_estado.ST_ESTADO_PROYECTO
     return JsonResponse({'success': True, 'estado_nombre': estado_nombre})
 
-
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def uploadFactura(request, proyecto_id):
     if request.method == 'POST':
         factura_file = request.FILES.get('facturaFile')
@@ -530,11 +572,15 @@ def uploadFactura(request, proyecto_id):
             return HttpResponse('Factura subida exitosamente.')
     return HttpResponse('Error al subir la factura.')
 
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def deleteFactura(request, factura_id ):
     factura = get_object_or_404(Factura, SK_FACTURA=factura_id)
     factura.delete()
     return JsonResponse({'message': 'Factura eliminada correctamente.'})
 
+@login_required(login_url='login')
+@allowed_users(['Administrador', 'Empleado'])
 def getFacturas(request, proyecto_id):
     facturas = Factura.objects.filter(FK_PROYECTO_id=proyecto_id)
     facturas_data = []
